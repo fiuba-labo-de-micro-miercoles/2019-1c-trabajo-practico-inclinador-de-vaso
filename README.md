@@ -14,7 +14,6 @@ Proyecto:
 Sistema Hibrido Inclinador de Vaso Automatizado
 
 
-
    El proyecto consta de lograr automatizar la inclinacion de un vaso de cerveza
 a medida que es servida, para evitar la formacion de espuma excesiva en esta.
 
