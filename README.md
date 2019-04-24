@@ -3,9 +3,9 @@ Repositorio para la documentación de proyectos de
 
 Integrantes: 
 
-Quattrone martin 
+            Quattrone martin 
             
-Segura Lola 
+            Segura Lola 
             
 Proyecto:
 
