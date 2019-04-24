@@ -9,7 +9,7 @@ Integrantes:
             
 Proyecto:
 
-                                                             S.H.I.V.A. 
+                                                         S.H.I.V.A. 
 
 Sistema Hibrido Inclinador de Vaso Automatizado
 
