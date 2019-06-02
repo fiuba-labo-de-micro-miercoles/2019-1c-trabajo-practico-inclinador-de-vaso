@@ -25,8 +25,10 @@
 ;-------------------------------------------------------------------------
 ; variables en registros
 ;-------------------------------------------------------------------------
-.def  CONT_8 = r18
-.def  CONT_3 = r19
+.def  CONT_8 = r17
+.def  DATO_H = r4
+.def  DATO_M = r3
+.def  DATO_L = r2
 
 ;-------------------------------------------------------------------------
 ; codigo
@@ -44,50 +46,71 @@ main:
 	ldi  r16, LOW(RAMEND)
 	out  spl, r16					; inicializo el stack pointer al final de la RAM
 
+    rcall configuracion_puertos
+	
+	rcall lectura_peso
+
+here: jmp here
+
+
+;-------------------------------------------------------------------------
+; FUNCIONES
+;-------------------------------------------------------------------------
+
 configuracion_puertos:
 	sbi  DDRC, SCK					; puerto PC0 = A0 como salida (SCK)
 
 	cbi  DDRC, DOUT
 	sbi  PORTC, DOUT				; puerto PC = A1 como entrada (DOUT)
-	
+
 
 ;-------------------------------------------------------------------------
-; lectura_peso: funcion para la lectura de datos de la celda de carga. Carga
+; lectura_peso: 
+; funcion para la lectura de datos de la celda de carga. Carga
 ; los bits enviados por el amplificador HX711 a traves del pin DOUT y los
-; guarda en los registros r4:r2
+; guarda en los registros r4:r2. Usa los registros r16 y r17
 ;-------------------------------------------------------------------------
+
 lectura_peso:
-	ldi  CONT_3, 3					; el dato ocupa 3 registros
-	ldi  zl, LOW(0x05)				; en r4:r2 guardo el dato
-	ldi  zh, HIGH(0x05)
+	push  r16
+	push  r17
 
-	sbic PINC, DOUT					
-	rjmp lectura_peso				; chequeo si DOUT está en alto
-	nop
-	nop 					
-	sbic PINC, DOUT					; por la hoja de datos, DOUT debe estar como minimo 0.1 useg en 0
-	rjmp lectura_peso				; para indicar que tiene un dato disponible para mandar.
+	sbic  PINC, DOUT					
+	rjmp  lectura_peso				; chequeo si DOUT está en alto
+	nop							
+	nop 							; Espero dos ciclos y vuelvo a preguntar si sigue en alto ya que
+	sbic  PINC, DOUT				; por la hoja de datos, DOUT debe estar como minimo 0.1 useg en 0
+	rjmp  lectura_peso				; para indicar que tiene un dato disponible para mandar.
 
-here:
-	ldi  CONT_8, 8					; contador para la cantidad de bits por registro
-carga_bit:	
-	sbi  PORTC, SCK					; genero un flanco ascendente en la señal SCK para cargar un bit
-	in   r16, PINC
-	bst  r16, DOUT					; en el flag T, tengo un bit del dato
-	bld  r17, 0						; lo guardo en LSB de r17
-	cbi  PORTC, SCK					; genero un flanco descendente en la señal SCK
-	lsl  r17						; shifteo a la izq para dar lugar al proximo bit de dato
-	dec  CONT_8
-	brne carga_bit
-	st   -Z, r17					; Z estaba apuntando inicialmente a r5	
-	dec  CONT_3
-	brne here						; si no es 0, todavia queda algun byte por cargar
-	sbi  PORTC, SCK					; se genera el pulso numero 25 requerido para setear el DOUT
+	rcall cargar_byte				; lee 8 bits y los guarda en r16
+	mov   DATO_H, r16				; primer byte es el mas significativo
+	rcall cargar_byte
+	mov   DATO_M, r16
+	rcall cargar_byte
+	mov   DATO_L, r16
+
+	sbi   PORTC, SCK				; se genera el pulso numero 25 requerido para setear el DOUT
+	nop								; debe estar un tiempo en alto mayor a 0.2 useg
 	nop
 	nop
 	nop
-	nop
-	cbi  PORTC, SCK
-	rjmp lectura_peso
-	
-	  								
+	cbi   PORTC, SCK
+	pop   r17
+	pop   r16
+	ret
+
+
+cargar_byte:
+	clr   r16
+	ldi   CONT_8, 8
+cargar_bit:
+	sbi   PORTC, SCK				; se genera un flanco ascendente en la señal SCK para cargar un bit
+	sbic  PORTC, DOUT				; si en DOUT hay un 1, se incrementa r16 y pone un 1 en el LSB	
+	inc   r16						; si en DOUT hay un 0, salte esta instruccion y deja un 0 en LSB	
+	cbi   PORTC, SCK				; se genera un flanco descendente en la señal SCK para cargar un bit
+	lsl   r16
+	dec   CONT_8
+	brne  cargar_bit
+	ret
+
+
