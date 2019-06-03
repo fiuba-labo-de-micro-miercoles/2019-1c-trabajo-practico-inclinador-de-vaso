@@ -38,6 +38,9 @@
 .org 0x00
 	jmp  main
 
+.org	0x0026		; USART Data Register Empty
+		rjmp	ISR_REG_USART_VACIO
+
 .org INT_VECTORS_SIZE
 
 main:
@@ -47,18 +50,15 @@ main:
 	out  spl, r16					; inicializo el stack pointer al final de la RAM
 
     rcall configuracion_puertos
-
-	rcall USART_init
+	rcall USART_init					
 	
-	;rcall lectura_peso
-
-	clr   r4
-	inc   r4
-loop:	rcall USART_transmit
-		inc r4
-		rjmp loop
-
-here: jmp here
+here:
+    rcall lectura_peso
+	sei
+	;lds  r19, UCSR0B
+	;sbr  r19, 1<<UDRIE0
+	;sts  UCSR0B, r19				; habilito interrupciones 
+ jmp here
 
 
 ;-------------------------------------------------------------------------
@@ -83,8 +83,9 @@ lectura_peso:
 	push  r16
 	push  r17
 
+loop:
 	sbic  PINC, DOUT					
-	rjmp  lectura_peso				; chequeo si DOUT está en alto
+	rjmp  loop						; chequeo si DOUT estÃ¡ en alto
 	nop							
 	nop 							; Espero dos ciclos y vuelvo a preguntar si sigue en alto ya que
 	sbic  PINC, DOUT				; por la hoja de datos, DOUT debe estar como minimo 0.1 useg en 0
@@ -107,22 +108,22 @@ lectura_peso:
 	pop   r16
 	ret
 
-
 cargar_byte:
 	clr   r16
 	ldi   CONT_8, 8
 cargar_bit:
-	sbi   PORTC, SCK				; se genera un flanco ascendente en la señal SCK para cargar un bit
-	sbic  PORTC, DOUT				; si en DOUT hay un 1, se incrementa r16 y pone un 1 en el LSB	
+	sbi   PORTC, SCK				; se genera un flanco ascendente en la seÃ±al SCK para cargar un bit
+	sbic  PINC, DOUT				; si en DOUT hay un 1, se incrementa r16 y pone un 1 en el LSB	
 	inc   r16						; si en DOUT hay un 0, salte esta instruccion y deja un 0 en LSB	
-	cbi   PORTC, SCK				; se genera un flanco descendente en la señal SCK para cargar un bit
+	cbi   PORTC, SCK				; se genera un flanco descendente en la seÃ±al SCK para cargar un bit
 	lsl   r16
 	dec   CONT_8
 	brne  cargar_bit
 	ret
 
-
-
+; ----------------------------------------------------------------------
+; INICIALIZACION DE LA UART EN MODO TRANSMISION
+; ----------------------------------------------------------------------
 USART_init:
 	push r16
 		
@@ -136,16 +137,25 @@ USART_init:
 	ldi  r16, (0<<UMSEL01)|(0<<UMSEL00)|(0<<UPM01)|(0<<UPM00)|(0<<USBS0)|(1<<UCSZ01)|(1<<UCSZ00) ; Trama: modo asincronico,sin paridad8 bits de datos y 1 bit de stop 
 	sts  UCSR0C, r16																			 
 
-	ldi  r16, (1<<RXCIE0)|(1<<TXCIE0)|(0<<RXEN0)|(1<<TXEN0)|(0<<UCSZ02)			  ; Habilito interrupciones de recepcion y transmision
-	sts  UCSR0B, r16															  ; habilito transmision y deshabilito recepcion, configuro la cantidad
-	pop  r16
-	ret																			  ; de bits del dato	
+	ldi  r16, (0<<UCSZ02)|(1<<UDRIE0)|(0<<RXEN0)|(1<<TXEN0)							; Habilito interrupciones de recepcion y transmision
+	sts  UCSR0B, r16																; habilito transmision y deshabilito recepcion, configuro la cantidad
 
-USART_transmit:
-	push r16
-	lds   r16, UCSR0A				; cargo el resgistro de control en un registro
-	sbrs r16, UDRE0					; verifico si el buffer de datos esta vacio
-	rjmp USART_transmit   
-	sts  UDR0, r4					; el buffer estaba vacio entonces se puede cargar con los datos
+	;ldi  r16, (1<<RXCIE0)|(1<<TXCIE0)|(0<<RXEN0)|(1<<TXEN0)|(0<<UCSZ02)
+	ldi  r16, (1<<RXCIE0)|(1<<TXCIE0)|(0<<RXEN0)|(1<<TXEN0)|(0<<UCSZ02)|(1<<UDRIE0)			  ; Habilito interrupciones de recepcion y transmision
+	sts  UCSR0B, r16																; habilito transmision y deshabilito recepcion, configuro la cantidad
+	
 	pop  r16
+	ret																				; de bits del dato	
+
+; ----------------------------------------------------------------------------
+
+
+ISR_REG_USART_VACIO:
+	ldi  r20, 'a'
+	mov  r4, r20
+	sts  UDR0, r4
+	
+	;lds  r19, UCSR0B
+	;cbr  r19, 1<<UDRIE0
+	;sts  UCSR0B, r19				; deshabilito interrupciones
 	ret
