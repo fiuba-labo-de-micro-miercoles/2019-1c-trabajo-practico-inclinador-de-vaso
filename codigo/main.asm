@@ -17,6 +17,7 @@
 .equ  SCK  = PC0					; pin donde se conecta SCK
 .equ  DOUT = PC1					; pin donde se conecta DOUT
 .equ  BAUD_RATE = 207				; baudrate=9600 e=0.2% U2X0=1
+
 ;-------------------------------------------------------------------------
 ; variables en SRAM
 ;-------------------------------------------------------------------------
@@ -51,20 +52,32 @@ main:
 
     rcall configuracion_puertos
 	rcall USART_init					
-	
+		
 here:
     rcall lectura_peso
+	rcall dellay
+	rcall dellay
+
+; siguiente codigo es para probar la medicion del peso	
+	ldi  zh, HIGH(0x04)
+	ldi  zl, LOW(0x04)						
 	sei
-	;lds  r19, UCSR0B
-	;sbr  r19, 1<<UDRIE0
-	;sts  UCSR0B, r19				; habilito interrupciones 
- jmp here
+	lds  r19, UCSR0B
+	sbr  r19, 1<<UDRIE0
+	sts  UCSR0B, r19				; habilito interrupciones 
+; fin del codigo de pruebas ------------------------------------	
+
+	rjmp here
+
 
 
 ;-------------------------------------------------------------------------
 ; FUNCIONES
 ;-------------------------------------------------------------------------
 
+;-------------------------------------------------------------------------
+; CONFIGURACION_PUERTOS:
+;-------------------------------------------------------------------------
 configuracion_puertos:
 	sbi  DDRC, SCK					; puerto PC0 = A0 como salida (SCK)
 
@@ -73,7 +86,7 @@ configuracion_puertos:
 	ret
 
 ;-------------------------------------------------------------------------
-; lectura_peso: 
+; LECTURA_PESO: 
 ; funcion para la lectura de datos de la celda de carga. Carga
 ; los bits enviados por el amplificador HX711 a traves del pin DOUT y los
 ; guarda en los registros r4:r2. Usa los registros r16 y r17
@@ -104,6 +117,7 @@ loop:
 	nop
 	nop
 	cbi   PORTC, SCK
+	
 	pop   r17
 	pop   r16
 	ret
@@ -113,10 +127,11 @@ cargar_byte:
 	ldi   CONT_8, 8
 cargar_bit:
 	sbi   PORTC, SCK				; se genera un flanco ascendente en la señal SCK para cargar un bit
+	nop
+	lsl   r16
 	sbic  PINC, DOUT				; si en DOUT hay un 1, se incrementa r16 y pone un 1 en el LSB	
 	inc   r16						; si en DOUT hay un 0, salte esta instruccion y deja un 0 en LSB	
 	cbi   PORTC, SCK				; se genera un flanco descendente en la señal SCK para cargar un bit
-	lsl   r16
 	dec   CONT_8
 	brne  cargar_bit
 	ret
@@ -131,31 +146,68 @@ USART_init:
 	sts  UBRR0H, r16
 	ldi  r16, low(BAUD_RATE)	
 	sts  UBRR0L, r16
+	
 	ldi  r16, (1<<U2X0)				; doble velocidad
 	sts	 UCSR0A, r16
 
 	ldi  r16, (0<<UMSEL01)|(0<<UMSEL00)|(0<<UPM01)|(0<<UPM00)|(0<<USBS0)|(1<<UCSZ01)|(1<<UCSZ00) ; Trama: modo asincronico,sin paridad8 bits de datos y 1 bit de stop 
 	sts  UCSR0C, r16																			 
 
-	ldi  r16, (0<<UCSZ02)|(1<<UDRIE0)|(0<<RXEN0)|(1<<TXEN0)							; Habilito interrupciones de recepcion y transmision
+	ldi  r16, (1<<RXCIE0)|(1<<TXCIE0)|(1<<UDRIE0)|(0<<RXEN0)|(1<<TXEN0)|(0<<UCSZ02)	; Habilito interrupciones de recepcion y transmision
 	sts  UCSR0B, r16																; habilito transmision y deshabilito recepcion, configuro la cantidad
-
-	;ldi  r16, (1<<RXCIE0)|(1<<TXCIE0)|(0<<RXEN0)|(1<<TXEN0)|(0<<UCSZ02)
-	ldi  r16, (1<<RXCIE0)|(1<<TXCIE0)|(0<<RXEN0)|(1<<TXEN0)|(0<<UCSZ02)|(1<<UDRIE0)			  ; Habilito interrupciones de recepcion y transmision
-	sts  UCSR0B, r16																; habilito transmision y deshabilito recepcion, configuro la cantidad
-	
+																					; de bits del dato	
 	pop  r16
-	ret																				; de bits del dato	
+	ret																				
 
 ; ----------------------------------------------------------------------------
 
-
+; ----------------------------------------------------------------------
+; INTERRUPCION PARA EL CODIGO DE PRUEBAS
+; hay 3 bytes para mandar por la USART. Z apunta al byte mas significativo.
+; La interrupcion, manda un byte, (comenzando por el maas significativo),
+; si todavia quedan bytes por mandar, sale sin deshabilitar la interrupcion
+; de transmision. Si ya mando los 3, antes de salir la deshabilita.
+; ----------------------------------------------------------------------
 ISR_REG_USART_VACIO:
-	ldi  r20, 'a'
-	mov  r4, r20
-	sts  UDR0, r4
 	
-	;lds  r19, UCSR0B
-	;cbr  r19, 1<<UDRIE0
-	;sts  UCSR0B, r19				; deshabilito interrupciones
+	ld   r16, Z
+	dec  zl
+	sts  UDR0, r16
+	cpi  zl, 1
+	breq fin
+	reti
+fin:
+	lds  r19, UCSR0B
+	cbr  r19, 1<<UDRIE0
+	sts  UCSR0B, r19				; deshabilito interrupciones
+	reti
+
+; ----------------------------------------------------------------------
+; DELLAY:
+; dellay de 1 segundo para ver mejor los datos enviados.
+; ----------------------------------------------------------------------
+dellay:
+	push r20
+	push r21
+	push r22
+
+	ldi  r20, 32
+L1: ldi  r21,200
+L2: ldi  r22, 250	
+L3:	
+	nop
+	nop
+	dec  r22
+	brne L3
+
+	dec  r21
+	brne L2
+
+	dec  r20
+	brne L1
+
+	pop  r21
+	pop  r22
+	pop  r20
+	
 	ret
