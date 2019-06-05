@@ -57,16 +57,7 @@ here:
     rcall lectura_peso
 	rcall dellay
 	rcall dellay
-
-; siguiente codigo es para probar la medicion del peso	
-	ldi  zh, HIGH(0x04)
-	ldi  zl, LOW(0x04)						
-	sei
-	lds  r19, UCSR0B
-	sbr  r19, 1<<UDRIE0
-	sts  UCSR0B, r19				; habilito interrupciones 
-; fin del codigo de pruebas ------------------------------------	
-
+	rcall send_data
 	rjmp here
 
 
@@ -159,8 +150,29 @@ USART_init:
 	pop  r16
 	ret																				
 
-; ----------------------------------------------------------------------------
 
+; ----------------------------------------------------------------------------
+; SEND_DATA:
+; Enviar los bytes r4:r2 por usart
+; ----------------------------------------------------------------------------
+send_data:
+	push zl
+	push zh
+	push r19
+
+	ldi  zh, HIGH(0x04)
+	ldi  zl, LOW(0x04)						
+	sei
+	lds  r19, UCSR0B
+	sbr  r19, 1<<UDRIE0
+	sts  UCSR0B, r19				; habilito interrupciones 
+	
+	pop r19
+	pop zh
+	pop zl
+
+	ret
+ 
 ; ----------------------------------------------------------------------
 ; INTERRUPCION PARA EL CODIGO DE PRUEBAS
 ; hay 3 bytes para mandar por la USART. Z apunta al byte mas significativo.
