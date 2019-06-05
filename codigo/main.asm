@@ -219,3 +219,47 @@ L3:
 	pop  r20
 	
 	ret
+	
+; ----------------------------------------------------------------------
+; SET_TARA:
+; Esta funcion lee 16 valores, calcula el promedio y es el ofset que hay que restarle 
+; luego a cada dato leido.
+; me deja en TARA_H, TARA_L el peso leido inicialmente
+; ----------------------------------------------------------------------
+	
+	.def TARA_H	= r6
+	.def TARA_L = r5
+
+	push r16
+	push r7
+
+	ldi  r16, 16				; contador
+	clr  TARA_L					; LOW_BYTE del resultado
+	clr  TARA_H					; HIGH_BYTE del resultado
+	clr  r7		
+	
+
+loop_tara:
+	rcall lectura_peso
+	add  TARA_L, DATO_L			; dividir por 8 es shiftear 8 veces a la derecha o directamente agarrar el byte mas dignificativo del peso de 16 bits
+	adc  TARA_H, DATO_M
+	brcc next
+	inc  r7 					; si hubo carry incremento el HIGH_BYTE
+next:
+	dec  r16
+	brne loop_tara
+	
+division_por_8:
+	ldi  r16, 4					; contador con 4 porque se va a shiftear 4 veces
+loop_division:
+	lsr  r7
+	ror  TARA_H
+	ror  TARA_L
+	dec  r16
+	brne  loop_division
+
+	pop r16
+	pop r7
+	ret
+
+; ----------------------------------------------------------------------
