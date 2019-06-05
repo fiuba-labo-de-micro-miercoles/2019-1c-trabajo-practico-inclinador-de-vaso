@@ -50,17 +50,18 @@ main:
 	ldi  r16, LOW(RAMEND)
 	out  spl, r16					; inicializo el stack pointer al final de la RAM
 
+
     rcall configuracion_puertos
 	rcall USART_init					
 		
 here:
-    rcall lectura_peso
+	rcall lectura_peso
 	rcall dellay
 	rcall dellay
 	rcall send_data
+	
+
 	rjmp here
-
-
 
 ;-------------------------------------------------------------------------
 ; FUNCIONES
@@ -150,29 +151,22 @@ USART_init:
 	pop  r16
 	ret																				
 
+; ----------------------------------------------------------------------------
+; SEND_DATA: 
+; envia los registros r4:r2 por la USART
+; ----------------------------------------------------------------------------
 
-; ----------------------------------------------------------------------------
-; SEND_DATA:
-; Enviar los bytes r4:r2 por usart
-; ----------------------------------------------------------------------------
 send_data:
-	push zl
-	push zh
-	push r19
-
+	push r16
 	ldi  zh, HIGH(0x04)
 	ldi  zl, LOW(0x04)						
 	sei
-	lds  r19, UCSR0B
-	sbr  r19, 1<<UDRIE0
-	sts  UCSR0B, r19				; habilito interrupciones 
-	
-	pop r19
-	pop zh
-	pop zl
-
+	lds  r16, UCSR0B
+	sbr  r16, 1<<UDRIE0
+	sts  UCSR0B, r16				; habilito interrupciones 
+	pop  r16
 	ret
- 
+
 ; ----------------------------------------------------------------------
 ; INTERRUPCION PARA EL CODIGO DE PRUEBAS
 ; hay 3 bytes para mandar por la USART. Z apunta al byte mas significativo.
@@ -181,17 +175,19 @@ send_data:
 ; de transmision. Si ya mando los 3, antes de salir la deshabilita.
 ; ----------------------------------------------------------------------
 ISR_REG_USART_VACIO:
-	
+	push r16
 	ld   r16, Z
 	dec  zl
 	sts  UDR0, r16
-	cpi  zl, 1
+	cpi  zl, 1						;  Z  esta apuntando a r1? Si lo esta haciendo ya se cargaron los 3 bytes
 	breq fin
+	pop  r16
 	reti
 fin:
-	lds  r19, UCSR0B
-	cbr  r19, 1<<UDRIE0
-	sts  UCSR0B, r19				; deshabilito interrupciones
+	lds  r16, UCSR0B
+	cbr  r16, 1<<UDRIE0
+	sts  UCSR0B, r16				; deshabilito interrupciones
+	pop  r16
 	reti
 
 ; ----------------------------------------------------------------------
