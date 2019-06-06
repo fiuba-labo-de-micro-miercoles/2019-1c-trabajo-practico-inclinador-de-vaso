@@ -18,6 +18,7 @@
 .equ  DOUT = PC1					; pin donde se conecta DOUT
 .equ  BAUD_RATE = 207				; baudrate=9600 e=0.2% U2X0=1
 
+.equ  MULTIPLICADOR = 141		; Factor de multiplicacion de la escala del peso (1/6872 ~ 19/2^17)
 ;-------------------------------------------------------------------------
 ; variables en SRAM
 ;-------------------------------------------------------------------------
@@ -55,12 +56,19 @@ main:
 	rcall USART_init					
 		
 here:
+
 	rcall lectura_peso
 	rcall dellay
 	rcall dellay
 	rcall send_data
-	
+	;rcall dellay
+	;rcall dellay
+	;rcall set_scale
+	;rcall send_data
+	rcall dellay
+	rcall dellay
 
+	
 	rjmp here
 
 ;-------------------------------------------------------------------------
@@ -110,6 +118,8 @@ loop:
 	nop
 	cbi   PORTC, SCK
 	
+	rcall set_scale					; Escala a gramos los datos recibidos
+
 	pop   r17
 	pop   r16
 	ret
@@ -119,6 +129,9 @@ cargar_byte:
 	ldi   CONT_8, 8
 cargar_bit:
 	sbi   PORTC, SCK				; se genera un flanco ascendente en la señal SCK para cargar un bit
+	nop
+	nop
+	nop
 	nop
 	lsl   r16
 	sbic  PINC, DOUT				; si en DOUT hay un 1, se incrementa r16 y pone un 1 en el LSB	
@@ -159,11 +172,12 @@ USART_init:
 send_data:
 	push r16
 	ldi  zh, HIGH(0x04)
-	ldi  zl, LOW(0x04)						
-	sei
+	ldi  zl, LOW(0x04)			
+	
 	lds  r16, UCSR0B
 	sbr  r16, 1<<UDRIE0
 	sts  UCSR0B, r16				; habilito interrupciones 
+	sei
 	pop  r16
 	ret
 
@@ -219,7 +233,91 @@ L3:
 	pop  r20
 	
 	ret
+
+; ----------------------------------------------------------------------
+; SET_SCALE:
+; Con los datos de la balanza obtuvimos el factor de escala para pasar
+; los datos a gramos. Como el factor es 1/6872 que se aproximó a 19/2^17
+; ----------------------------------------------------------------------
+
+set_scale:
+	push r16
+	push r17
+	push r18
+	push r19
 	
+	ldi r17, 7
+	ldi r16, MULTIPLICADOR
+
+	mov  DATO_L, DATO_M
+	mov  DATO_M, DATO_H
+	clr  DATO_H
+	
+	com DATO_M
+	neg DATO_L
+	brcs shifteo
+	inc DATO_M
+
+shifteo:
+	lsr  DATO_M
+	ror  DATO_L
+	dec  r17
+	brne shifteo
+
+
+multiplicacion_low:
+	
+	mul  DATO_L,r16						; mutiplico el byte bajo del numero con 2 bytes
+	mov  r18, r1
+	mov  r17, r0
+	
+multiplicacion_high:
+	mul  DATO_M, r16
+	mov  r19, r1
+	add  r18, r0
+	brcc here_scale
+	inc   r19
+		
+here_scale:
+	mov  DATO_L, r17
+	mov  DATO_M, r18
+	mov  DATO_H, r19
+	
+	;lsr  DATO_M
+	;ldi  r16, MULTIPLICADOR
+	;mul  DATO_M, r16								; Multiplicacion por 19
+	;mov  DATO_L, r0									
+	;mov  DATO_M, r1									; Se guarda el resultado de la multiplicacion en r3:r2
+	
+	pop r19
+	pop r18
+	pop r17
+	pop r16
+	ret
+	
+	; ror  DATO_L
+	;dec  r16
+	; brne shifteo
+	;pop r16
+	;ret
+	
+/*	
+	lsr  DATO_H										; Como hay que dividir por 2^17 simplemente se shiftea a la derecha el byte
+	neg  DATO_H										; mas significativo y luego se toma el complemento a 2.
+	
+	mul	 DATO_H, r16								; Multiplicacion por 19
+	
+
+	mov  DATO_L, r0									
+	mov  DATO_M, r1									; Se guarda el resultado de la multiplicacion en r3:r2
+
+	clr  r16
+	mov  DATO_H, r16								; El byte mas significativo se setea en 0
+
+	pop r16
+	ret
+	*/
+
 ; ----------------------------------------------------------------------
 ; SET_TARA:
 ; Esta funcion lee 16 valores, calcula el promedio y es el ofset que hay que restarle 
