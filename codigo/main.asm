@@ -54,26 +54,26 @@ main:
 	ldi  r16, LOW(RAMEND)
 	out  spl, r16					; inicializo el stack pointer al final de la RAM
 
-
     rcall configuracion_puertos
 	rcall USART_init
 			
 	rcall set_tara
-	rcall dellay
-	rcall dellay
+	
+	; Hardcodeo del valor inicial leido---------------
+	; ldi  r16, LOW(0x125)
+	; mov  TARA_L, r16
+	; ldi  r16, HIGH(0x125)
+	; mov  TARA_H, r16
+	; ------------------------------------------------
 
 here:
 	rcall lectura_peso				; lee los datos y los deja almacenados en r4:r2
-	rcall dellay
-	rcall dellay
+	; rcall dellay
+	; rcall dellay
 	rcall send_data					; Se encarga de activar las interrupciones asi los datos son transmitidos por la UART
-	;rcall dellay
-	;rcall dellay
-	;rcall set_scale				; Escala los valores almacenados en r4:r2
-	;rcall send_data
-	rcall dellay
-	rcall dellay
-	cli
+	; rcall dellay
+	; rcall dellay
+ 
  rjmp here
 
 ;-------------------------------------------------------------------------
@@ -179,8 +179,8 @@ USART_init:
 
 send_data:
 	push r16
-	ldi  zh, HIGH(0x04)
-	ldi  zl, LOW(0x04)			
+	ldi  zh, HIGH(0x04)				; hay que mandar 3 bytes, ubicados en r4:r2. Definimos
+	ldi  zl, LOW(0x04)				; que Z apunte a r4 y luego en la rutina de interruopcion se decrementa
 	
 	lds  r16, UCSR0B
 	sbr  r16, 1<<UDRIE0
@@ -235,9 +235,9 @@ L3:
 
 	dec  r20
 	brne L1
-
-	pop  r21
+	
 	pop  r22
+	pop  r21
 	pop  r20
 	
 	ret
@@ -266,7 +266,7 @@ com_2_retornar:
 ; los datos a gramos. Como el factor es 1/6872 que se aproximó a 19/2^17
 ; ----------------------------------------------------------------------
 
-set_scale:
+/*set_scale:
 	push r16
 	push r17
 	push r18
@@ -281,7 +281,7 @@ shifteo:
 	pop r17
 	pop r16
 	ret
-/*
+
 	lsr  DATO_M
 	ror  DATO_L
 	dec  r17
@@ -347,9 +347,6 @@ here_scale:
 ; luego a cada dato leido.
 ; me deja en TARA_H, TARA_L el peso leido inicialmente
 ; ----------------------------------------------------------------------
-	
-	
-
 set_tara:
 	push r16
 	push r17
@@ -383,10 +380,11 @@ set_tara_division:
 	
 	mov TARA_H, r18				; guardo en tara el promedio de los primeros 16 valores
 	mov TARA_L, r17
-
+	
 	pop r19
 	pop r18
 	pop r17
 	pop r16	
 	ret
 ; ----------------------------------------------------------------------
+
