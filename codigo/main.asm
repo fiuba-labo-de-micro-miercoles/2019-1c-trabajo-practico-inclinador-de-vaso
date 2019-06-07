@@ -18,7 +18,7 @@
 .equ  DOUT = PC1					; pin donde se conecta DOUT
 .equ  BAUD_RATE = 207				; baudrate=9600 e=0.2% U2X0=1
 
-.equ  MULTIPLICADOR = 141		; Factor de multiplicacion de la escala del peso (1/6872 ~ 19/2^17)
+.equ  MULTIPLICADOR = 77			; Factor de multiplicacion de la escala del peso del programa en C ~ 77/2^14
 ;-------------------------------------------------------------------------
 ; variables en SRAM
 ;-------------------------------------------------------------------------
@@ -32,13 +32,13 @@
 .def  DATO_M = r3
 .def  DATO_L = r2
 
-.def TARA_H	= r6
+.def TARA_H	= r7
+.def TARA_M	= r6
 .def TARA_L = r5
 
 ;-------------------------------------------------------------------------
 ; codigo
 ;-------------------------------------------------------------------------
-
 		.cseg 
 .org 0x00
 	jmp  main
@@ -57,24 +57,25 @@ main:
     rcall configuracion_puertos
 	rcall USART_init
 			
-	rcall set_tara
+	;rcall set_tara
 	
 	; Hardcodeo del valor inicial leido---------------
-	; ldi  r16, LOW(0x125)
-	; mov  TARA_L, r16
-	; ldi  r16, HIGH(0x125)
-	; mov  TARA_H, r16
+	 ldi  r16, LOW(0x2359)
+	 mov  TARA_L, r16
+	 ldi  r16, HIGH(0x2359)
+	 mov  TARA_M, r16
+     ldi  r16, 1
+	 mov  TARA_H, r16
 	; ------------------------------------------------
 
-here:
-	rcall lectura_peso				; lee los datos y los deja almacenados en r4:r2
-	; rcall dellay
-	; rcall dellay
+main_here:
+	rcall lectura_peso				; lee los datos, le resta el tara y los deja almacenados en r4:r2 
+    rcall set_scale					; multiplica por el factor de escala para obtener el valor medido en gramos
+	rcall dellay
+	rcall dellay
 	rcall send_data					; Se encarga de activar las interrupciones asi los datos son transmitidos por la UART
-	; rcall dellay
-	; rcall dellay
  
- rjmp here
+ rjmp main_here
 
 ;-------------------------------------------------------------------------
 ; FUNCIONES
@@ -94,7 +95,7 @@ configuracion_puertos:
 ; LECTURA_PESO: 
 ; funcion para la lectura de datos de la celda de carga. Carga
 ; los bits enviados por el amplificador HX711 a traves del pin DOUT y los
-; guarda en los registros r4:r2. Usa los registros r16 y r17
+; guarda en los registros r4:r2 y les resta el tara. Usa los registros r16 y r17
 ;-------------------------------------------------------------------------
 
 lectura_peso:
@@ -124,10 +125,11 @@ lectura_peso_loop:
 	cbi   PORTC, SCK
 	
 	rcall com_2						; Hace el complemento a 2 de los datos leidos
-	
+   	
 	sub   DATO_L, TARA_L			; Le saco el offset a los valores
-	sbc   DATO_M, TARA_H
-
+	sbc   DATO_M, TARA_M
+	sbc   DATO_H, TARA_H
+	   
 	pop   r17
 	pop   r16
 	ret
@@ -202,10 +204,10 @@ ISR_REG_USART_VACIO:
 	dec  zl
 	sts  UDR0, r16
 	cpi  zl, 1						;  Z  esta apuntando a r1? Si lo esta haciendo ya se cargaron los 3 bytes
-	breq fin
+	breq ISR_REG_USART_VACIO_fin
 	pop  r16
 	reti
-fin:
+ISR_REG_USART_VACIO_fin:
 	lds  r16, UCSR0B
 	cbr  r16, 1<<UDRIE0
 	sts  UCSR0B, r16				; deshabilito interrupciones
@@ -222,19 +224,19 @@ dellay:
 	push r22
 
 	ldi  r20, 32
-L1: ldi  r21,200
-L2: ldi  r22, 250	
-L3:	
+dellay_L1: ldi  r21,200
+dellay_L2: ldi  r22, 250	
+dellay_L3:	
 	nop
 	nop
 	dec  r22
-	brne L3
+	brne dellay_L3
 
 	dec  r21
-	brne L2
+	brne dellay_L2
 
 	dec  r20
-	brne L1
+	brne dellay_L1
 	
 	pop  r22
 	pop  r21
@@ -244,108 +246,29 @@ L3:
 
 ; ----------------------------------------------------------------------
 ; COM_2:
-; Elimina el byte menos significativo y hace el complemento a dos 
-; de los otros dos bytes y los deja en r3:r2 y clr r4. 
+; Calcula el complemento a dos del dato guardado en  r4:r2 
 ; ----------------------------------------------------------------------
 
 com_2:
-
-	mov  DATO_L, DATO_M
-	mov  DATO_M, DATO_H
-	clr  DATO_H
+	push  r16
 	
+	clr r16	
+	com DATO_H
 	com DATO_M
 	neg DATO_L
 	brcs com_2_retornar
-	inc DATO_M
+	adc  DATO_M, r16
+	adc  DATO_H, r16
+
 com_2_retornar:
-	ret
-; ----------------------------------------------------------------------
-; SET_SCALE:
-; Con los datos de la balanza obtuvimos el factor de escala para pasar
-; los datos a gramos. Como el factor es 1/6872 que se aproximó a 19/2^17
-; ----------------------------------------------------------------------
-
-/*set_scale:
-	push r16
-	push r17
-	push r18
-	push r19
-	
-	ldi r17, 7
-	ldi r16, MULTIPLICADOR
-
-shifteo:
-	pop r19
-	pop r18
-	pop r17
 	pop r16
 	ret
-
-	lsr  DATO_M
-	ror  DATO_L
-	dec  r17
-	brne shifteo
-
-
-multiplicacion_low:
-	
-	mul  DATO_L,r16						; mutiplico el byte bajo del numero con 2 bytes
-	mov  r18, r1
-	mov  r17, r0
-	
-multiplicacion_high:
-	mul  DATO_M, r16
-	mov  r19, r1
-	add  r18, r0
-	brcc here_scale
-	inc   r19
-		
-here_scale:
-	mov  DATO_L, r17
-	mov  DATO_M, r18
-	mov  DATO_H, r19
-	
-	;lsr  DATO_M
-	;ldi  r16, MULTIPLICADOR
-	;mul  DATO_M, r16								; Multiplicacion por 19
-	;mov  DATO_L, r0									
-	;mov  DATO_M, r1									; Se guarda el resultado de la multiplicacion en r3:r2
-	
-	pop r19
-	pop r18
-	pop r17
-	pop r16
-	ret
-	
-	; ror  DATO_L
-	;dec  r16
-	; brne shifteo
-	;pop r16
-	;ret
-	
-
-	lsr  DATO_H										; Como hay que dividir por 2^17 simplemente se shiftea a la derecha el byte
-	neg  DATO_H										; mas significativo y luego se toma el complemento a 2.
-	
-	mul	 DATO_H, r16								; Multiplicacion por 19
-	
-
-	mov  DATO_L, r0									
-	mov  DATO_M, r1									; Se guarda el resultado de la multiplicacion en r3:r2
-
-	clr  r16
-	mov  DATO_H, r16								; El byte mas significativo se setea en 0
-
-	pop r16
-	ret
-	*/
 
 ; ----------------------------------------------------------------------
 ; SET_TARA:
-; Esta funcion lee 16 valores, calcula el promedio y es el ofset que hay que restarle 
+; Esta funcion lee 16 valores, calcula el promedio y es el offset que hay que restarle 
 ; luego a cada dato leido.
-; me deja en TARA_H, TARA_L el peso leido inicialmente
+; me deja en TARA_H, TARA_M, TARA_L el peso leido inicialmente.
 ; ----------------------------------------------------------------------
 set_tara:
 	push r16
@@ -353,17 +276,17 @@ set_tara:
 	push r18
 	push r19
 
-	ldi  r16, 16				; contador
+	ldi  r16, 16				; contador, se va a hacer un promedio de 16 muestras para el offset
 	clr  TARA_L					; LOW_BYTE del resultado
 	clr  TARA_H					; HIGH_BYTE del resultado
 	clr  r17
 	clr  r18
 	clr  r19		
 	
-set_tara_loop:
-	rcall lectura_peso
-	add  r17, DATO_L			
-	adc  r18, DATO_M
+set_tara_loop:					
+	;rcall lectura_peso			
+	add  r17, DATO_L			; se usan registros auxiliares para no modificar las lecturas dentro de
+	adc  r18, DATO_M			; lectura peso, ya que se resta en esa funcion la tara
 	brcc set_tara_next
 	inc  r19 					; si hubo carry incremento el HIGH_BYTE
 set_tara_next:
@@ -388,3 +311,66 @@ set_tara_division:
 	ret
 ; ----------------------------------------------------------------------
 
+; ----------------------------------------------------------------------
+; SET_SCALE:
+; Con los datos de la balanza obtuvimos el factor de escala para pasar
+; los datos a gramos. Como el factor es 1/211.9170459 que se aproximó a 77/2^14
+; ----------------------------------------------------------------------
+
+set_scale:
+	push r16
+	push r17
+	push r18
+	push r19
+	push r20
+
+	clr r17
+	clr r18
+	clr r19
+	clr r20
+	
+	ldi  r16, MULTIPLICADOR
+	tst  DATO_H								; si el valor leido es negativo (tara>valor_leido) se le hace el complemento a 2
+	brpl multiplicacion_low
+	rcall com_2
+											; primero multiplicamos por 77 el dato y guardamos el resultado en r20:r17
+multiplicacion_low:
+	mul  DATO_L, r16						; mutiplico el byte bajo del numero con 3 bytes
+	mov  r18, r1
+	mov  r17, r0
+	
+multiplicacion_middle:
+	mul  DATO_M, r16						; mutiplico el byte medio del numero con 3 bytes
+	add  r18, r0
+	adc  r19, r1
+	brcc multiplicacion_high
+	inc  r20
+
+multiplicacion_high:						; mutiplico el byte alto del numero con 3 bytes
+	mul  DATO_H, r16
+	add  r19, r0
+	adc  r20, r1
+											; vamos a dividir por 2^14, que es tomar los primero 3 bytes y shiftear 6 veces
+	mov  DATO_L, r18
+	mov  DATO_M, r19
+	mov  DATO_H, r20
+
+shifteo:
+	ldi  r16, 6
+
+shifteo_loop:
+	lsr  DATO_H
+	ror  DATO_M
+	ror  DATO_L
+	dec  r16
+	brne shifteo_loop
+	
+	pop r20
+	pop r19
+	pop r18
+	pop r17
+	pop r16
+	ret
+
+	
+	
