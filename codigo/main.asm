@@ -57,7 +57,7 @@ setup:
 
     rcall configuracion_puertos
 	rcall USART_init
-	;rcall set_tara
+	rcall set_tara
 					
 	sbi   PORTC, PC2				; encendemos led de prueba
 	rcall dellay
@@ -391,5 +391,4 @@ shifteo_loop:
 	pop r16
 	ret
 
-		
 	
