@@ -17,8 +17,8 @@
 .equ  SCK  = PC0					; pin donde se conecta SCK
 .equ  DOUT = PC1					; pin donde se conecta DOUT
 .equ  BAUD_RATE = 207				; baudrate=9600 e=0.2% U2X0=1
-
 .equ  MULTIPLICADOR = 77			; Factor de multiplicacion de la escala del peso del programa en C ~ 77/2^14
+
 ;-------------------------------------------------------------------------
 ; variables en SRAM
 ;-------------------------------------------------------------------------
@@ -41,14 +41,15 @@
 ;-------------------------------------------------------------------------
 		.cseg 
 .org 0x00
-	jmp  main
+	jmp setup
 
 .org	0x0026		; USART Data Register Empty
-		rjmp	ISR_REG_USART_VACIO
+	jmp	ISR_REG_USART_VACIO
 
-.org INT_VECTORS_SIZE
 
-main:
+.org 0x500
+
+setup:
 	ldi	 r16, HIGH(RAMEND)
 	out  sph, r16
 	ldi  r16, LOW(RAMEND)
@@ -56,27 +57,35 @@ main:
 
     rcall configuracion_puertos
 	rcall USART_init
-			
 	;rcall set_tara
-	
-	; Hardcodeo del valor inicial leido---------------
-	 ldi  r16, LOW(0x2359)
-	 mov  TARA_L, r16
-	 ldi  r16, HIGH(0x2359)
-	 mov  TARA_M, r16
-     ldi  r16, 1
-	 mov  TARA_H, r16
-	; ------------------------------------------------
+					
+	sbi   PORTC, PC2				; encendemos led de prueba
+	rcall dellay
+	rcall dellay
 
-main_here:
+
+	jmp main_loop
+
+
+.org INT_VECTORS_SIZE
+
+main_loop:
+	cbi   PORTC, PC2
+
 	rcall lectura_peso				; lee los datos, le resta el tara y los deja almacenados en r4:r2 
     rcall set_scale					; multiplica por el factor de escala para obtener el valor medido en gramos
 	rcall dellay
 	rcall dellay
 	rcall send_data					; Se encarga de activar las interrupciones asi los datos son transmitidos por la UART
- 
- rjmp main_here
+ 	
+	
 
+
+	jmp main_loop
+
+
+
+.org 0x200
 ;-------------------------------------------------------------------------
 ; FUNCIONES
 ;-------------------------------------------------------------------------
@@ -86,6 +95,8 @@ main_here:
 ;-------------------------------------------------------------------------
 configuracion_puertos:
 	sbi  DDRC, SCK					; puerto PC0 = A0 como salida (SCK)
+
+	sbi  DDRC, PC2					; led de prueba
 
 	cbi  DDRC, DOUT
 	sbi  PORTC, DOUT				; puerto PC = A1 como entrada (DOUT)
@@ -275,35 +286,43 @@ set_tara:
 	push r17
 	push r18
 	push r19
+	push r20
 
 	ldi  r16, 16				; contador, se va a hacer un promedio de 16 muestras para el offset
-	clr  TARA_L					; LOW_BYTE del resultado
-	clr  TARA_H					; HIGH_BYTE del resultado
-	clr  r17
+	clr  TARA_L					
+	clr  TARA_M
+	clr  TARA_H					
+	clr  r17					; 4 bytes para ir guardando la suma parcial del promedio
 	clr  r18
 	clr  r19		
-	
+	clr  r20
+
 set_tara_loop:					
-	;rcall lectura_peso			
+	rcall lectura_peso			
 	add  r17, DATO_L			; se usan registros auxiliares para no modificar las lecturas dentro de
 	adc  r18, DATO_M			; lectura peso, ya que se resta en esa funcion la tara
+	adc  r19, DATO_H
 	brcc set_tara_next
-	inc  r19 					; si hubo carry incremento el HIGH_BYTE
+	inc  r20 					; si hubo carry incremento el HIGH_BYTE
 set_tara_next:
 	dec  r16
 	brne set_tara_loop
-	
-	ldi  r16, 4					; division por 16. Contador con 4 porque se va a shiftear 4 veces
+
+set_tara_division_por_4:	
+	ldi  r16, 4					; Para dividir por 16 se crea un contador con 4 porque se va a shiftear 4 veces
 set_tara_division:
-	lsr  r19
+	lsr  r20
+	ror  r19
 	ror  r18
 	ror  r17
 	dec  r16
 	brne  set_tara_division
 	
-	mov TARA_H, r18				; guardo en tara el promedio de los primeros 16 valores
+	mov TARA_H, r19				; guardo en tara el promedio de los primeros 16 valores
+	mov TARA_M, r18
 	mov TARA_L, r17
 	
+	pop r20
 	pop r19
 	pop r18
 	pop r17
@@ -355,7 +374,7 @@ multiplicacion_high:						; mutiplico el byte alto del numero con 3 bytes
 	mov  DATO_M, r19
 	mov  DATO_H, r20
 
-shifteo:
+division_por_6:
 	ldi  r16, 6
 
 shifteo_loop:
@@ -372,5 +391,5 @@ shifteo_loop:
 	pop r16
 	ret
 
-	
+		
 	
