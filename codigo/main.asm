@@ -36,6 +36,9 @@
 .def TARA_M	= r6
 .def TARA_L = r5
 
+.def VASO_H	= r10
+.def VASO_M	= r9
+.def VASO_L = r8
 ;-------------------------------------------------------------------------
 ; codigo
 ;-------------------------------------------------------------------------
@@ -58,12 +61,12 @@ setup:
     rcall configuracion_puertos
 	rcall USART_init
 	rcall set_tara
+
 					
 	sbi   PORTC, PC2				; encendemos led de prueba
 	rcall dellay
 	rcall dellay
-
-
+	
 	jmp main_loop
 
 
@@ -74,13 +77,12 @@ main_loop:
 
 	rcall lectura_peso				; lee los datos, le resta el tara y los deja almacenados en r4:r2 
     rcall set_scale					; multiplica por el factor de escala para obtener el valor medido en gramos
-	rcall dellay
-	rcall dellay
-	rcall send_data					; Se encarga de activar las interrupciones asi los datos son transmitidos por la UART
- 	
+	;rcall dellay
+	;rcall dellay
 	
-
-
+	rcall detectar_cancelacion	
+	
+	rcall send_data					; Se encarga de activar las interrupciones asi los datos son transmitidos por la UART
 	jmp main_loop
 
 
@@ -391,4 +393,40 @@ shifteo_loop:
 	pop r16
 	ret
 
+; ----------------------------------------------------------------------
+; DETECTAR_CANCELACION:
+; La cancelacion se da en cualquier momento del proceso cuando el usuario
+; hace una presion de mas de 4096 g. Esta funcion chequea el dato leido, 
+; lo compara con 4096 g (0x1000) y si es es mayor, espera a que no hay nada  
+;  sobre la balanza y vuelve a setup. Se eligio 4096 g porque es solo comparar el segundo
+; byte del dato con 0x10 
+; ----------------------------------------------------------------------	
+
+.equ  VALOR_CANCELACION = 4096 
+detectar_cancelacion:	
+	push r16
+
+	mov  r16, DATO_M
+	cpi  r16, HIGH (VALOR_CANCELACION)
+	brsh proceso_cancelado
+	pop  r16
+	ret
+
+proceso_cancelado:						; se debe volver al SETUP cuando no haya peso sobre la balanza
+										; y eso se dara cuando el dato sea igual al peso del vaso 
+	clr    VASO_H						; que quedo guardado en VASO
+	clr    VASO_M
+	clr    VASO_L
+
+	rcall  lectura_peso	
+	cp     DATO_H, VASO_H
+	brne   proceso_cancelado
+	cp     DATO_M, VASO_M
+	brne   proceso_cancelado
+	ldi    r16, 2
+	cp     DATO_L, r16
+	brsh   proceso_cancelado
+	
+
+	rjmp   setup
 	
