@@ -1,1 +1,5 @@
-Aquí se ubica toda la información recabada por los alumnos utilizada en la realización del proyecto
+LINKS DE UTILIDAD
+
+PARA LA PANTALLA LCD:
+https://www.geekfactory.mx/tutoriales/tutoriales-arduino/pantalla-lcd-16x2-con-arduino/
+https://www.arduino.cc/en/Reference/LiquidCrystal
