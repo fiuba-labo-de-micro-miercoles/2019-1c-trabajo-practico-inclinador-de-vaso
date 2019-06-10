@@ -430,3 +430,44 @@ proceso_cancelado:						; se debe volver al SETUP cuando no haya peso sobre la b
 
 	rjmp   setup
 	
+	
+; ----------------------------------------------------------------------
+; DETECTAR_PERTURBACION:
+; Para la configuracion del dispositivo se detectaran golpes dados por
+; el usuario. Entonces, se determino que un golpe equivale a aproximadamente
+; 300 gr. Por lo que se toma el byte del medio del dato y se verifica si es
+; mayor a 255. Si lo es se verifica que haya un segundo golpe. Si esto
+; ocurre significa que el dispositivo esta siendo configurado.
+; ----------------------------------------------------------------------
+
+detectar_perturbacion:
+	push  r16
+	push  r17
+
+	ldi	  r16, HIGH(MIN_PERTURBACION)					; se utiliza para comparar el valor de lectura y saber si hubo alguna perturbacion
+	
+
+detectar_perturbacion_lectura:
+	rcall lectura_peso
+	cp    DATO_M, r16
+	brlo  detectar_perturbacion_lectura
+	ldi   r17, 4
+
+detectar_perturbacion_verificacion:
+	dec   r17
+	breq  detectar_perturbacion_lectura
+
+	rcall lectura_peso
+	cp    DATO_M, r16
+	brsh  detectar_perturbacion_verificacion
+	ldi   r17, 6
+
+detectar_perturbacion_verificacion2:
+	dec   r17
+	breq  detectar_perturbacion_lectura
+
+	rcall lectura_peso
+	cp    DATO_M, r16
+	brlo  detectar_perturbacion_verificacion2
+	ret
+	
