@@ -39,6 +39,7 @@
 .def VASO_H	= r10
 .def VASO_M	= r9
 .def VASO_L = r8
+
 ;-------------------------------------------------------------------------
 ; codigo
 ;-------------------------------------------------------------------------
@@ -49,7 +50,6 @@
 .org	0x0026		; USART Data Register Empty
 	jmp	ISR_REG_USART_VACIO
 
-
 .org 0x500
 
 setup:
@@ -59,13 +59,20 @@ setup:
 	out  spl, r16					; inicializo el stack pointer al final de la RAM
 
     rcall configuracion_puertos
+	
+	sbi   PORTC, PC2				; encendemos led de prueba
+	cbi   PORTC, PC3
+	
 	rcall USART_init
 	rcall set_tara
+	
+	;rcall dellay				
+	;sbi   PORTC, PC2				; encendemos led de prueba
+	;cbi   PORTC, PC3
+	;rcall dellay
+	;rcall dellay
 
-					
-	sbi   PORTC, PC2				; encendemos led de prueba
-	rcall dellay
-	rcall dellay
+	rcall detectar_perturbacion
 	
 	jmp main_loop
 
@@ -73,16 +80,17 @@ setup:
 .org INT_VECTORS_SIZE
 
 main_loop:
-	cbi   PORTC, PC2
-
+	cbi   PORTC, PC2	
+	sbi   PORTC, PC3	
 	rcall lectura_peso				; lee los datos, le resta el tara y los deja almacenados en r4:r2 
-    rcall set_scale					; multiplica por el factor de escala para obtener el valor medido en gramos
+	rcall set_scale
+	;rcall send_data
 	;rcall dellay
 	;rcall dellay
 	
 	rcall detectar_cancelacion	
 	
-	rcall send_data					; Se encarga de activar las interrupciones asi los datos son transmitidos por la UART
+	;rcall send_data					; Se encarga de activar las interrupciones asi los datos son transmitidos por la UART
 	jmp main_loop
 
 
@@ -98,7 +106,8 @@ main_loop:
 configuracion_puertos:
 	sbi  DDRC, SCK					; puerto PC0 = A0 como salida (SCK)
 
-	sbi  DDRC, PC2					; led de prueba
+	sbi  DDRC, PC2					; leds de prueba
+	sbi  DDRC, PC3
 
 	cbi  DDRC, DOUT
 	sbi  PORTC, DOUT				; puerto PC = A1 como entrada (DOUT)
@@ -142,7 +151,7 @@ lectura_peso_loop:
 	sub   DATO_L, TARA_L			; Le saco el offset a los valores
 	sbc   DATO_M, TARA_M
 	sbc   DATO_H, TARA_H
-	   
+	
 	pop   r17
 	pop   r16
 	ret
@@ -152,8 +161,6 @@ cargar_byte:
 	ldi   CONT_8, 8
 cargar_bit:
 	sbi   PORTC, SCK				; se genera un flanco ascendente en la señal SCK para cargar un bit
-	nop
-	nop
 	nop
 	nop
 	lsl   r16
@@ -413,7 +420,7 @@ detectar_cancelacion:
 	ret
 
 proceso_cancelado:						; se debe volver al SETUP cuando no haya peso sobre la balanza
-										; y eso se dara cuando el dato sea igual al peso del vaso 
+	cbi    PORTC,PC3					; y eso se dara cuando el dato sea igual al peso del vaso 
 	clr    VASO_H						; que quedo guardado en VASO
 	clr    VASO_M
 	clr    VASO_L
@@ -423,10 +430,10 @@ proceso_cancelado:						; se debe volver al SETUP cuando no haya peso sobre la b
 	brne   proceso_cancelado
 	cp     DATO_M, VASO_M
 	brne   proceso_cancelado
-	ldi    r16, 2
+	ldi    r16, 5
 	cp     DATO_L, r16
 	brsh   proceso_cancelado
-	
+	pop    r16
 
 	rjmp   setup
 	
@@ -439,6 +446,7 @@ proceso_cancelado:						; se debe volver al SETUP cuando no haya peso sobre la b
 ; mayor a 255. Si lo es se verifica que haya un segundo golpe. Si esto
 ; ocurre significa que el dispositivo esta siendo configurado.
 ; ----------------------------------------------------------------------
+.equ MIN_PERTURBACION = 256
 
 detectar_perturbacion:
 	push  r16
@@ -449,6 +457,10 @@ detectar_perturbacion:
 
 detectar_perturbacion_lectura:
 	rcall lectura_peso
+	rcall set_scale
+
+	;rcall send_data
+	
 	cp    DATO_M, r16
 	brlo  detectar_perturbacion_lectura
 	ldi   r17, 4
@@ -458,6 +470,7 @@ detectar_perturbacion_verificacion:
 	breq  detectar_perturbacion_lectura
 
 	rcall lectura_peso
+	rcall set_scale
 	cp    DATO_M, r16
 	brsh  detectar_perturbacion_verificacion
 	ldi   r17, 6
@@ -467,7 +480,10 @@ detectar_perturbacion_verificacion2:
 	breq  detectar_perturbacion_lectura
 
 	rcall lectura_peso
+	rcall set_scale
 	cp    DATO_M, r16
 	brlo  detectar_perturbacion_verificacion2
-	ret
 	
+	pop   r17
+	pop   r16
+	ret
