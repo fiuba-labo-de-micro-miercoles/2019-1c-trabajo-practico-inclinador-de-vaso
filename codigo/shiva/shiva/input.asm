@@ -15,21 +15,26 @@ detectar_cancelacion:
 	pop  r16
 	ret
 
-proceso_cancelado:						; se debe volver al SETUP cuando no haya peso sobre la balanza
+proceso_cancelado:						
+	ldi   zh, HIGH(DIR_MSG_CANCELACION<<1)
+	ldi   zl, LOW(DIR_MSG_CANCELACION<<1)
+	rcall send_msg
+										; se debe volver al SETUP cuando no haya peso sobre la balanza
 	cbi    PORTC,PC3					; y eso se dara cuando el dato sea igual al peso del vaso 
 	clr    VASO_H						; que quedo guardado en VASO
 	clr    VASO_M
 	clr    VASO_L
-
+proceso_cancelado_loop:
 	rcall  lectura_peso	
 	cp     DATO_H, VASO_H
-	brne   proceso_cancelado
+	brne   proceso_cancelado_loop
 	cp     DATO_M, VASO_M
-	brne   proceso_cancelado
+	brne   proceso_cancelado_loop
 	ldi    r16, 5
 	cp     DATO_L, r16
-	brsh   proceso_cancelado
+	brsh   proceso_cancelado_loop
 	pop    r16
+
 
 	rjmp   setup
 	

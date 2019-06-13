@@ -25,12 +25,38 @@ USART_init:
 ; CONFIGURACION_PUERTOS:
 ;-------------------------------------------------------------------------
 configuracion_puertos:
+	push r16
+									; CELDA DE CARGA	
 	sbi  DDRC, SCK					; puerto PC0 = A0 como salida (SCK)
 
 	sbi  DDRC, PC2					; leds de prueba
 	sbi  DDRC, PC3
 
 	cbi  DDRC, DOUT
-	sbi  PORTC, DOUT				; puerto PC = A1 como entrada (DOUT)
+	sbi  PORTC, DOUT				; puerto PC = A1 como entrada (DOUT) 
+																		
+	ldi  r16, 0xF0					; PANTALLA LCD		
+	out  LCD_DDDR, r16
+	sbi  LCD_CDDR, LCD_RS		
+	sbi  LCD_CDDR, LCD_RW
+	sbi  LCD_CDDR, LCD_E			; Configuro los puertos de dato (PORTD) y los comandos usados (del PORTB) como de salida 
+	rcall delay_3ms
+	pop  r16
 	ret
 
+;-------------------------------------------------------------------------
+; LCD_INIT:
+;-------------------------------------------------------------------------
+LCD_init:
+	push  r16
+
+	ldi   r16, DATA_4BIT			; Trabajamos enviando los caracteres de a 4 bits
+	rcall send_command
+	rcall delay_3ms
+	
+	ldi   r16, DISP_ON_CURS_OFF
+	rcall send_command			; Deja el cursor parpadeando
+	rcall delay_3ms
+
+	pop   r16
+	ret

@@ -1,22 +1,26 @@
 
-AVRASM ver. 2.2.7  C:\Users\marti\Desktop\shiva\shiva\main.asm Mon Jun 10 16:37:31 2019
+AVRASM ver. 2.2.7  C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm Wed Jun 12 21:53:00 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(13): Including file 'C:\Users\marti\Desktop\shiva\shiva\hx711.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(14): Including file 'C:\Users\marti\Desktop\shiva\shiva\input.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(15): Including file 'C:\Users\marti\Desktop\shiva\shiva\configuracion.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(18): Including file 'C:\Users\marti\Desktop\shiva\shiva\hx711.asm'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(19): Including file 'C:\Users\marti\Desktop\shiva\shiva\configuracion.asm'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\Desktop\shiva\shiva\input.asm'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(13): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(14): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(15): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(16): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(19): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(20): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(21): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(22): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(13): Including file 'C:\Users\marti\Desktop\shiva\shiva\hx711.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(14): Including file 'C:\Users\marti\Desktop\shiva\shiva\input.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(15): Including file 'C:\Users\marti\Desktop\shiva\shiva\configuracion.inc'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(18): Including file 'C:\Users\marti\Desktop\shiva\shiva\hx711.asm'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(19): Including file 'C:\Users\marti\Desktop\shiva\shiva\configuracion.asm'
-C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\Desktop\shiva\shiva\input.asm'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(13): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(14): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(15): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(16): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.inc'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(19): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(20): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(21): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm'
+C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(22): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm'
                                  
                                  ;-------------------------------------------------------------------------
                                  
@@ -1081,6 +1085,42 @@ C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\
                                  
                                  ; CONSTANTES y MACROS
                                  ;-------------------------------------------------------------------------
+                                 .include "output.inc"
+                                 
+                                 ;MACROS
+                                 ;====================================================	
+                                 .equ  LCD_DPRT = PORTD
+                                 .equ  LCD_DDDR = DDRD
+                                 .equ  LCD_DPIN = PIND			; Para los datos del LCD se usan los pines D7:D0
+                                 
+                                 .equ  LCD_CPRT = PORTB  
+                                 .equ  LCD_CDDR = DDRB
+                                 .equ  LCD_CPIN = PINB           ; Para los comandos se utilizan los pines PB1:PB0
+                                 
+                                 .equ  LCD_RS = 0
+                                 .equ  LCD_RW = 1
+                                 .equ  LCD_E  = 2				; A que pin del PORTB pertencen
+                                 
+                                 .equ  CLEAR_DISPLAY                 = 0x01
+                                 .equ  RETURN_HOME                   = 0x02
+                                 .equ  DECREMENT_CURSOR              = 0x04
+                                 .equ  INCREMENT_CURSOR              = 0x06
+                                 .equ  SHIFT_DISPLAY_RIGHT           = 0x05
+                                 .equ  SHIFT_DISPLAY_LEFT            = 0x07
+                                 .equ  DISP_OFF_CURS_OFF             = 0x08  ; Display apagado, cursor apagado
+                                 .equ  DISP_OFF_CURS_ON              = 0x0A  ; Display apagado, cursor prendido
+                                 .equ  DISP_ON_CURS_OFF              = 0x0C  ; Display prendido, cursor apagado
+                                 .equ  DISP_ON_CURS_BLINK            = 0x0E  ; Display prendido, cursor titilando
+                                 .equ  DISP_ON_CURS_NO_BLINK         = 0x0F  ; Display prendido, cursor sin titilar
+                                 .equ  SHIFT_CURSOR_LEFT             = 0x10 ; Shiftea la posicion del cursor a la izquierda
+                                 .equ  SHIFT_CURSOR_RIGHT            = 0x14 ; Shiftea la posicion del cursor a la derecha
+                                 .equ  SHIFT_ENTIRE_DISPLAY_LEFT     = 0x18 ; Shiftea todo el display a la izquierda
+                                 .equ  SHIFT_ENTIRE_DISPLAY_RIGHT    = 0x1C ; Shiftea todo el display a la derecha
+                                 .equ  CURSOR_LINE_1                 = 0x80 ; Fuerza el cursor al ppio de la 1raa linea
+                                 .equ  CURSOR_LINE_2                 = 0xC0 ; Fuerza el cursor al ppio de la 2da linea
+                                 .equ  DATA_4BIT                     = 0x28 ; Dos lineas, D4-D7
+                                 .equ  DATA_8BIT                     = 0x38 ; Dos lineas, D0-D7
+                                 
                                  
                                  .org 0x500
                                  .include "hx711.asm"
@@ -1291,8 +1331,8 @@ C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\
                                  
                                  send_data:
 00057d 930f                      	push r16
-00057e e0f0                      	ldi  zh, HIGH(0x04)				; hay que mandar 3 bytes, ubicados en r4:r2. Definimos
-00057f e0e4                      	ldi  zl, LOW(0x04)				; que Z apunte a r4 y luego en la rutina de interruopcion se decrementa
+00057e e0d0                      	ldi  yh, HIGH(0x04)				; hay que mandar 3 bytes, ubicados en r4:r2. Definimos
+00057f e0c4                      	ldi  yl, LOW(0x04)				; que Z apunte a r4 y luego en la rutina de interruopcion se decrementa
                                  	
 000580 9100 00c1                 	lds  r16, UCSR0B
 000582 6200                      	sbr  r16, 1<<UDRIE0
@@ -1327,15 +1367,41 @@ C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\
                                  ; CONFIGURACION_PUERTOS:
                                  ;-------------------------------------------------------------------------
                                  configuracion_puertos:
-00059a 9a38                      	sbi  DDRC, SCK					; puerto PC0 = A0 como salida (SCK)
+00059a 930f                      	push r16
+                                 									; CELDA DE CARGA	
+00059b 9a38                      	sbi  DDRC, SCK					; puerto PC0 = A0 como salida (SCK)
                                  
-00059b 9a3a                      	sbi  DDRC, PC2					; leds de prueba
-00059c 9a3b                      	sbi  DDRC, PC3
+00059c 9a3a                      	sbi  DDRC, PC2					; leds de prueba
+00059d 9a3b                      	sbi  DDRC, PC3
                                  
-00059d 9839                      	cbi  DDRC, DOUT
-00059e 9a41                      	sbi  PORTC, DOUT				; puerto PC = A1 como entrada (DOUT)
-00059f 9508                      	ret
+00059e 9839                      	cbi  DDRC, DOUT
+00059f 9a41                      	sbi  PORTC, DOUT				; puerto PC = A1 como entrada (DOUT) 
+                                 																		
+0005a0 ef00                      	ldi  r16, 0xF0					; PANTALLA LCD		
+0005a1 b90a                      	out  LCD_DDDR, r16
+0005a2 9a20                      	sbi  LCD_CDDR, LCD_RS		
+0005a3 9a21                      	sbi  LCD_CDDR, LCD_RW
+0005a4 9a22                      	sbi  LCD_CDDR, LCD_E			; Configuro los puertos de dato (PORTD) y los comandos usados (del PORTB) como de salida 
+0005a5 dadd                      	rcall delay_3ms
+0005a6 910f                      	pop  r16
+0005a7 9508                      	ret
                                  
+                                 ;-------------------------------------------------------------------------
+                                 ; LCD_INIT:
+                                 ;-------------------------------------------------------------------------
+                                 LCD_init:
+0005a8 930f                      	push  r16
+                                 
+0005a9 e208                      	ldi   r16, DATA_4BIT			; Trabajamos enviando los caracteres de a 4 bits
+0005aa d1c3                      	rcall send_command
+0005ab dad7                      	rcall delay_3ms
+                                 	
+0005ac e00c                      	ldi   r16, DISP_ON_CURS_OFF
+0005ad d1c0                      	rcall send_command			; Deja el cursor parpadeando
+0005ae dad4                      	rcall delay_3ms
+                                 
+0005af 910f                      	pop   r16
+0005b0 9508                      	ret
                                  .include "input.asm"
                                  
                                  ; DETECTAR_CANCELACION:
@@ -1346,31 +1412,36 @@ C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\
                                  ; byte del dato con 0x10 
                                  ; ----------------------------------------------------------------------	
                                  detectar_cancelacion:	
-0005a0 930f                      	push r16
+0005b1 930f                      	push r16
                                  
-0005a1 2d03                      	mov  r16, DATO_M
-0005a2 3100                      	cpi  r16, HIGH (VALOR_CANCELACION)
-0005a3 f410                      	brsh proceso_cancelado
-0005a4 910f                      	pop  r16
-0005a5 9508                      	ret
+0005b2 2d03                      	mov  r16, DATO_M
+0005b3 3100                      	cpi  r16, HIGH (VALOR_CANCELACION)
+0005b4 f410                      	brsh proceso_cancelado
+0005b5 910f                      	pop  r16
+0005b6 9508                      	ret
                                  
-                                 proceso_cancelado:						; se debe volver al SETUP cuando no haya peso sobre la balanza
-0005a6 9843                      	cbi    PORTC,PC3					; y eso se dara cuando el dato sea igual al peso del vaso 
-0005a7 24aa                      	clr    VASO_H						; que quedo guardado en VASO
-0005a8 2499                      	clr    VASO_M
-0005a9 2488                      	clr    VASO_L
+                                 proceso_cancelado:						
+0005b7 e0fe                      	ldi   zh, HIGH(DIR_MSG_CANCELACION<<1)
+0005b8 ece2                      	ldi   zl, LOW(DIR_MSG_CANCELACION<<1)
+0005b9 d1c9                      	rcall send_msg
+                                 										; se debe volver al SETUP cuando no haya peso sobre la balanza
+0005ba 9843                      	cbi    PORTC,PC3					; y eso se dara cuando el dato sea igual al peso del vaso 
+0005bb 24aa                      	clr    VASO_H						; que quedo guardado en VASO
+0005bc 2499                      	clr    VASO_M
+0005bd 2488                      	clr    VASO_L
+                                 proceso_cancelado_loop:
+0005be df41                      	rcall  lectura_peso	
+0005bf 144a                      	cp     DATO_H, VASO_H
+0005c0 f7e9                      	brne   proceso_cancelado_loop
+0005c1 1439                      	cp     DATO_M, VASO_M
+0005c2 f7d9                      	brne   proceso_cancelado_loop
+0005c3 e005                      	ldi    r16, 5
+0005c4 1620                      	cp     DATO_L, r16
+0005c5 f7c0                      	brsh   proceso_cancelado_loop
+0005c6 910f                      	pop    r16
                                  
-0005aa df55                      	rcall  lectura_peso	
-0005ab 144a                      	cp     DATO_H, VASO_H
-0005ac f7c9                      	brne   proceso_cancelado
-0005ad 1439                      	cp     DATO_M, VASO_M
-0005ae f7b9                      	brne   proceso_cancelado
-0005af e005                      	ldi    r16, 5
-0005b0 1620                      	cp     DATO_L, r16
-0005b1 f7a0                      	brsh   proceso_cancelado
-0005b2 910f                      	pop    r16
                                  
-0005b3 ca80                      	rjmp   setup
+0005c7 ca6c                      	rjmp   setup
                                  	
                                  	
                                  ; ----------------------------------------------------------------------
@@ -1382,39 +1453,234 @@ C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\
                                  ; ocurre significa que el dispositivo esta siendo configurado.
                                  ; ----------------------------------------------------------------------
                                  detectar_perturbacion:
-0005b4 930f                      	push  r16
-0005b5 931f                      	push  r17
+0005c8 930f                      	push  r16
+0005c9 931f                      	push  r17
                                  
-0005b6 e001                      	ldi	  r16, HIGH(MIN_PERTURBACION)					; se utiliza para comparar el valor de lectura y saber si hubo alguna perturbacion
+0005ca e001                      	ldi	  r16, HIGH(MIN_PERTURBACION)					; se utiliza para comparar el valor de lectura y saber si hubo alguna perturbacion
                                  	
                                  
                                  detectar_perturbacion_lectura:
-0005b7 df48                      	rcall lectura_peso
-0005b8 df93                      	rcall set_scale	
-0005b9 1630                      	cp    DATO_M, r16
-0005ba f3e0                      	brlo  detectar_perturbacion_lectura
-0005bb e014                      	ldi   r17, 4
+0005cb df34                      	rcall lectura_peso
+0005cc df7f                      	rcall set_scale	
+0005cd 1630                      	cp    DATO_M, r16
+0005ce f3e0                      	brlo  detectar_perturbacion_lectura
+0005cf e014                      	ldi   r17, 4
                                  
                                  detectar_perturbacion_verificacion:
-0005bc 951a                      	dec   r17
-0005bd f3c9                      	breq  detectar_perturbacion_lectura
-0005be df41                      	rcall lectura_peso
-0005bf df8c                      	rcall set_scale
-0005c0 1630                      	cp    DATO_M, r16
-0005c1 f7d0                      	brsh  detectar_perturbacion_verificacion
-0005c2 e016                      	ldi   r17, 6
+0005d0 951a                      	dec   r17
+0005d1 f3c9                      	breq  detectar_perturbacion_lectura
+0005d2 df2d                      	rcall lectura_peso
+0005d3 df78                      	rcall set_scale
+0005d4 1630                      	cp    DATO_M, r16
+0005d5 f7d0                      	brsh  detectar_perturbacion_verificacion
+0005d6 e016                      	ldi   r17, 6
                                  
                                  detectar_perturbacion_verificacion2:
-0005c3 951a                      	dec   r17
-0005c4 f391                      	breq  detectar_perturbacion_lectura
-0005c5 df3a                      	rcall lectura_peso
-0005c6 df85                      	rcall set_scale
-0005c7 1630                      	cp    DATO_M, r16
-0005c8 f3d0                      	brlo  detectar_perturbacion_verificacion2
+0005d7 951a                      	dec   r17
+0005d8 f391                      	breq  detectar_perturbacion_lectura
+0005d9 df26                      	rcall lectura_peso
+0005da df71                      	rcall set_scale
+0005db 1630                      	cp    DATO_M, r16
+0005dc f3d0                      	brlo  detectar_perturbacion_verificacion2
                                  	
-0005c9 911f                      	pop   r17
-0005ca 910f                      	pop   r16
-0005cb 9508                      
+0005dd 911f                      	pop   r17
+0005de 910f                      	pop   r16
+                                 .include "output.asm"
+0005df 9508                      
+                                 .org  0x700
+000700 2020
+000701 5320
+000702 482e
+000703 492e
+000704 562e
+000705 412e
+000706 202e
+000707 470a
+000708 6c6f
+000709 6570
+00070a 2065
+00070b 2032
+00070c 6576
+00070d 6563
+00070e ff73                      	DIR_MSG_INICIO:          .DB "   S.H.I.V.A. ", '\n', "Golpee 2 veces", 0xFF     
+00070f 6f43
+000710 6f6c
+000711 7571
+000712 2065
+000713 6e75
+000714 7620
+000715 7361
+000716 ff6f                      	DIR_MSG_ESPERA_VASO:     .DB "Coloque un vaso", 0xFF
+000717 6f47
+000718 706c
+000719 6165
+00071a 2072
+00071b 2032
+00071c 6576
+00071d 6563
+00071e 0a73
+00071f 6170
+000720 6172
+000721 6520
+000722 656c
+000723 6967
+000724 2072
+000725 6176
+000726 6f73
+000727 ffff                      	DIR_MSG_CONFIGURACION_1: .DB "Golpear 2 veces", '\n', "para elegir vaso", 0xFF, 0xFF
+000728 4950
+000729 544e
+00072a 2041
+00072b 3528
+00072c 3030
+00072d 6c6d
+00072e 0a29
+00072f 6f47
+000730 706c
+000731 6565
+000732 7020
+000733 7261
+000734 2061
+000735 746f
+000736 6f72
+000737 ffff                      	DIR_MSG_PINTA:           .DB "PINTA (500ml)", '\n', "Golpee para otro", 0xFF, 0xFF
+000738 4843
+000739 504f
+00073a 2050
+00073b 3328
+00073c 3537
+00073d 6c6d
+00073e 0a29
+00073f 6f47
+000740 706c
+000741 6565
+000742 7020
+000743 7261
+000744 2061
+000745 746f
+000746 6f72
+000747 ffff                      	DIR_MSG_CHOPP:           .DB "CHOPP (375ml)", '\n', "Golpee para otro", 0xFF, 0xFF
+000748 2f31
+000749 2032
+00074a 4950
+00074b 544e
+00074c 2041
+00074d 3228
+00074e 3035
+00074f 6c6d
+000750 0a29
+000751 6f47
+000752 706c
+000753 6565
+000754 7020
+000755 7261
+000756 2061
+000757 746f
+000758 6f72
+000759 ffff                      	DIR_MSG_MEDIA_PINTA:     .DB "1/2 PINTA (250ml)", '\n', "Golpee para otro", 0xFF, 0xFF
+00075a 6953
+00075b 7672
+00075c 6569
+00075d 646e
+00075e 2e6f
+00075f 2e2e
+000760 ff2e                      	DIR_MSG_SIRVIENDO:       .DB "Sirviendo....", 0xFF
+000761 2020
+000762 2020
+000763 7250
+000764 636f
+000765 7365
+000766 0a6f
+000767 2020
+000768 6320
+000769 6e61
+00076a 6563
+00076b 616c
+00076c 6f64
+00076d ffff                      	DIR_MSG_CANCELACION:     .DB "    Proceso",'\n', "   cancelado", 0xFF, 0xFF
+                                 
+                                 ;-------------------------------------------------------------------------
+                                 ; SEND_COMMAND:
+                                 ; Recibe el registro r16 cargado con una configuracion. Luego
+                                 ; lo envía a la pantalla LCD.
+                                 ;-------------------------------------------------------------------------
+                                 send_command:
+00076e 931f                      	push  r17
+                                 
+00076f 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
+000770 7f10                      	andi  r17, 0xF0
+000771 b91b                      	out   LCD_DPRT, r17
+000772 9828                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
+000773 9829                      	cbi   LCD_CPRT, LCD_RW
+000774 9a2a                      	sbi   LCD_CPRT, LCD_E
+000775 d8f7                      	rcall delay_500ns 
+000776 982a                      	cbi   LCD_CPRT,LCD_E
+                                 
+000777 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
+000778 9512                      	swap  r17
+000779 7f10                      	andi  r17, 0xF0
+00077a b91b                      	out   LCD_DPRT, r17
+00077b 9828                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
+00077c 9829                      	cbi   LCD_CPRT, LCD_RW
+00077d 9a2a                      	sbi   LCD_CPRT, LCD_E
+00077e d8ee                      	rcall delay_500ns 
+00077f 982a                      	cbi   LCD_CPRT,LCD_E
+                                 
+000780 d8f5                      	rcall delay_100us
+000781 911f                      	pop  r17
+000782 9508                      	ret
+                                 ;-------------------------------------------------------------------------
+                                 ; SEND_MSG:
+                                 ; Recibe el puntero Z cargado con un mensaje guardado en memoria ROM. Luego
+                                 ; lo envía por la pantalla LCD.
+                                 ;-------------------------------------------------------------------------
+                                 send_msg:
+000783 930f                      	push  r16
+000784 931f                      	push  r17
+                                 
+000785 e001                      	ldi   r16, CLEAR_DISPLAY
+000786 dfe7                      	rcall send_command			; Borra la pantalla
+000787 d8fb                      	rcall delay_3ms
+                                 
+                                 send_msg_loop:
+000788 9105                          lpm  r16, Z+
+                                 	
+000789 3f0f                      	cpi r16, 0xFF				; Me fijo si termino el mensaje
+00078a f0c9                      	breq send_msg_fin
+00078b 300a                      	cpi r16, '\n'				; Me fijo si el mensaje tiene una segunda parte
+00078c f421                      	brne send_msg_next
+                                 
+00078d ec00                      	ldi   r16, CURSOR_LINE_2
+00078e dfdf                      	rcall send_command			; Fuerza el cursor a la 2da linea
+00078f d8f3                      	rcall delay_3ms	
+000790 cff7                      	rjmp  send_msg_loop
+                                 
+                                 send_msg_next:	
+000791 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
+000792 7f10                      	andi  r17, 0xF0
+000793 b91b                      	out   LCD_DPRT, r17
+000794 9a28                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
+000795 9829                      	cbi   LCD_CPRT, LCD_RW
+000796 9a2a                      	sbi   LCD_CPRT, LCD_E
+000797 d8d5                      	rcall delay_500ns 
+000798 982a                      	cbi   LCD_CPRT,LCD_E
+                                 
+000799 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
+00079a 9512                      	swap  r17
+00079b 7f10                      	andi  r17, 0xF0
+00079c b91b                      	out   LCD_DPRT, r17
+00079d 9a28                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
+00079e 9829                      	cbi   LCD_CPRT, LCD_RW
+00079f 9a2a                      	sbi   LCD_CPRT, LCD_E
+0007a0 d8cc                      	rcall delay_500ns 
+0007a1 982a                      	cbi   LCD_CPRT,LCD_E
+0007a2 d8d3                      	rcall delay_100us
+0007a3 cfe4                      	rjmp  send_msg_loop
+                                 send_msg_fin:		
+0007a4 910f                      	pop  r16
+0007a5 911f                      	pop  r17
+0007a6 9508                      	ret
+                                 
                                  ;-------------------------------------------------------------------------
                                  ; VARIABLES EN REGISTROS
                                  ;-------------------------------------------------------------------------
@@ -1430,7 +1696,7 @@ C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\
 000000 940c 0034                 	jmp setup
                                  
                                  .org	0x0026		; USART Data Register Empty
-000026 940c 0044                 	jmp	ISR_REG_USART_VACIO
+000026 940c 004b                 	jmp	ISR_REG_USART_VACIO
                                  
                                  .org INT_VECTORS_SIZE
                                  
@@ -1442,20 +1708,29 @@ C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\
                                  
 000038 d561                          rcall configuracion_puertos
 000039 d54e                      	rcall USART_init
-                                 		
-00003a 9a42                      	sbi   PORTC, PC2				; encendemos led de prueba
-00003b 9843                      	cbi   PORTC, PC3
-00003c d4ea                      	rcall set_tara	
-00003d d576                      	rcall detectar_perturbacion
-                                 	
-                                 main_loop:
-00003e 9842                      	cbi   PORTC, PC2	
-00003f 9a43                      	sbi   PORTC, PC3	
-000040 d4bf                      	rcall lectura_peso				; lee los datos, le resta el tara y los deja almacenados en r4:r2 
-000041 d50a                      	rcall set_scale					; convierte el dato a gramos
-000042 d55d                      	rcall detectar_cancelacion		; chequea si el dato leido es mayor a 4096 gramos, en ese caso cancela el proceso
-000043 cffa                      	rjmp main_loop
+00003a d56d                      	rcall LCD_init
                                  
+00003b 9a42                      	sbi   PORTC, PC2				; encendemos led de prueba
+00003c 9843                      	cbi   PORTC, PC3
+00003d d4e9                      	rcall set_tara	
+                                 	
+00003e e0fe                      	ldi   zh, HIGH(DIR_MSG_INICIO<<1)
+00003f e0e0                      	ldi   zl, LOW(DIR_MSG_INICIO<<1)
+000040 d742                      	rcall send_msg
+                                 
+000041 d586                      	rcall detectar_perturbacion
+                                 	
+000042 e0fe                      	ldi   zh, HIGH(DIR_MSG_ESPERA_VASO<<1)
+000043 e1ee                      	ldi   zl, LOW(DIR_MSG_ESPERA_VASO<<1)
+000044 d73e                      	rcall send_msg
+                                 
+                                 main_loop:
+000045 9842                      	cbi   PORTC, PC2	
+000046 9a43                      	sbi   PORTC, PC3	
+000047 d4b8                      	rcall lectura_peso				; lee los datos, le resta el tara y los deja almacenados en r4:r2 
+000048 d503                      	rcall set_scale					; convierte el dato a gramos
+000049 d567                      	rcall detectar_cancelacion		; chequea si el dato leido es mayor a 4096 gramos, en ese caso cancela el proceso
+00004a cffa                      	rjmp main_loop
                                  
                                  ;-------------------------------------------------------------------------
                                  ; FUNCIONES
@@ -1469,50 +1744,112 @@ C:\Users\marti\Desktop\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\
                                  ; de transmision. Si ya mando los 3, antes de salir la deshabilita.
                                  ; ----------------------------------------------------------------------
                                  ISR_REG_USART_VACIO:
-000044 930f                      	push r16
-000045 8100                      	ld   r16, Z
-000046 95ea                      	dec  zl
-000047 9300 00c6                 	sts  UDR0, r16
-000049 30e1                      	cpi  zl, 1						;  Z  esta apuntando a r1? Si lo esta haciendo ya se cargaron los 3 bytes
-00004a f011                      	breq ISR_REG_USART_VACIO_fin
-00004b 910f                      	pop  r16
-00004c 9518                      	reti
-                                 ISR_REG_USART_VACIO_fin:
-00004d 9100 00c1                 	lds  r16, UCSR0B
-00004f 7d0f                      	cbr  r16, 1<<UDRIE0
-000050 9300 00c1                 	sts  UCSR0B, r16				; deshabilito interrupciones
+00004b 930f                      	push r16
+00004c 8108                      	ld   r16, Y
+00004d 95ca                      	dec  yl
+00004e 9300 00c6                 	sts  UDR0, r16
+000050 30c1                      	cpi  yl, 1						;  Z  esta apuntando a r1? Si lo esta haciendo ya se cargaron los 3 bytes
+000051 f011                      	breq ISR_REG_USART_VACIO_fin
 000052 910f                      	pop  r16
 000053 9518                      	reti
+                                 ISR_REG_USART_VACIO_fin:
+000054 9100 00c1                 	lds  r16, UCSR0B
+000056 7d0f                      	cbr  r16, 1<<UDRIE0
+000057 9300 00c1                 	sts  UCSR0B, r16				; deshabilito interrupciones
+000059 910f                      	pop  r16
+00005a 9518                      	reti
                                  
                                  ; ----------------------------------------------------------------------
                                  ; DELLAY:
                                  ; dellay de 1 segundo para ver mejor los datos enviados.
                                  ; ----------------------------------------------------------------------
                                  dellay:
-000054 934f                      	push r20
-000055 935f                      	push r21
-000056 936f                      	push r22
+00005b 934f                      	push r20
+00005c 935f                      	push r21
+00005d 936f                      	push r22
                                  
-000057 e240                      	ldi  r20, 32
-000058 ec58                      dellay_L1: ldi  r21,200
-000059 ef6a                      dellay_L2: ldi  r22, 250	
+00005e e240                      	ldi  r20, 32
+00005f ec58                      dellay_L1: ldi  r21,200
+000060 ef6a                      dellay_L2: ldi  r22, 250	
                                  dellay_L3:	
-00005a 0000                      	nop
-00005b 0000                      	nop
-00005c 956a                      	dec  r22
-00005d f7e1                      	brne dellay_L3
+000061 0000                      	nop
+000062 0000                      	nop
+000063 956a                      	dec  r22
+000064 f7e1                      	brne dellay_L3
                                  
-00005e 955a                      	dec  r21
-00005f f7c9                      	brne dellay_L2
+000065 955a                      	dec  r21
+000066 f7c9                      	brne dellay_L2
                                  
-000060 954a                      	dec  r20
-000061 f7b1                      	brne dellay_L1
+000067 954a                      	dec  r20
+000068 f7b1                      	brne dellay_L1
                                  	
-000062 916f                      	pop  r22
-000063 915f                      	pop  r21
-000064 914f                      	pop  r20
+000069 916f                      	pop  r22
+00006a 915f                      	pop  r21
+00006b 914f                      	pop  r20
                                  	
-000065 9508                      	ret
+00006c 9508                      	ret
+                                 
+                                 ;__________________________________________________________
+                                 ; Delay de 500ns porque el pin E tiene que estar alto ese tiempo
+                                 ;__________________________________________________________
+                                 
+                                 delay_500ns:
+00006d 0000                      	nop
+00006e 0000                      	nop
+00006f 0000                      	nop
+000070 0000                      	nop
+000071 0000                      	nop
+000072 0000                      	nop
+000073 0000                      	nop
+000074 0000                      	nop
+000075 9508                      	ret
+                                 
+                                 ;__________________________________________________________
+                                 ; Delay de 100us porque tarda este tiempo en enviar un dato
+                                 ;__________________________________________________________
+                                 delay_100us:
+000076 935f                      	push r21
+000077 936f                      	push r22
+                                 
+000078 e052                      	ldi  r21,2
+000079 ea60                      dellay_L11: ldi  r22, 160	
+                                 dellay_L21:	
+00007a 0000                      	nop
+00007b 0000                      	nop
+00007c 956a                      	dec  r22
+00007d f7e1                      	brne dellay_L21
+                                 
+00007e 955a                      	dec  r21
+00007f f7c9                      	brne dellay_L11
+                                 	
+000080 916f                      	pop  r22
+000081 915f                      	pop  r21
+                                 	
+000082 9508                      	ret
+                                 
+                                 ;_____________________________________________________________
+                                 ; Delay de 3ms porque tarda este tiempo en ejecutar un comando
+                                 ;_____________________________________________________________
+                                 
+                                 delay_3ms:
+000083 935f                      	push r21
+000084 936f                      	push r22
+                                 
+000085 e255                      	ldi  r21,37
+000086 ef6a                      dellay_L12: ldi  r22, 250	
+                                 dellay_L22:	
+000087 0000                      	nop
+000088 0000                      	nop
+000089 956a                      	dec  r22
+00008a f7e1                      	brne dellay_L22
+                                 
+00008b 955a                      	dec  r21
+00008c f7c9                      	brne dellay_L12
+                                 	
+00008d 916f                      	pop  r22
+00008e 915f                      	pop  r21
+                                 	
+00008f 9508                      	ret
                                  
                                  
                                  
@@ -1533,39 +1870,39 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   0 y  :   0 z  :   1 r0 :   3 r1 :   3 r2 :   8 r3 :  13 r4 :  10 
+x  :   0 y  :   1 z  :   1 r0 :   3 r1 :   3 r2 :   8 r3 :  13 r4 :  10 
 r5 :   3 r6 :   3 r7 :   3 r8 :   1 r9 :   2 r10:   2 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  69 r17:  20 r18:  12 r19:  12 r20:  15 
-r21:   4 r22:   4 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
-r29:   0 r30:   3 r31:   1 
-Registers used: 21 out of 35 (60.0%)
+r13:   0 r14:   0 r15:   0 r16:  88 r17:  38 r18:  12 r19:  12 r20:  15 
+r21:  12 r22:  12 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   3 
+r29:   1 r30:   3 r31:   3 
+Registers used: 24 out of 35 (68.6%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   6 add   :   3 adiw  :   0 and   :   0 
-andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   2 brcs  :   1 break :   0 breq  :   3 brge  :   0 brhc  :   0 
+andi  :   4 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
+brcc  :   2 brcs  :   1 break :   0 breq  :   4 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   2 brlt  :   0 brmi  :   0 
-brne  :   9 brpl  :   1 brsh  :   3 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   6 cbr   :   1 
+brne  :  14 brpl  :   1 brsh  :   3 brtc  :   0 brts  :   0 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :  16 cbr   :   1 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  16 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   2 cp    :   6 cpc   :   0 
-cpi   :   2 cpse  :   0 dec   :  10 eor   :   0 fmul  :   0 fmuls :   0 
+cpi   :   4 cpse  :   0 dec   :  14 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   3 jmp   :   2 
-ld    :   1 ldd   :   0 ldi   :  21 lds   :   2 lpm   :   0 lsl   :   1 
-lsr   :   2 mov   :  12 movw  :   0 mul   :   3 muls  :   0 mulsu :   0 
-neg   :   1 nop   :  10 or    :   0 ori   :   0 out   :   2 pop   :  24 
-push  :  22 rcall :  20 ret   :  11 reti  :   2 rjmp  :   4 rol   :   0 
-ror   :   5 sbc   :   2 sbci  :   0 sbi   :   8 sbic  :   3 sbis  :   0 
+ld    :   1 ldd   :   0 ldi   :  36 lds   :   2 lpm   :   1 lsl   :   1 
+lsr   :   2 mov   :  16 movw  :   0 mul   :   3 muls  :   0 mulsu :   0 
+neg   :   1 nop   :  22 or    :   0 ori   :   0 out   :   7 pop   :  33 
+push  :  31 rcall :  39 ret   :  17 reti  :   2 rjmp  :   6 rol   :   0 
+ror   :   5 sbc   :   2 sbci  :   0 sbi   :  17 sbic  :   3 sbis  :   0 
 sbiw  :   0 sbr   :   1 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   8 
-sub   :   1 subi  :   0 swap  :   0 tst   :   1 wdr   :   0 
-Instructions used: 43 out of 113 (38.1%)
+sub   :   1 subi  :   0 swap  :   2 tst   :   1 wdr   :   0 
+Instructions used: 46 out of 113 (40.7%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000b98    516      0    516   32768   1.6%
+[.cseg] 0x000000 0x000f4e    754    220    974   32768   3.0%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

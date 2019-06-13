@@ -13,11 +13,13 @@
 .include "hx711.inc"
 .include "input.inc"
 .include "configuracion.inc"
+.include "output.inc"
 
 .org 0x500
 .include "hx711.asm"
 .include "configuracion.asm"
 .include "input.asm"
+.include "output.asm"
 
 ;-------------------------------------------------------------------------
 ; VARIABLES EN REGISTROS
@@ -46,12 +48,22 @@ setup:
 
     rcall configuracion_puertos
 	rcall USART_init
-		
+	rcall LCD_init
+
 	sbi   PORTC, PC2				; encendemos led de prueba
 	cbi   PORTC, PC3
 	rcall set_tara	
+	
+	ldi   zh, HIGH(DIR_MSG_INICIO<<1)
+	ldi   zl, LOW(DIR_MSG_INICIO<<1)
+	rcall send_msg
+
 	rcall detectar_perturbacion
 	
+	ldi   zh, HIGH(DIR_MSG_ESPERA_VASO<<1)
+	ldi   zl, LOW(DIR_MSG_ESPERA_VASO<<1)
+	rcall send_msg
+
 main_loop:
 	cbi   PORTC, PC2	
 	sbi   PORTC, PC3	
@@ -59,7 +71,6 @@ main_loop:
 	rcall set_scale					; convierte el dato a gramos
 	rcall detectar_cancelacion		; chequea si el dato leido es mayor a 4096 gramos, en ese caso cancela el proceso
 	rjmp main_loop
-
 
 ;-------------------------------------------------------------------------
 ; FUNCIONES
@@ -74,10 +85,10 @@ main_loop:
 ; ----------------------------------------------------------------------
 ISR_REG_USART_VACIO:
 	push r16
-	ld   r16, Z
-	dec  zl
+	ld   r16, Y
+	dec  yl
 	sts  UDR0, r16
-	cpi  zl, 1						;  Z  esta apuntando a r1? Si lo esta haciendo ya se cargaron los 3 bytes
+	cpi  yl, 1						;  Z  esta apuntando a r1? Si lo esta haciendo ya se cargaron los 3 bytes
 	breq ISR_REG_USART_VACIO_fin
 	pop  r16
 	reti
@@ -115,6 +126,68 @@ dellay_L3:
 	pop  r22
 	pop  r21
 	pop  r20
+	
+	ret
+
+;__________________________________________________________
+; Delay de 500ns porque el pin E tiene que estar alto ese tiempo
+;__________________________________________________________
+
+delay_500ns:
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	nop
+	ret
+
+;__________________________________________________________
+; Delay de 100us porque tarda este tiempo en enviar un dato
+;__________________________________________________________
+delay_100us:
+	push r21
+	push r22
+
+	ldi  r21,2
+dellay_L11: ldi  r22, 160	
+dellay_L21:	
+	nop
+	nop
+	dec  r22
+	brne dellay_L21
+
+	dec  r21
+	brne dellay_L11
+	
+	pop  r22
+	pop  r21
+	
+	ret
+
+;_____________________________________________________________
+; Delay de 3ms porque tarda este tiempo en ejecutar un comando
+;_____________________________________________________________
+
+delay_3ms:
+	push r21
+	push r22
+
+	ldi  r21,37
+dellay_L12: ldi  r22, 250	
+dellay_L22:	
+	nop
+	nop
+	dec  r22
+	brne dellay_L22
+
+	dec  r21
+	brne dellay_L12
+	
+	pop  r22
+	pop  r21
 	
 	ret
 

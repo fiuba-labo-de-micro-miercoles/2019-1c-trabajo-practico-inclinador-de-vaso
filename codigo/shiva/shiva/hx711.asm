@@ -205,8 +205,8 @@ com_2_retornar:
 
 send_data:
 	push r16
-	ldi  zh, HIGH(0x04)				; hay que mandar 3 bytes, ubicados en r4:r2. Definimos
-	ldi  zl, LOW(0x04)				; que Z apunte a r4 y luego en la rutina de interruopcion se decrementa
+	ldi  yh, HIGH(0x04)				; hay que mandar 3 bytes, ubicados en r4:r2. Definimos
+	ldi  yl, LOW(0x04)				; que Z apunte a r4 y luego en la rutina de interruopcion se decrementa
 	
 	lds  r16, UCSR0B
 	sbr  r16, 1<<UDRIE0

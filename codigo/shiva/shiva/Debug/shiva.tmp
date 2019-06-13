@@ -1,24 +1,26 @@
 <ASSEMBLER_INFO>
  <VERSION>2.2.7</VERSION>
  <DEVICE>"ATmega328P"</DEVICE>
- <WORKING_DIR>C:\Users\marti\Desktop\shiva\shiva\Debug</WORKING_DIR>
+ <WORKING_DIR>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\Debug</WORKING_DIR>
  <INCLUDE_PATH>
   <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
   <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
-  <DIR></DIR>
+  <DIR>C:\Program Files (x86)\Atmel\AVR Tools\AvrAssembler2\Appnotes</DIR>
  </INCLUDE_PATH>
- <SOURCE_FILE>C:\Users\marti\Desktop\shiva\shiva\main.asm</SOURCE_FILE>
+ <SOURCE_FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</SOURCE_FILE>
  <INCLUDED_FILES>
   <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc</FILE>
-  <FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.inc</FILE>
-  <FILE>C:\Users\marti\Desktop\shiva\shiva\input.inc</FILE>
-  <FILE>C:\Users\marti\Desktop\shiva\shiva\configuracion.inc</FILE>
-  <FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE>
-  <FILE>C:\Users\marti\Desktop\shiva\shiva\configuracion.asm</FILE>
-  <FILE>C:\Users\marti\Desktop\shiva\shiva\input.asm</FILE>
+  <FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.inc</FILE>
+  <FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.inc</FILE>
+  <FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.inc</FILE>
+  <FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.inc</FILE>
+  <FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE>
+  <FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm</FILE>
+  <FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm</FILE>
+  <FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE>
  </INCLUDED_FILES>
  <OBJECT_FILES>
-  <FILE>C:\Users\marti\Desktop\shiva\shiva\Debug\shiva.obj</FILE>
+  <FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\Debug\shiva.obj</FILE>
  </OBJECT_FILES>
  <HEX_FILES>
   <FILE>shiva.hex</FILE>
@@ -28,39 +30,61 @@
   <FILE>shiva.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <lectura_peso><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>10</LINE></lectura_peso>
-  <lectura_peso_loop><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>14</LINE></lectura_peso_loop>
-  <cargar_byte><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>51</LINE></cargar_byte>
-  <com_2><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>185</LINE></com_2>
-  <cargar_bit><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>54</LINE></cargar_bit>
-  <set_tara><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>72</LINE></set_tara>
-  <set_tara_loop><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>88</LINE></set_tara_loop>
-  <set_tara_next><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>95</LINE></set_tara_next>
-  <set_tara_division_por_4><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>99</LINE></set_tara_division_por_4>
-  <set_tara_division><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>101</LINE></set_tara_division>
-  <set_scale><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>126</LINE></set_scale>
-  <multiplicacion_low><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>143</LINE></multiplicacion_low>
-  <multiplicacion_middle><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>148</LINE></multiplicacion_middle>
-  <multiplicacion_high><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>155</LINE></multiplicacion_high>
-  <division_por_6><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>164</LINE></division_por_6>
-  <shifteo_loop><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>167</LINE></shifteo_loop>
-  <com_2_retornar><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>196</LINE></com_2_retornar>
-  <send_data><FILE>C:\Users\marti\Desktop\shiva\shiva\hx711.asm</FILE><LINE>206</LINE></send_data>
-  <USART_init><FILE>C:\Users\marti\Desktop\shiva\shiva\configuracion.asm</FILE><LINE>4</LINE></USART_init>
-  <configuracion_puertos><FILE>C:\Users\marti\Desktop\shiva\shiva\configuracion.asm</FILE><LINE>27</LINE></configuracion_puertos>
-  <detectar_cancelacion><FILE>C:\Users\marti\Desktop\shiva\shiva\input.asm</FILE><LINE>9</LINE></detectar_cancelacion>
-  <proceso_cancelado><FILE>C:\Users\marti\Desktop\shiva\shiva\input.asm</FILE><LINE>18</LINE></proceso_cancelado>
-  <setup><FILE>C:\Users\marti\Desktop\shiva\shiva\main.asm</FILE><LINE>41</LINE></setup>
-  <detectar_perturbacion><FILE>C:\Users\marti\Desktop\shiva\shiva\input.asm</FILE><LINE>45</LINE></detectar_perturbacion>
-  <detectar_perturbacion_lectura><FILE>C:\Users\marti\Desktop\shiva\shiva\input.asm</FILE><LINE>52</LINE></detectar_perturbacion_lectura>
-  <detectar_perturbacion_verificacion><FILE>C:\Users\marti\Desktop\shiva\shiva\input.asm</FILE><LINE>59</LINE></detectar_perturbacion_verificacion>
-  <detectar_perturbacion_verificacion2><FILE>C:\Users\marti\Desktop\shiva\shiva\input.asm</FILE><LINE>68</LINE></detectar_perturbacion_verificacion2>
-  <ISR_REG_USART_VACIO><FILE>C:\Users\marti\Desktop\shiva\shiva\main.asm</FILE><LINE>75</LINE></ISR_REG_USART_VACIO>
-  <main_loop><FILE>C:\Users\marti\Desktop\shiva\shiva\main.asm</FILE><LINE>55</LINE></main_loop>
-  <ISR_REG_USART_VACIO_fin><FILE>C:\Users\marti\Desktop\shiva\shiva\main.asm</FILE><LINE>84</LINE></ISR_REG_USART_VACIO_fin>
-  <dellay><FILE>C:\Users\marti\Desktop\shiva\shiva\main.asm</FILE><LINE>95</LINE></dellay>
-  <dellay_L1><FILE>C:\Users\marti\Desktop\shiva\shiva\main.asm</FILE><LINE>101</LINE></dellay_L1>
-  <dellay_L2><FILE>C:\Users\marti\Desktop\shiva\shiva\main.asm</FILE><LINE>102</LINE></dellay_L2>
-  <dellay_L3><FILE>C:\Users\marti\Desktop\shiva\shiva\main.asm</FILE><LINE>103</LINE></dellay_L3>
+  <lectura_peso><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>10</LINE></lectura_peso>
+  <lectura_peso_loop><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>14</LINE></lectura_peso_loop>
+  <cargar_byte><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>51</LINE></cargar_byte>
+  <com_2><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>185</LINE></com_2>
+  <cargar_bit><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>54</LINE></cargar_bit>
+  <set_tara><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>72</LINE></set_tara>
+  <set_tara_loop><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>88</LINE></set_tara_loop>
+  <set_tara_next><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>95</LINE></set_tara_next>
+  <set_tara_division_por_4><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>99</LINE></set_tara_division_por_4>
+  <set_tara_division><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>101</LINE></set_tara_division>
+  <set_scale><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>126</LINE></set_scale>
+  <multiplicacion_low><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>143</LINE></multiplicacion_low>
+  <multiplicacion_middle><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>148</LINE></multiplicacion_middle>
+  <multiplicacion_high><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>155</LINE></multiplicacion_high>
+  <division_por_6><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>164</LINE></division_por_6>
+  <shifteo_loop><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>167</LINE></shifteo_loop>
+  <com_2_retornar><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>196</LINE></com_2_retornar>
+  <send_data><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm</FILE><LINE>206</LINE></send_data>
+  <USART_init><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm</FILE><LINE>4</LINE></USART_init>
+  <configuracion_puertos><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm</FILE><LINE>27</LINE></configuracion_puertos>
+  <delay_3ms><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>174</LINE></delay_3ms>
+  <LCD_init><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm</FILE><LINE>50</LINE></LCD_init>
+  <send_command><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>17</LINE></send_command>
+  <detectar_cancelacion><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm</FILE><LINE>9</LINE></detectar_cancelacion>
+  <proceso_cancelado><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm</FILE><LINE>18</LINE></proceso_cancelado>
+  <DIR_MSG_CANCELACION><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>10</LINE></DIR_MSG_CANCELACION>
+  <send_msg><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>47</LINE></send_msg>
+  <proceso_cancelado_loop><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm</FILE><LINE>27</LINE></proceso_cancelado_loop>
+  <setup><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>43</LINE></setup>
+  <detectar_perturbacion><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm</FILE><LINE>50</LINE></detectar_perturbacion>
+  <detectar_perturbacion_lectura><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm</FILE><LINE>57</LINE></detectar_perturbacion_lectura>
+  <detectar_perturbacion_verificacion><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm</FILE><LINE>64</LINE></detectar_perturbacion_verificacion>
+  <detectar_perturbacion_verificacion2><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm</FILE><LINE>73</LINE></detectar_perturbacion_verificacion2>
+  <DIR_MSG_INICIO><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>3</LINE></DIR_MSG_INICIO>
+  <DIR_MSG_ESPERA_VASO><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>4</LINE></DIR_MSG_ESPERA_VASO>
+  <DIR_MSG_CONFIGURACION_1><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>5</LINE></DIR_MSG_CONFIGURACION_1>
+  <DIR_MSG_PINTA><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>6</LINE></DIR_MSG_PINTA>
+  <DIR_MSG_CHOPP><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>7</LINE></DIR_MSG_CHOPP>
+  <DIR_MSG_MEDIA_PINTA><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>8</LINE></DIR_MSG_MEDIA_PINTA>
+  <DIR_MSG_SIRVIENDO><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>9</LINE></DIR_MSG_SIRVIENDO>
+  <delay_500ns><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>136</LINE></delay_500ns>
+  <delay_100us><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>150</LINE></delay_100us>
+  <send_msg_loop><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>55</LINE></send_msg_loop>
+  <send_msg_fin><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>89</LINE></send_msg_fin>
+  <send_msg_next><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm</FILE><LINE>68</LINE></send_msg_next>
+  <ISR_REG_USART_VACIO><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>86</LINE></ISR_REG_USART_VACIO>
+  <main_loop><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>67</LINE></main_loop>
+  <ISR_REG_USART_VACIO_fin><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>95</LINE></ISR_REG_USART_VACIO_fin>
+  <dellay><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>106</LINE></dellay>
+  <dellay_L1><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>112</LINE></dellay_L1>
+  <dellay_L2><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>113</LINE></dellay_L2>
+  <dellay_L3><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>114</LINE></dellay_L3>
+  <dellay_L11><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>155</LINE></dellay_L11>
+  <dellay_L21><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>156</LINE></dellay_L21>
+  <dellay_L12><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>179</LINE></dellay_L12>
+  <dellay_L22><FILE>C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm</FILE><LINE>180</LINE></dellay_L22>
  </LABELS>
 </ASSEMBLER_INFO>
