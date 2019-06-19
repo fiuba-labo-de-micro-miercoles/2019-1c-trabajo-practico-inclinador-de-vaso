@@ -1,26 +1,26 @@
 
-AVRASM ver. 2.2.7  C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm Wed Jun 12 21:53:00 2019
+AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm Wed Jun 19 15:21:57 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(13): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(14): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(15): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(16): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(19): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(20): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(21): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(22): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(13): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\hx711.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(14): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\input.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(15): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\configuracion.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(16): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\output.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(19): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\hx711.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\configuracion.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(21): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\input.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(22): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\output.asm'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(13): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(14): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(15): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(16): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(19): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(20): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(21): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(22): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(13): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\hx711.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(14): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\input.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(15): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\configuracion.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(16): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\output.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(19): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\hx711.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(20): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\configuracion.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(21): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\input.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm(22): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\output.asm'
                                  
                                  ;-------------------------------------------------------------------------
                                  
@@ -1382,7 +1382,7 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
 0005a2 9a20                      	sbi  LCD_CDDR, LCD_RS		
 0005a3 9a21                      	sbi  LCD_CDDR, LCD_RW
 0005a4 9a22                      	sbi  LCD_CDDR, LCD_E			; Configuro los puertos de dato (PORTD) y los comandos usados (del PORTB) como de salida 
-0005a5 dadd                      	rcall delay_3ms
+0005a5 dade                      	rcall delay_3ms
 0005a6 910f                      	pop  r16
 0005a7 9508                      	ret
                                  
@@ -1394,11 +1394,11 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  
 0005a9 e208                      	ldi   r16, DATA_4BIT			; Trabajamos enviando los caracteres de a 4 bits
 0005aa d1c3                      	rcall send_command
-0005ab dad7                      	rcall delay_3ms
+0005ab dad8                      	rcall delay_3ms
                                  	
 0005ac e00c                      	ldi   r16, DISP_ON_CURS_OFF
 0005ad d1c0                      	rcall send_command			; Deja el cursor parpadeando
-0005ae dad4                      	rcall delay_3ms
+0005ae dad5                      	rcall delay_3ms
                                  
 0005af 910f                      	pop   r16
 0005b0 9508                      	ret
@@ -1640,7 +1640,7 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  
 000785 e001                      	ldi   r16, CLEAR_DISPLAY
 000786 dfe7                      	rcall send_command			; Borra la pantalla
-000787 d8fb                      	rcall delay_3ms
+000787 d8fc                      	rcall delay_3ms
                                  
                                  send_msg_loop:
 000788 9105                          lpm  r16, Z+
@@ -1652,7 +1652,7 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  
 00078d ec00                      	ldi   r16, CURSOR_LINE_2
 00078e dfdf                      	rcall send_command			; Fuerza el cursor a la 2da linea
-00078f d8f3                      	rcall delay_3ms	
+00078f d8f4                      	rcall delay_3ms	
 000790 cff7                      	rjmp  send_msg_loop
                                  
                                  send_msg_next:	
@@ -1804,54 +1804,80 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
 000074 0000                      	nop
 000075 9508                      	ret
                                  
-                                 ;__________________________________________________________
-                                 ; Delay de 100us porque tarda este tiempo en enviar un dato
-                                 ;__________________________________________________________
+                                 ; -------------------------------------------------------------------------
+                                 ; DELAY_100us:
+                                 ; funcion de delay de 100 us. 
+                                 ; Calculo de delay: (256-VALOR_INICIAL_TCNT0) * PRESCALER / fclk
+                                 ; -------------------------------------------------------------------------
+                                 
                                  delay_100us:
-000076 935f                      	push r21
-000077 936f                      	push r22
+000076 930f                      	push r16
                                  
-000078 e052                      	ldi  r21,2
-000079 ea60                      dellay_L11: ldi  r22, 160	
+000077 ef08                      	ldi r16, 248
+000078 bd06                      	out TCNT0, r16					; se inicializa el contador
+                                 	
+000079 2700                      	clr r16
+00007a bd04                      	out TCCR0A, r16		
+                                 	
+00007b e004                      	ldi r16, (1<<CS02)|(0<<CS01)|(0<<CS00)
+00007c bd05                      	out TCCR0B, r16					; config: modo normal, con prescaler = 256
+                                 delay_100us_loop:
+00007d 9ba8                      	sbis TIFR0, TOV0
+00007e cffe                      	rjmp delay_100us_loop
+00007f 2700                      	clr  r16
+000080 bd05                      	out  TCCR0B, r16				; se apaga el timer
+000081 9aa8                      	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
+                                 
+000082 910f                      	pop r16
+000083 9508                      	ret
+                                 
+                                 /*
+                                 delay_100us:
+                                 	push r21
+                                 	push r22
+                                 
+                                 	ldi  r21,2
+                                 dellay_L11: ldi  r22, 160	
                                  dellay_L21:	
-00007a 0000                      	nop
-00007b 0000                      	nop
-00007c 956a                      	dec  r22
-00007d f7e1                      	brne dellay_L21
+                                 	nop
+                                 	nop
+                                 	dec  r22
+                                 	brne dellay_L21
                                  
-00007e 955a                      	dec  r21
-00007f f7c9                      	brne dellay_L11
+                                 	dec  r21
+                                 	brne dellay_L11
                                  	
-000080 916f                      	pop  r22
-000081 915f                      	pop  r21
+                                 	pop  r22
+                                 	pop  r21
                                  	
-000082 9508                      	ret
+                                 	ret
+                                 */
                                  
-                                 ;_____________________________________________________________
-                                 ; Delay de 3ms porque tarda este tiempo en ejecutar un comando
-                                 ;_____________________________________________________________
-                                 
+                                 ; -------------------------------------------------------------------------
+                                 ; DELAY_3MS:
+                                 ; funcion de delay de 3 ms. 
+                                 ; Calculo de delay: (256-VALOR_INICIAL_TCNT0) * PRESCALER / fclk
+                                 ; -------------------------------------------------------------------------
                                  delay_3ms:
-000083 935f                      	push r21
-000084 936f                      	push r22
+000084 930f                      	push r16
                                  
-000085 e255                      	ldi  r21,37
-000086 ef6a                      dellay_L12: ldi  r22, 250	
-                                 dellay_L22:	
-000087 0000                      	nop
-000088 0000                      	nop
-000089 956a                      	dec  r22
-00008a f7e1                      	brne dellay_L22
-                                 
-00008b 955a                      	dec  r21
-00008c f7c9                      	brne dellay_L12
+000085 e405                      	ldi r16, 69
+000086 bd06                      	out TCNT0, r16					; se inicializa el contador
                                  	
-00008d 916f                      	pop  r22
-00008e 915f                      	pop  r21
+000087 2700                      	clr r16
+000088 bd04                      	out TCCR0A, r16		
                                  	
-00008f 9508                      	ret
+000089 e004                      	ldi r16, (1<<CS02)|(0<<CS01)|(0<<CS00)
+00008a bd05                      	out TCCR0B, r16					; config: modo normal, con prescaler = 256
+                                 delay_3ms_loop:
+00008b 9ba8                      	sbis TIFR0, TOV0
+00008c cffe                      	rjmp delay_3ms_loop
+00008d 2700                      	clr  r16
+00008e bd05                      	out  TCCR0B, r16				; se apaga el timer
+00008f 9aa8                      	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
                                  
-                                 
+000090 910f                      	pop r16
+000091 9508                      	ret
                                  
 
 
@@ -1872,8 +1898,8 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   1 z  :   1 r0 :   3 r1 :   3 r2 :   8 r3 :  13 r4 :  10 
 r5 :   3 r6 :   3 r7 :   3 r8 :   1 r9 :   2 r10:   2 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  88 r17:  38 r18:  12 r19:  12 r20:  15 
-r21:  12 r22:  12 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   3 
+r13:   0 r14:   0 r15:   0 r16: 108 r17:  38 r18:  12 r19:  12 r20:  15 
+r21:   4 r22:   4 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   3 
 r29:   1 r30:   3 r31:   3 
 Registers used: 24 out of 35 (68.6%)
 
@@ -1882,27 +1908,27 @@ Registers used: 24 out of 35 (68.6%)
 andi  :   4 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   2 brcs  :   1 break :   0 breq  :   4 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   2 brlt  :   0 brmi  :   0 
-brne  :  14 brpl  :   1 brsh  :   3 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :  10 brpl  :   1 brsh  :   3 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :  16 cbr   :   1 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  16 cls   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  20 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   2 cp    :   6 cpc   :   0 
-cpi   :   4 cpse  :   0 dec   :  14 eor   :   0 fmul  :   0 fmuls :   0 
+cpi   :   4 cpse  :   0 dec   :  10 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   3 jmp   :   2 
 ld    :   1 ldd   :   0 ldi   :  36 lds   :   2 lpm   :   1 lsl   :   1 
 lsr   :   2 mov   :  16 movw  :   0 mul   :   3 muls  :   0 mulsu :   0 
-neg   :   1 nop   :  22 or    :   0 ori   :   0 out   :   7 pop   :  33 
-push  :  31 rcall :  39 ret   :  17 reti  :   2 rjmp  :   6 rol   :   0 
-ror   :   5 sbc   :   2 sbci  :   0 sbi   :  17 sbic  :   3 sbis  :   0 
+neg   :   1 nop   :  18 or    :   0 ori   :   0 out   :  15 pop   :  31 
+push  :  29 rcall :  39 ret   :  17 reti  :   2 rjmp  :   8 rol   :   0 
+ror   :   5 sbc   :   2 sbci  :   0 sbi   :  19 sbic  :   3 sbis  :   2 
 sbiw  :   0 sbr   :   1 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   8 
 sub   :   1 subi  :   0 swap  :   2 tst   :   1 wdr   :   0 
-Instructions used: 46 out of 113 (40.7%)
+Instructions used: 47 out of 113 (41.6%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000f4e    754    220    974   32768   3.0%
+[.cseg] 0x000000 0x000f4e    758    220    978   32768   3.0%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

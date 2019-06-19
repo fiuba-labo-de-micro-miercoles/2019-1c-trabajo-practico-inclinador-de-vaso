@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm Wed Jun 12 21:53:00 2019
+AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\shiva\main.asm Wed Jun 19 15:21:57 2019
 
 
 EQU  SIGNATURE_000 0000001e
@@ -756,7 +756,7 @@ CSEG com_2_retornar 0000057b
 CSEG send_data    0000057d
 CSEG USART_init   00000588
 CSEG configuracion_puertos 0000059a
-CSEG delay_3ms    00000083
+CSEG delay_3ms    00000084
 CSEG LCD_init     000005a8
 CSEG send_command 0000076e
 CSEG detectar_cancelacion 000005b1
@@ -791,7 +791,5 @@ CSEG dellay       0000005b
 CSEG dellay_L1    0000005f
 CSEG dellay_L2    00000060
 CSEG dellay_L3    00000061
-CSEG dellay_L11   00000079
-CSEG dellay_L21   0000007a
-CSEG dellay_L12   00000086
-CSEG dellay_L22   00000087
+CSEG delay_100us_loop 0000007d
+CSEG delay_3ms_loop 0000008b

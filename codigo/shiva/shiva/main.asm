@@ -144,9 +144,34 @@ delay_500ns:
 	nop
 	ret
 
-;__________________________________________________________
-; Delay de 100us porque tarda este tiempo en enviar un dato
-;__________________________________________________________
+; -------------------------------------------------------------------------
+; DELAY_100us:
+; funcion de delay de 100 us. 
+; Calculo de delay: (256-VALOR_INICIAL_TCNT0) * PRESCALER / fclk
+; -------------------------------------------------------------------------
+
+delay_100us:
+	push r16
+
+	ldi r16, 248
+	out TCNT0, r16					; se inicializa el contador
+	
+	clr r16
+	out TCCR0A, r16		
+	
+	ldi r16, (1<<CS02)|(0<<CS01)|(0<<CS00)
+	out TCCR0B, r16					; config: modo normal, con prescaler = 256
+delay_100us_loop:
+	sbis TIFR0, TOV0
+	rjmp delay_100us_loop
+	clr  r16
+	out  TCCR0B, r16				; se apaga el timer
+	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
+
+	pop r16
+	ret
+
+/*
 delay_100us:
 	push r21
 	push r22
@@ -166,30 +191,31 @@ dellay_L21:
 	pop  r21
 	
 	ret
+*/
 
-;_____________________________________________________________
-; Delay de 3ms porque tarda este tiempo en ejecutar un comando
-;_____________________________________________________________
-
+; -------------------------------------------------------------------------
+; DELAY_3MS:
+; funcion de delay de 3 ms. 
+; Calculo de delay: (256-VALOR_INICIAL_TCNT0) * PRESCALER / fclk
+; -------------------------------------------------------------------------
 delay_3ms:
-	push r21
-	push r22
+	push r16
 
-	ldi  r21,37
-dellay_L12: ldi  r22, 250	
-dellay_L22:	
-	nop
-	nop
-	dec  r22
-	brne dellay_L22
+	ldi r16, 69
+	out TCNT0, r16					; se inicializa el contador
+	
+	clr r16
+	out TCCR0A, r16		
+	
+	ldi r16, (1<<CS02)|(0<<CS01)|(0<<CS00)
+	out TCCR0B, r16					; config: modo normal, con prescaler = 256
+delay_3ms_loop:
+	sbis TIFR0, TOV0
+	rjmp delay_3ms_loop
+	clr  r16
+	out  TCCR0B, r16				; se apaga el timer
+	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
 
-	dec  r21
-	brne dellay_L12
-	
-	pop  r22
-	pop  r21
-	
+	pop r16
 	ret
-
-
 
