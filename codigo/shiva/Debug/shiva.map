@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm Fri Jun 21 15:06:14 2019
+AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm Fri Jun 21 18:47:59 2019
 
 
 EQU  SIGNATURE_000 0000001e
@@ -758,15 +758,15 @@ CSEG configuracion_puertos 00000588
 CSEG delay_3ms    0000008b
 CSEG USART_init   00000596
 CSEG LCD_init     000005a8
-CSEG send_command 00000772
+CSEG send_command 00000775
 CSEG detectar_perturbacion 000005b1
 CSEG detectar_perturbacion_lectura 000005b4
 CSEG detectar_perturbacion_verificacion 000005b9
 CSEG detectar_perturbacion_verificacion2 000005c0
 CSEG detectar_cancelacion 000005c9
 CSEG proceso_cancelado 000005cf
-CSEG DIR_MSG_CANCELACION 00000765
-CSEG send_msg     00000787
+CSEG DIR_MSG_CANCELACION 00000768
+CSEG send_msg     0000078a
 CSEG proceso_cancelado_loop 000005d3
 DEF  VASO_H       r10
 DEF  VASO_M       r9
@@ -775,20 +775,22 @@ CSEG DIR_MSG_INICIO 00000700
 CSEG DIR_MSG_ESPERA_VASO 0000070f
 CSEG DIR_MSG_AGUARDE 00000717
 CSEG DIR_MSG_CONFIGURACION_1 0000071d
-CSEG DIR_MSG_PINTA 0000072c
-CSEG DIR_MSG_CHOPP 0000073c
-CSEG DIR_MSG_MEDIA_PINTA 0000074c
-CSEG DIR_MSG_SIRVIENDO 0000075e
+CSEG MEDIDA_PINTA 0000072c
+CSEG DIR_MSG_PINTA 0000072d
+CSEG MEDIDA_CHOP  0000073d
+CSEG DIR_MSG_CHOPP 0000073e
+CSEG MEDIDA_MEDIAPINTA 0000074e
+CSEG DIR_MSG_MEDIA_PINTA 0000074f
+CSEG DIR_MSG_SIRVIENDO 00000761
 CSEG delay_500ns  00000074
 CSEG delay_100us  0000007d
-CSEG send_msg_loop 0000078c
-CSEG send_msg_fin 000007a8
-CSEG send_msg_next 00000795
+CSEG send_msg_loop 0000078f
+CSEG send_msg_fin 000007ab
+CSEG send_msg_next 00000798
 DEF  VASO_L       r8
-CSEG INT_TIMER0_OVF 000000db
+CSEG INT_TIMER0_OVF 000000dc
 CSEG ISR_REG_USART_VACIO 00000052
-CSEG programa     00000041
-CSEG detectar_vaso 00000099
+CSEG detectar_vaso 000000a5
 CSEG main_loop    0000004c
 CSEG ISR_REG_USART_VACIO_fin 0000005b
 CSEG dellay       00000062
@@ -797,13 +799,13 @@ CSEG dellay_L2    00000067
 CSEG dellay_L3    00000068
 CSEG delay_100us_loop 00000084
 CSEG delay_3ms_loop 00000092
+CSEG delay_4s     00000099
 EQU  VASO_MINIMO  000000c8
-CSEG detectar_vaso_lectura 0000009b
-CSEG detectar_vaso_verificacion 000000a2
-CSEG MEDIDA       000000b1
+CSEG detectar_vaso_lectura 000000a7
+CSEG detectar_vaso_verificacion 000000ae
 DEF  MEDIDA_L     r11
 DEF  MEDIDA_H     r12
-CSEG configurar_medida 000000b5
-CSEG configurar_medida_init 000000bb
-CSEG configurar_medida_loop 000000bd
-CSEG configurar_medida_fin 000000cf
+CSEG configurar_medida 000000bd
+CSEG configurar_medida_init 000000c3
+CSEG configurar_medida_loop 000000c5
+CSEG configurar_medida_fin 000000d0

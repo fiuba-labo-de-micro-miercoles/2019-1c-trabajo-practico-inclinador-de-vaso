@@ -1,26 +1,26 @@
 
-AVRASM ver. 2.2.7  C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm Fri Jun 21 15:06:14 2019
+AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm Fri Jun 21 18:47:59 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(13): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(14): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(15): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(16): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(19): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(20): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(21): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(22): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(13): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\hx711.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(14): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\input.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(15): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\configuracion.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(16): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(19): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\hx711.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(20): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\configuracion.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(21): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\input.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(22): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.asm'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(13): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(14): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(15): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(16): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.inc'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(19): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\hx711.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(20): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\configuracion.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(21): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\input.asm'
-C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\main.asm(22): Including file 'C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\output.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(13): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\hx711.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(14): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\input.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(15): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\configuracion.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(16): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.inc'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(19): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\hx711.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(20): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\configuracion.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(21): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\input.asm'
+C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(22): Including file 'C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.asm'
                                  
                                  ;-------------------------------------------------------------------------
                                  
@@ -1390,11 +1390,11 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
 0005a8 930f                      	push  r16
                                  
 0005a9 e208                      	ldi   r16, DATA_4BIT			; Trabajamos enviando los caracteres de a 4 bits
-0005aa d1c7                      	rcall send_command
+0005aa d1ca                      	rcall send_command
 0005ab dadf                      	rcall delay_3ms
                                  	
 0005ac e00c                      	ldi   r16, DISP_ON_CURS_OFF		; Deja el cursor fijo
-0005ad d1c4                      	rcall send_command				
+0005ad d1c7                      	rcall send_command				
 0005ae dadc                      	rcall delay_3ms
                                  
 0005af 910f                      	pop   r16
@@ -1461,8 +1461,8 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  
                                  proceso_cancelado:						
 0005cf e0fe                      	ldi   zh, HIGH(DIR_MSG_CANCELACION<<1)
-0005d0 ecea                      	ldi   zl, LOW(DIR_MSG_CANCELACION<<1)
-0005d1 d1b5                      	rcall send_msg
+0005d0 ede0                      	ldi   zl, LOW(DIR_MSG_CANCELACION<<1)
+0005d1 d1b8                      	rcall send_msg
                                  										; se debe volver al SETUP cuando no haya peso sobre la balanza
 0005d2 9843                      	cbi    PORTC,PC3					; y eso se dara cuando el dato sea igual al peso del vaso 
                                  										; que quedo guardado en VASO
@@ -1512,7 +1512,7 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
 000719 6472
 00071a 2e65
 00071b 2e2e
-00071c ffff                      	DIR_MSG_AGUARDE:		 .DB "Aguarde...", 0xFF, 0xFF
+00071c ff20                      	DIR_MSG_AGUARDE:		 .DB "Aguarde... ", 0xFF
 00071d 6f47
 00071e 706c
 00071f 6165
@@ -1527,77 +1527,85 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
 000728 6d61
 000729 6962
 00072a 7261
-00072b ffff                      	DIR_MSG_CONFIGURACION_1: .DB "Golpear 2 veces", '\n', "para cambiar", 0xFF, 0xFF
-00072c 4950
-00072d 544e
-00072e 2041
-00072f 3528
-000730 3030
-000731 6c6d
-000732 0a29
-000733 6f47
-000734 706c
-000735 6565
-000736 7020
-000737 7261
-000738 2061
-000739 746f
-00073a 6f72
-00073b ffff                      	DIR_MSG_PINTA:           .DB "PINTA (500ml)", '\n', "Golpee para otro", 0xFF, 0xFF
-00073c 4843
-00073d 504f
-00073e 2050
-00073f 3328
-000740 3537
-000741 6c6d
-000742 0a29
-000743 6f47
-000744 706c
-000745 6565
-000746 7020
-000747 7261
-000748 2061
-000749 746f
-00074a 6f72
-00074b ffff                      	DIR_MSG_CHOPP:           .DB "CHOPP (375ml)", '\n', "Golpee para otro", 0xFF, 0xFF
-00074c 2f31
-00074d 2032
-00074e 4950
-00074f 544e
-000750 2041
-000751 3228
-000752 3035
-000753 6c6d
-000754 0a29
-000755 6f47
-000756 706c
-000757 6565
-000758 7020
-000759 7261
-00075a 2061
-00075b 746f
-00075c 6f72
-00075d ffff                      	DIR_MSG_MEDIA_PINTA:     .DB "1/2 PINTA (250ml)", '\n', "Golpee para otro", 0xFF, 0xFF
-00075e 6953
-00075f 7672
-000760 6569
-000761 646e
-000762 2e6f
-000763 2e2e
-000764 ff2e                      	DIR_MSG_SIRVIENDO:       .DB "Sirviendo....", 0xFF
-000765 2020
-000766 2020
-000767 7250
-000768 636f
-000769 7365
-00076a 0a6f
-00076b 2020
-00076c 6320
-00076d 6e61
-00076e 6563
-00076f 616c
-000770 6f64
-000771 ffff                      	DIR_MSG_CANCELACION:     .DB "    Proceso",'\n', "   cancelado", 0xFF, 0xFF
+00072b ff20                      	DIR_MSG_CONFIGURACION_1: .DB "Golpear 2 veces", '\n', "para cambiar ", 0xFF
+                                 	
+00072c f401                      	MEDIDA_PINTA:			 .DB HIGH(500), LOW(500)
+00072d 4950
+00072e 544e
+00072f 2041
+000730 3528
+000731 3030
+000732 6c6d
+000733 0a29
+000734 6f47
+000735 706c
+000736 6565
+000737 7020
+000738 7261
+000739 2061
+00073a 746f
+00073b 6f72
+00073c ff2e                      	DIR_MSG_PINTA:           .DB "PINTA (500ml)", '\n', "Golpee para otro.", 0xFF
+                                 
+00073d 7701                      	MEDIDA_CHOP:			 .DB HIGH(375), LOW(375)
+00073e 4843
+00073f 504f
+000740 2050
+000741 3328
+000742 3537
+000743 6c6d
+000744 0a29
+000745 6f47
+000746 706c
+000747 6565
+000748 7020
+000749 7261
+00074a 2061
+00074b 746f
+00074c 6f72
+00074d ff2e                      	DIR_MSG_CHOPP:           .DB "CHOPP (375ml)", '\n', "Golpee para otro.", 0xFF
+                                 
+00074e fa00                      	MEDIDA_MEDIAPINTA:       .DB HIGH(250), LOW(250)
+00074f 2f31
+000750 2032
+000751 4950
+000752 544e
+000753 2841
+000754 3532
+000755 6d30
+000756 296c
+000757 470a
+000758 6c6f
+000759 6570
+00075a 2065
+00075b 6170
+00075c 6172
+00075d 6f20
+00075e 7274
+00075f 206f
+000760 ffff                      	DIR_MSG_MEDIA_PINTA:     .DB "1/2 PINTA(250ml)", '\n', "Golpee para otro ", 0xFF, 0xFF 
+                                 	
+000761 6953
+000762 7672
+000763 6569
+000764 646e
+000765 2e6f
+000766 2e2e
+000767 ff2e                      	DIR_MSG_SIRVIENDO:       .DB "Sirviendo....", 0xFF
+000768 2020
+000769 2020
+00076a 7250
+00076b 636f
+00076c 7365
+00076d 206f
+00076e 200a
+00076f 2020
+000770 6163
+000771 636e
+000772 6c65
+000773 6461
+000774 ff6f                      	DIR_MSG_CANCELACION:     .DB "    Proceso ",'\n', "   cancelado", 0xFF 
+                                 
                                  
                                  ;-------------------------------------------------------------------------
                                  ; SEND_COMMAND:
@@ -1605,81 +1613,81 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  ; lo envía a la pantalla LCD.
                                  ;-------------------------------------------------------------------------
                                  send_command:
-000772 931f                      	push  r17
+000775 931f                      	push  r17
                                  
-000773 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
-000774 7f10                      	andi  r17, 0xF0
-000775 b91b                      	out   LCD_DPRT, r17
-000776 9828                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
-000777 9829                      	cbi   LCD_CPRT, LCD_RW
-000778 9a2a                      	sbi   LCD_CPRT, LCD_E
-000779 d8fa                      	rcall delay_500ns 
-00077a 982a                      	cbi   LCD_CPRT,LCD_E
+000776 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
+000777 7f10                      	andi  r17, 0xF0
+000778 b91b                      	out   LCD_DPRT, r17
+000779 9828                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
+00077a 9829                      	cbi   LCD_CPRT, LCD_RW
+00077b 9a2a                      	sbi   LCD_CPRT, LCD_E
+00077c d8f7                      	rcall delay_500ns 
+00077d 982a                      	cbi   LCD_CPRT,LCD_E
                                  
-00077b 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
-00077c 9512                      	swap  r17
-00077d 7f10                      	andi  r17, 0xF0
-00077e b91b                      	out   LCD_DPRT, r17
-00077f 9828                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
-000780 9829                      	cbi   LCD_CPRT, LCD_RW
-000781 9a2a                      	sbi   LCD_CPRT, LCD_E
-000782 d8f1                      	rcall delay_500ns 
-000783 982a                      	cbi   LCD_CPRT,LCD_E
+00077e 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
+00077f 9512                      	swap  r17
+000780 7f10                      	andi  r17, 0xF0
+000781 b91b                      	out   LCD_DPRT, r17
+000782 9828                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
+000783 9829                      	cbi   LCD_CPRT, LCD_RW
+000784 9a2a                      	sbi   LCD_CPRT, LCD_E
+000785 d8ee                      	rcall delay_500ns 
+000786 982a                      	cbi   LCD_CPRT,LCD_E
                                  
-000784 d8f8                      	rcall delay_100us
-000785 911f                      	pop  r17
-000786 9508                      	ret
+000787 d8f5                      	rcall delay_100us
+000788 911f                      	pop  r17
+000789 9508                      	ret
                                  ;-------------------------------------------------------------------------
                                  ; SEND_MSG:
                                  ; Recibe el puntero Z cargado con un mensaje guardado en memoria ROM. Luego
                                  ; lo envía por la pantalla LCD.
                                  ;-------------------------------------------------------------------------
                                  send_msg:
-000787 930f                      	push  r16
-000788 931f                      	push  r17
+00078a 930f                      	push  r16
+00078b 931f                      	push  r17
                                  
-000789 e001                      	ldi   r16, CLEAR_DISPLAY
-00078a dfe7                      	rcall send_command			; Borra la pantalla
-00078b d8ff                      	rcall delay_3ms
+00078c e001                      	ldi   r16, CLEAR_DISPLAY
+00078d dfe7                      	rcall send_command			; Borra la pantalla
+00078e d8fc                      	rcall delay_3ms
                                  
                                  send_msg_loop:
-00078c 9105                          lpm  r16, Z+
+00078f 9105                          lpm  r16, Z+
                                  	
-00078d 3f0f                      	cpi r16, 0xFF				; Me fijo si termino el mensaje
-00078e f0c9                      	breq send_msg_fin
-00078f 300a                      	cpi r16, '\n'				; Me fijo si el mensaje tiene una segunda parte
-000790 f421                      	brne send_msg_next
+000790 3f0f                      	cpi r16, 0xFF				; Me fijo si termino el mensaje
+000791 f0c9                      	breq send_msg_fin
+000792 300a                      	cpi r16, '\n'				; Me fijo si el mensaje tiene una segunda parte
+000793 f421                      	brne send_msg_next
                                  
-000791 ec00                      	ldi   r16, CURSOR_LINE_2
-000792 dfdf                      	rcall send_command			; Fuerza el cursor a la 2da linea
-000793 d8f7                      	rcall delay_3ms	
-000794 cff7                      	rjmp  send_msg_loop
+000794 ec00                      	ldi   r16, CURSOR_LINE_2
+000795 dfdf                      	rcall send_command			; Fuerza el cursor a la 2da linea
+000796 d8f4                      	rcall delay_3ms	
+000797 cff7                      	rjmp  send_msg_loop
                                  
                                  send_msg_next:	
-000795 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
-000796 7f10                      	andi  r17, 0xF0
-000797 b91b                      	out   LCD_DPRT, r17
-000798 9a28                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
-000799 9829                      	cbi   LCD_CPRT, LCD_RW
-00079a 9a2a                      	sbi   LCD_CPRT, LCD_E
-00079b d8d8                      	rcall delay_500ns 
-00079c 982a                      	cbi   LCD_CPRT,LCD_E
+000798 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
+000799 7f10                      	andi  r17, 0xF0
+00079a b91b                      	out   LCD_DPRT, r17
+00079b 9a28                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
+00079c 9829                      	cbi   LCD_CPRT, LCD_RW
+00079d 9a2a                      	sbi   LCD_CPRT, LCD_E
+00079e d8d5                      	rcall delay_500ns 
+00079f 982a                      	cbi   LCD_CPRT,LCD_E
                                  
-00079d 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
-00079e 9512                      	swap  r17
-00079f 7f10                      	andi  r17, 0xF0
-0007a0 b91b                      	out   LCD_DPRT, r17
-0007a1 9a28                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
-0007a2 9829                      	cbi   LCD_CPRT, LCD_RW
-0007a3 9a2a                      	sbi   LCD_CPRT, LCD_E
-0007a4 d8cf                      	rcall delay_500ns 
-0007a5 982a                      	cbi   LCD_CPRT,LCD_E
-0007a6 d8d6                      	rcall delay_100us
-0007a7 cfe4                      	rjmp  send_msg_loop
+0007a0 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
+0007a1 9512                      	swap  r17
+0007a2 7f10                      	andi  r17, 0xF0
+0007a3 b91b                      	out   LCD_DPRT, r17
+0007a4 9a28                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
+0007a5 9829                      	cbi   LCD_CPRT, LCD_RW
+0007a6 9a2a                      	sbi   LCD_CPRT, LCD_E
+0007a7 d8cc                      	rcall delay_500ns 
+0007a8 982a                      	cbi   LCD_CPRT,LCD_E
+0007a9 d8d3                      	rcall delay_100us
+0007aa cfe4                      	rjmp  send_msg_loop
                                  send_msg_fin:		
-0007a8 910f                      	pop  r16
-0007a9 911f                      	pop  r17
-0007aa 9508                      
+0007ab 910f                      	pop  r16
+0007ac 911f                      	pop  r17
+0007ad 9508                      
                                  ;-------------------------------------------------------------------------
                                  ; VARIABLES EN REGISTROS
                                  ;-------------------------------------------------------------------------
@@ -1695,7 +1703,7 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
 000000 940c 0034                 	jmp setup
                                  
                                  .org    0x0020
-000020 940c 00db                 	jmp INT_TIMER0_OVF
+000020 940c 00dc                 	jmp INT_TIMER0_OVF
                                  
                                  .org	0x0026								; USART Data Register Empty
 000026 940c 0052                 	jmp	ISR_REG_USART_VACIO
@@ -1714,27 +1722,26 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  
 00003b e0fe                      	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)			; Se envia el mensaje de aguarde hasta que se termina de configurar el peso con la tara
 00003c e2ee                      	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
-00003d d749                      	rcall send_msg
+00003d d74c                      	rcall send_msg
                                  
 00003e 9a42                      	sbi   PORTC, PC2							; encendemos led de prueba
 00003f 9843                      	cbi   PORTC, PC3
 000040 d4e6                      	rcall set_tara								; Setea el peso 0 de la balanza
-                                 
-                                 programa:	
+                                 	
 000041 e0fe                      	ldi   zh, HIGH(DIR_MSG_INICIO<<1)			; Se envia el mensaje de inicio
 000042 e0e0                      	ldi   zl, LOW(DIR_MSG_INICIO<<1)
-000043 d743                      	rcall send_msg
+000043 d746                      	rcall send_msg
                                  
 000044 d56c                      	rcall detectar_perturbacion					; Esta función espera a que haya una perturbación para iniciar el proceso
                                  	
 000045 e0fe                      	ldi   zh, HIGH(DIR_MSG_ESPERA_VASO<<1)		; Mensaje hasta que se detecta un peso
 000046 e1ee                      	ldi   zl, LOW(DIR_MSG_ESPERA_VASO<<1)
-000047 d73f                      	rcall send_msg
+000047 d742                      	rcall send_msg
                                  	
-000048 d050                      	rcall detectar_vaso
+000048 d05c                      	rcall detectar_vaso
 000049 e0fe                      	ldi   zh, HIGH(DIR_MSG_CONFIGURACION_1<<1)	; Mensaje para elegir medida
 00004a e3ea                      	ldi   zl, LOW(DIR_MSG_CONFIGURACION_1<<1)
-00004b d73b                      	rcall send_msg
+00004b d73e                      	rcall send_msg
                                  
                                  main_loop:
 00004c 9842                      	cbi   PORTC, PC2							; LEDS de prueba	
@@ -1801,10 +1808,9 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  	
 000073 9508                      	ret
                                  
-                                 ;__________________________________________________________
+                                 ; ----------------------------------------------------------------------
                                  ; Delay de 500ns porque el pin E tiene que estar alto ese tiempo
-                                 ;__________________________________________________________
-                                 
+                                 ; ----------------------------------------------------------------------
                                  delay_500ns:
 000074 0000                      	nop
 000075 0000                      	nop
@@ -1868,41 +1874,29 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  
 000097 910f                      	pop r16
 000098 9508                      	ret
-                                 /*
-                                 ;-------------------------------------------------------------------------
-                                 ; DELAY_3S:
-                                 ; funcion de delay de 3 s
-                                 ; Calculo del delay: (PRESCALER * 256)/fclk
-                                 ; Se va a utilizar un timer de 8 bits, el delay mas grande que se consigue es
-                                 ; de 16,36 ms, por lo que se crea un loop para llegar a 3 seg
-                                 ; Calculo de cuantos loops: 3 s / 16,38 ms = 183,1501832 ~ 183
-                                 ;-------------------------------------------------------------------------
                                  
-                                 delay_3s:
-                                 	push r16
-                                 	
-                                 	clr r16							
-                                 	out TCNT0, r16					; se inicializa el contador en 0 	
-                                 	
-                                 	
-                                 	out TCCR0A, r16					; config: modo normal, OC0A y OC0B desconectados
-                                 	
-                                 	ldi r16, (1<<CS02)|(0<<CS01)|(1<<CS00)
-                                 	out TCCR0B, r16					; config: modo normal, con prescaler = 1024
+                                 ; -------------------------------------------------------------------------
+                                 ; DELAY_4s:
+                                 ; funcion que activa un delay de 4 seg, que es el tiempo que tendra el 
+                                 ; usuario para ir cambiando de medida de vaso.
+                                 ; -------------------------------------------------------------------------
+                                 delay_4s:
+000099 930f                      	push  r16
                                  
-                                 delay_3s_loop:
-                                 	sbis TIFR0, TOV0
-                                 	rjmp delay_3ms_loop
-                                 	clr  r16
-                                 	out  TCCR0B, r16				; se apaga el timer
-                                 	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
-                                 	dec  r17
-                                 	brne delay_3s_loop
+00009a 2700                      	clr   r16							
+00009b bd06                      	out   TCNT0, r16					; se inicializa el contador en 0 	
                                  
-                                 	pop r17
-                                 	pop r16
-                                 	ret
-                                 	*/
+00009c bd04                      	out   TCCR0A, r16					; config: modo normal, OC0A y OC0B desconectados
+                                 	
+00009d e005                      	ldi   r16, (1<<CS02)|(0<<CS01)|(1<<CS00)
+00009e bd05                      	out   TCCR0B, r16					; config: modo normal, con prescaler = 1024
+                                 
+00009f e001                      	ldi  r16, (1<<TOIE0)				; se activa la interrupcion por overflow
+0000a0 9300 006e                 	sts  TIMSK0, r16
+                                 
+0000a2 ef24                      	ldi  r18, 244						; se inicializa el contador para el delay de 4 s
+0000a3 910f                      	pop  r16
+0000a4 9508                      	ret
                                  
                                  ;-------------------------------------------------------------------------
                                  ; DETECTA_VASO:
@@ -1914,105 +1908,94 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  .equ VASO_MINIMO = 200
                                  
                                  detectar_vaso: 
-000099 930f                      	push  r16
+0000a5 930f                      	push  r16
                                  
-00009a ec08                      	ldi   r16, VASO_MINIMO				; peso aproximado de un vaso de vidrio
+0000a6 ec08                      	ldi   r16, VASO_MINIMO				; peso aproximado de un vaso de vidrio
                                  
                                  detectar_vaso_lectura:
-00009b d464                      	rcall lectura_peso					
-00009c d4af                      	rcall set_scale						; lee un dato y lo escala
-00009d d52b                      	rcall detectar_cancelacion
-00009e 2044                      	tst   DATO_H						
-00009f f411                      	brne  detectar_vaso_verificacion					
-0000a0 1620                      	cp    DATO_L, r16					; compara el peso leido con el peso estandar de un vaso			
-0000a1 f3c8                      	brlo  detectar_vaso_lectura			; si no detecta un cambio vuelve a leer un peso
+0000a7 d458                      	rcall lectura_peso					
+0000a8 d4a3                      	rcall set_scale						; lee un dato y lo escala
+0000a9 d51f                      	rcall detectar_cancelacion
+0000aa 2044                      	tst   DATO_H						
+0000ab f411                      	brne  detectar_vaso_verificacion					
+0000ac 1620                      	cp    DATO_L, r16					; compara el peso leido con el peso estandar de un vaso			
+0000ad f3c8                      	brlo  detectar_vaso_lectura			; si no detecta un cambio vuelve a leer un peso
                                  	
                                  
                                  detectar_vaso_verificacion:				; la balanza envia 10 muestras por segundo por lo que la siguiente muestra sera a los 10 ms de la anterior
-0000a2 2c82                      	mov   VASO_L, DATO_L
-0000a3 2ca4                      	mov   VASO_H, DATO_H
-0000a4 d45b                      	rcall lectura_peso					
-0000a5 d4a6                      	rcall set_scale						; lee un dato y lo escala
-0000a6 d522                      	rcall detectar_cancelacion
-0000a7 144a                      	cp    DATO_H, VASO_H				; compara el peso leido con el peso estandar de un vaso			
-0000a8 f791                      	brne  detectar_vaso_lectura		
-0000a9 1428                      	cp    DATO_L, VASO_L				; compara el peso leido con el peso estandar de un vaso			
-0000aa f781                      	brne  detectar_vaso_lectura	
+0000ae 2c82                      	mov   VASO_L, DATO_L
+0000af 2ca4                      	mov   VASO_H, DATO_H
+0000b0 d44f                      	rcall lectura_peso					
+0000b1 d49a                      	rcall set_scale						; lee un dato y lo escala
+0000b2 d516                      	rcall detectar_cancelacion
+0000b3 144a                      	cp    DATO_H, VASO_H				; compara el peso leido con el peso estandar de un vaso			
+0000b4 f791                      	brne  detectar_vaso_lectura		
+0000b5 1428                      	cp    DATO_L, VASO_L				; compara el peso leido con el peso estandar de un vaso			
+0000b6 f781                      	brne  detectar_vaso_lectura	
                                  	
-0000ab e0fe                      	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)	; Mensaje hasta que se setea la tara
-0000ac e2ee                      	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
-0000ad d6d9                      	rcall send_msg
+0000b7 e0fe                      	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)	; Mensaje hasta que se setea la tara
+0000b8 e2ee                      	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
+0000b9 d6d0                      	rcall send_msg
                                  
-0000ae d478                      	rcall set_tara						; setea la tara ahora con el vaso puesto
+0000ba d46c                      	rcall set_tara						; setea la tara ahora con el vaso puesto
                                  	
-0000af 910f                      	pop   r16
-0000b0 9508                      	ret
+0000bb 910f                      	pop   r16
+0000bc 9508                      	ret
                                  
                                  ;-------------------------------------------------------------------------
                                  ; CONFIGURAR_MEDIDA:
                                  ; Se espera 3 segundos a que el usuario golpee 2 veces para cambiar la medida
                                  ;-------------------------------------------------------------------------
                                  
-0000b1 01f4
-0000b2 0177
-0000b3 00fa
-0000b4 ffff                      MEDIDA: .DB  LOW(500), HIGH(500), LOW(375), HIGH(375), LOW(250), HIGH(250), 0xFF, 0xFF
+                                 
                                  .def    MEDIDA_L = r11
                                  .def    MEDIDA_H = r12
                                  
                                  configurar_medida:
-0000b5 930f                      	push r16
-0000b6 931f                      	push r17
-0000b7 932f                      	push r18
-0000b8 93ef                      	push zl
-0000b9 93ff                      	push zh
+0000bd 930f                      	push r16
+0000be 931f                      	push r17
+0000bf 932f                      	push r18
+0000c0 93ef                      	push zl
+0000c1 93ff                      	push zh
                                  
-0000ba ef1f                      	ldi  r17, 0xFF
+0000c2 ef1f                      	ldi  r17, 0xFF
                                  
                                  configurar_medida_init:
-0000bb e6e2                      	ldi  zl, LOW(MEDIDA<<1)				; Se inicializa en la medida pinta
-0000bc e0f1                      	ldi  zh, HIGH(MEDIDA<<1)
+0000c3 e5e8                      	ldi  zl, LOW(MEDIDA_PINTA<<1)				; Se inicializa en la medida pinta
+0000c4 e0fe                      	ldi  zh, HIGH(MEDIDA_PINTA<<1)
                                  
                                  configurar_medida_loop:
-0000bd 90b5                      	lpm  MEDIDA_L, Z+					; se guarda la medida seleccionada
-0000be 90c5                      	lpm  MEDIDA_H, Z+ 
+0000c5 90b5                      	lpm  MEDIDA_L, Z+					; se guarda la medida seleccionada
+0000c6 90c5                      	lpm  MEDIDA_H, Z+ 
                                  	
-0000bf 16b1                      	cp   MEDIDA_L, r17
-0000c0 f3d1                      	breq configurar_medida_init
+0000c7 16b1                      	cp   MEDIDA_L, r17					; si el siguiente valor es 0xFF, ya se recorrieron las 3 medidas
+0000c8 f3d1                      	breq configurar_medida_init
+                                 	
+0000c9 d6c0                      	rcall send_msg						; envia el mensaje correspondiente a la medida cargada
                                  		
-0000c1 2700                      	clr   r16							
-0000c2 bd06                      	out   TCNT0, r16					; se inicializa el contador en 0 	
-                                 
-0000c3 bd04                      	out   TCCR0A, r16					; config: modo normal, OC0A y OC0B desconectados
+0000ca dfce                      	rcall delay_4s						; inicializa el delay de 4 seg
                                  	
-0000c4 e005                      	ldi   r16, (1<<CS02)|(0<<CS01)|(1<<CS00)
-0000c5 bd05                      	out   TCCR0B, r16					; config: modo normal, con prescaler = 1024
-                                 
-0000c6 e001                      	ldi  r16, (1<<TOIE0)				; se activa la interrupcion por overflow
-0000c7 9300 006e                 	sts  TIMSK0, r16
-                                 
-0000c9 ef24                      	ldi  r18, 244						; se inicializa el contador para el delay de 3 s
+0000cb d4e5                      	rcall detectar_perturbacion			
                                  	
-0000ca d4e6                      	rcall detectar_perturbacion			
-0000cb e001                      	ldi  r16, (1<<TOIE0)				; se desactiva la interrupcion por overflow
-0000cc 9300 006e                 	sts  TIMSK0, r16
-0000ce cfee                      	rjmp  configurar_medida_loop
+0000cc e001                      	ldi  r16, (1<<TOIE0)				; se desactiva la interrupcion por overflow
+0000cd 9300 006e                 	sts  TIMSK0, r16
+0000cf cff5                      	rjmp  configurar_medida_loop
                                  
-                                 configurar_medida_fin:	
-0000cf e000                      	ldi   r16, (0<<CS02)|(0<<CS01)|(0<<CS00)
-0000d0 bd05                      	out   TCCR0B, r16					; config: se apaga el timer
+                                 configurar_medida_fin:					; si pasaron 4 seg, de la subrutina de interrupcion se vuelve aqui
+0000d0 e000                      	ldi   r16, (0<<CS02)|(0<<CS01)|(0<<CS00)
+0000d1 bd05                      	out   TCCR0B, r16					; config: se apaga el timer
                                  
-0000d1 e000                      	ldi  r16, (0<<TOIE0)				; se desactiva la interrupcion por overflow
-0000d2 9300 006e                 	sts  TIMSK0, r16
+0000d2 e000                      	ldi  r16, (0<<TOIE0)				; se desactiva la interrupcion por overflow
+0000d3 9300 006e                 	sts  TIMSK0, r16
                                  	
-0000d4 9478                      	sei 
+0000d5 9478                      	sei								
                                  
-0000d5 91ff                      	pop   zh
-0000d6 91ef                      	pop   zl
-0000d7 912f                      	pop   r18
-0000d8 911f                      	pop   r17
-0000d9 910f                      	pop   r16
-0000da 9508                      	ret	
+0000d6 91ff                      	pop   zh
+0000d7 91ef                      	pop   zl
+0000d8 912f                      	pop   r18
+0000d9 911f                      	pop   r17
+0000da 910f                      	pop   r16
+0000db 9508                      	ret	
                                  
                                  
                                  ;-------------------------------------------------------------------------
@@ -2020,9 +2003,9 @@ C:\Users\Lola\Documents\FIUBA\7.Septimcuatrimestre\Labo\Proyecto\shiva\shiva\mai
                                  ; 
                                  ;-------------------------------------------------------------------------
                                  INT_TIMER0_OVF:
-0000db 952a                      	dec  r18
-0000dc f391                      	breq configurar_medida_fin 
-0000dd 9518                      	reti
+0000dc 952a                      	dec  r18
+0000dd f391                      	breq configurar_medida_fin					; si el contador llego a 0, pasaron 4 segundos
+0000de 9518                      	reti
                                  
                                  
                                  
@@ -2052,7 +2035,7 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   1 z  :   3 r0 :   3 r1 :   3 r2 :  11 r3 :  13 r4 :  13 
 r5 :   3 r6 :   3 r7 :   3 r8 :   2 r9 :   1 r10:   3 r11:   2 r12:   1 
-r13:   0 r14:   0 r15:   0 r16: 127 r17:  42 r18:  16 r19:  12 r20:  15 
+r13:   0 r14:   0 r15:   0 r16: 129 r17:  42 r18:  16 r19:  12 r20:  15 
 r21:   4 r22:   4 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   3 
 r29:   1 r30:   9 r31:   9 
 Registers used: 26 out of 35 (74.3%)
@@ -2070,8 +2053,8 @@ cpi   :   4 cpse  :   0 dec   :  11 eor   :   0 fmul  :   0 fmuls :   0
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   3 jmp   :   3 
 ld    :   1 ldd   :   0 ldi   :  52 lds   :   2 lpm   :   3 lsl   :   1 
 lsr   :   2 mov   :  18 movw  :   0 mul   :   3 muls  :   0 mulsu :   0 
-neg   :   1 nop   :  18 or    :   0 ori   :   0 out   :  19 pop   :  37 
-push  :  35 rcall :  51 ret   :  19 reti  :   3 rjmp  :   9 rol   :   0 
+neg   :   1 nop   :  18 or    :   0 ori   :   0 out   :  19 pop   :  38 
+push  :  36 rcall :  53 ret   :  20 reti  :   3 rjmp  :   9 rol   :   0 
 ror   :   5 sbc   :   2 sbci  :   0 sbi   :  19 sbic  :   3 sbis  :   2 
 sbiw  :   0 sbr   :   1 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   2 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
@@ -2082,7 +2065,7 @@ Instructions used: 47 out of 113 (41.6%)
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000f56    900    236   1136   32768   3.5%
+[.cseg] 0x000000 0x000f5c    910    234   1144   32768   3.5%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

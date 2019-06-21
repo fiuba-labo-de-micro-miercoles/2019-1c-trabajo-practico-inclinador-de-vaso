@@ -2,13 +2,21 @@
 .org  0x700
 	DIR_MSG_INICIO:          .DB "   S.H.I.V.A. ", '\n', "Golpee 2 veces", 0xFF     
 	DIR_MSG_ESPERA_VASO:     .DB "Coloque un vaso", 0xFF
-	DIR_MSG_AGUARDE:		 .DB "Aguarde...", 0xFF, 0xFF
-	DIR_MSG_CONFIGURACION_1: .DB "Golpear 2 veces", '\n', "para cambiar", 0xFF, 0xFF
-	DIR_MSG_PINTA:           .DB "PINTA (500ml)", '\n', "Golpee para otro", 0xFF, 0xFF
-	DIR_MSG_CHOPP:           .DB "CHOPP (375ml)", '\n', "Golpee para otro", 0xFF, 0xFF
-	DIR_MSG_MEDIA_PINTA:     .DB "1/2 PINTA (250ml)", '\n', "Golpee para otro", 0xFF, 0xFF
+	DIR_MSG_AGUARDE:		 .DB "Aguarde... ", 0xFF
+	DIR_MSG_CONFIGURACION_1: .DB "Golpear 2 veces", '\n', "para cambiar ", 0xFF
+	
+	MEDIDA_PINTA:			 .DB HIGH(500), LOW(500)
+	DIR_MSG_PINTA:           .DB "PINTA (500ml)", '\n', "Golpee para otro.", 0xFF
+
+	MEDIDA_CHOP:			 .DB HIGH(375), LOW(375)
+	DIR_MSG_CHOPP:           .DB "CHOPP (375ml)", '\n', "Golpee para otro.", 0xFF
+
+	MEDIDA_MEDIAPINTA:       .DB HIGH(250), LOW(250)
+	DIR_MSG_MEDIA_PINTA:     .DB "1/2 PINTA(250ml)", '\n', "Golpee para otro ", 0xFF, 0xFF 
+	
 	DIR_MSG_SIRVIENDO:       .DB "Sirviendo....", 0xFF
-	DIR_MSG_CANCELACION:     .DB "    Proceso",'\n', "   cancelado", 0xFF, 0xFF
+	DIR_MSG_CANCELACION:     .DB "    Proceso ",'\n', "   cancelado", 0xFF 
+
 
 ;-------------------------------------------------------------------------
 ; SEND_COMMAND:

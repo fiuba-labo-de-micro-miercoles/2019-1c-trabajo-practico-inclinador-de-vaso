@@ -60,8 +60,7 @@ setup:
 	sbi   PORTC, PC2							; encendemos led de prueba
 	cbi   PORTC, PC3
 	rcall set_tara								; Setea el peso 0 de la balanza
-
-programa:	
+	
 	ldi   zh, HIGH(DIR_MSG_INICIO<<1)			; Se envia el mensaje de inicio
 	ldi   zl, LOW(DIR_MSG_INICIO<<1)
 	rcall send_msg
@@ -209,6 +208,29 @@ delay_3ms_loop:
 	pop r16
 	ret
 
+; -------------------------------------------------------------------------
+; DELAY_4s:
+; funcion que activa un delay de 4 seg, que es el tiempo que tendra el 
+; usuario para ir cambiando de medida de vaso.
+; -------------------------------------------------------------------------
+delay_4s:
+	push  r16
+
+	clr   r16							
+	out   TCNT0, r16					; se inicializa el contador en 0 	
+
+	out   TCCR0A, r16					; config: modo normal, OC0A y OC0B desconectados
+	
+	ldi   r16, (1<<CS02)|(0<<CS01)|(1<<CS00)
+	out   TCCR0B, r16					; config: modo normal, con prescaler = 1024
+
+	ldi  r16, (1<<TOIE0)				; se activa la interrupcion por overflow
+	sts  TIMSK0, r16
+
+	ldi  r18, 244						; se inicializa el contador para el delay de 4 s
+	pop  r16
+	ret
+
 ;-------------------------------------------------------------------------
 ; DETECTA_VASO:
 ; Se tiene en cuenta que un vaso de virdio pesa aproximadamente 200gr. 
@@ -258,7 +280,7 @@ detectar_vaso_verificacion:				; la balanza envia 10 muestras por segundo por lo
 ; Se espera 3 segundos a que el usuario golpee 2 veces para cambiar la medida
 ;-------------------------------------------------------------------------
 
-MEDIDA: .DB  LOW(500), HIGH(500), LOW(375), HIGH(375), LOW(250), HIGH(250), 0xFF, 0xFF
+
 .def    MEDIDA_L = r11
 .def    MEDIDA_H = r12
 
@@ -272,42 +294,34 @@ configurar_medida:
 	ldi  r17, 0xFF
 
 configurar_medida_init:
-	ldi  zl, LOW(MEDIDA<<1)				; Se inicializa en la medida pinta
-	ldi  zh, HIGH(MEDIDA<<1)
+	ldi  zl, LOW(MEDIDA_PINTA<<1)				; Se inicializa en la medida pinta
+	ldi  zh, HIGH(MEDIDA_PINTA<<1)
 
 configurar_medida_loop:
 	lpm  MEDIDA_L, Z+					; se guarda la medida seleccionada
 	lpm  MEDIDA_H, Z+ 
 	
-	cp   MEDIDA_L, r17
+	cp   MEDIDA_L, r17					; si el siguiente valor es 0xFF, ya se recorrieron las 3 medidas
 	breq configurar_medida_init
-		
-	clr   r16							
-	out   TCNT0, r16					; se inicializa el contador en 0 	
-
-	out   TCCR0A, r16					; config: modo normal, OC0A y OC0B desconectados
 	
-	ldi   r16, (1<<CS02)|(0<<CS01)|(1<<CS00)
-	out   TCCR0B, r16					; config: modo normal, con prescaler = 1024
-
-	ldi  r16, (1<<TOIE0)				; se activa la interrupcion por overflow
-	sts  TIMSK0, r16
-
-	ldi  r18, 244						; se inicializa el contador para el delay de 3 s
+	rcall send_msg						; envia el mensaje correspondiente a la medida cargada
+		
+	rcall delay_4s						; inicializa el delay de 4 seg
 	
 	rcall detectar_perturbacion			
+	
 	ldi  r16, (1<<TOIE0)				; se desactiva la interrupcion por overflow
 	sts  TIMSK0, r16
 	rjmp  configurar_medida_loop
 
-configurar_medida_fin:	
+configurar_medida_fin:					; si pasaron 4 seg, de la subrutina de interrupcion se vuelve aqui
 	ldi   r16, (0<<CS02)|(0<<CS01)|(0<<CS00)
 	out   TCCR0B, r16					; config: se apaga el timer
 
 	ldi  r16, (0<<TOIE0)				; se desactiva la interrupcion por overflow
 	sts  TIMSK0, r16
 	
-	sei 
+	sei								
 
 	pop   zh
 	pop   zl
@@ -323,7 +337,7 @@ configurar_medida_fin:
 ;-------------------------------------------------------------------------
 INT_TIMER0_OVF:
 	dec  r18
-	breq configurar_medida_fin 
+	breq configurar_medida_fin					; si el contador llego a 0, pasaron 4 segundos
 	reti
 
 
