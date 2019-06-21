@@ -1,0 +1,37 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.7</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Users\marti\Google Drive\LABO\servo\servo\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Users\marti\Google Drive\LABO\servo\servo\Debug\servo.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>servo.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>servo.map</FILE>
+  <FILE>servo.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <main><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>10</LINE></main>
+  <INT_TIMER1_OVF><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>78</LINE></INT_TIMER1_OVF>
+  <servo_init><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>32</LINE></servo_init>
+  <dellay><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>89</LINE></dellay>
+  <here><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>21</LINE></here>
+  <servo_pull><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>56</LINE></servo_pull>
+  <servo_pull_end><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>73</LINE></servo_pull_end>
+  <servo_pull_next><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>69</LINE></servo_pull_next>
+  <dellay_L1><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>95</LINE></dellay_L1>
+  <dellay_L2><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>96</LINE></dellay_L2>
+  <dellay_L3><FILE>C:\Users\marti\Google Drive\LABO\servo\servo\main.asm</FILE><LINE>97</LINE></dellay_L3>
+ </LABELS>
+</ASSEMBLER_INFO>
