@@ -10,8 +10,8 @@
 .equ  LCD_CDDR = DDRB
 .equ  LCD_CPIN = PINB						; Para los comandos del LCD se utilizan los pines PB1:PB0
 
-.equ  LCD_RS = 0
-.equ  LCD_RW = 1
+.equ  LCD_RS = 4
+.equ  LCD_RW = 3
 .equ  LCD_E  = 2							; A que pin del PORTB pertencen
 
 .equ  CLEAR_DISPLAY                 = 0x01

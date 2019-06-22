@@ -53,6 +53,9 @@ setup:
 	rcall USART_init
 	rcall LCD_init
 
+	clr   VASO_H
+	clr  VASO_M
+	clr  VASO_L
 	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)			; Se envia el mensaje de aguarde hasta que se termina de configurar el peso con la tara
 	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
 	rcall send_msg
@@ -71,10 +74,10 @@ setup:
 	ldi   zl, LOW(DIR_MSG_ESPERA_VASO<<1)
 	rcall send_msg
 	
-	rcall detectar_vaso
-	ldi   zh, HIGH(DIR_MSG_CONFIGURACION_1<<1)	; Mensaje para elegir medida
-	ldi   zl, LOW(DIR_MSG_CONFIGURACION_1<<1)
-	rcall send_msg
+	;rcall detectar_vaso
+	;ldi   zh, HIGH(DIR_MSG_CONFIGURACION_1<<1)	; Mensaje para elegir medida
+	;ldi   zl, LOW(DIR_MSG_CONFIGURACION_1<<1)
+	;rcall send_msg
 
 main_loop:
 	cbi   PORTC, PC2							; LEDS de prueba	

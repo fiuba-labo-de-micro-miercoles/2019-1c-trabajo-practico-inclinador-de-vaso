@@ -71,7 +71,7 @@ proceso_cancelado_loop:
 	brne   proceso_cancelado_loop
 	cp     DATO_M, VASO_M
 	brne   proceso_cancelado_loop
-	ldi    r16, 5
+	ldi    r16, 25
 	cp     DATO_L, r16
 	brsh   proceso_cancelado_loop
 	pop    r16

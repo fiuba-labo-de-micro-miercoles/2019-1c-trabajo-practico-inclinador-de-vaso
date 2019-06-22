@@ -49,7 +49,7 @@
   <com_2_retornar><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\hx711.asm</FILE><LINE>194</LINE></com_2_retornar>
   <send_data><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\hx711.asm</FILE><LINE>204</LINE></send_data>
   <configuracion_puertos><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\configuracion.asm</FILE><LINE>4</LINE></configuracion_puertos>
-  <delay_3ms><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>190</LINE></delay_3ms>
+  <delay_3ms><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>193</LINE></delay_3ms>
   <USART_init><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\configuracion.asm</FILE><LINE>27</LINE></USART_init>
   <LCD_init><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\configuracion.asm</FILE><LINE>50</LINE></LCD_init>
   <send_command><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.asm</FILE><LINE>26</LINE></send_command>
@@ -74,28 +74,28 @@
   <MEDIDA_MEDIAPINTA><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.asm</FILE><LINE>14</LINE></MEDIDA_MEDIAPINTA>
   <DIR_MSG_MEDIA_PINTA><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.asm</FILE><LINE>15</LINE></DIR_MSG_MEDIA_PINTA>
   <DIR_MSG_SIRVIENDO><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.asm</FILE><LINE>17</LINE></DIR_MSG_SIRVIENDO>
-  <delay_500ns><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>147</LINE></delay_500ns>
-  <delay_100us><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>164</LINE></delay_100us>
+  <delay_500ns><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>150</LINE></delay_500ns>
+  <delay_100us><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>167</LINE></delay_100us>
   <send_msg_loop><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.asm</FILE><LINE>64</LINE></send_msg_loop>
   <send_msg_fin><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.asm</FILE><LINE>98</LINE></send_msg_fin>
   <send_msg_next><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\output.asm</FILE><LINE>77</LINE></send_msg_next>
-  <INT_TIMER0_OVF><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>338</LINE></INT_TIMER0_OVF>
-  <ISR_REG_USART_VACIO><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>98</LINE></ISR_REG_USART_VACIO>
-  <detectar_vaso><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>243</LINE></detectar_vaso>
-  <main_loop><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>79</LINE></main_loop>
-  <ISR_REG_USART_VACIO_fin><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>107</LINE></ISR_REG_USART_VACIO_fin>
-  <dellay><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>118</LINE></dellay>
-  <dellay_L1><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>124</LINE></dellay_L1>
-  <dellay_L2><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>125</LINE></dellay_L2>
-  <dellay_L3><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>126</LINE></dellay_L3>
-  <delay_100us_loop><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>175</LINE></delay_100us_loop>
-  <delay_3ms_loop><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>201</LINE></delay_3ms_loop>
-  <delay_4s><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>216</LINE></delay_4s>
-  <detectar_vaso_lectura><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>248</LINE></detectar_vaso_lectura>
-  <detectar_vaso_verificacion><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>258</LINE></detectar_vaso_verificacion>
-  <configurar_medida><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>287</LINE></configurar_medida>
-  <configurar_medida_init><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>296</LINE></configurar_medida_init>
-  <configurar_medida_loop><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>300</LINE></configurar_medida_loop>
-  <configurar_medida_fin><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>317</LINE></configurar_medida_fin>
+  <INT_TIMER0_OVF><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>341</LINE></INT_TIMER0_OVF>
+  <ISR_REG_USART_VACIO><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>101</LINE></ISR_REG_USART_VACIO>
+  <main_loop><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>82</LINE></main_loop>
+  <ISR_REG_USART_VACIO_fin><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>110</LINE></ISR_REG_USART_VACIO_fin>
+  <dellay><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>121</LINE></dellay>
+  <dellay_L1><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>127</LINE></dellay_L1>
+  <dellay_L2><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>128</LINE></dellay_L2>
+  <dellay_L3><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>129</LINE></dellay_L3>
+  <delay_100us_loop><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>178</LINE></delay_100us_loop>
+  <delay_3ms_loop><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>204</LINE></delay_3ms_loop>
+  <delay_4s><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>219</LINE></delay_4s>
+  <detectar_vaso><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>246</LINE></detectar_vaso>
+  <detectar_vaso_lectura><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>251</LINE></detectar_vaso_lectura>
+  <detectar_vaso_verificacion><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>261</LINE></detectar_vaso_verificacion>
+  <configurar_medida><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>290</LINE></configurar_medida>
+  <configurar_medida_init><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>299</LINE></configurar_medida_init>
+  <configurar_medida_loop><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>303</LINE></configurar_medida_loop>
+  <configurar_medida_fin><FILE>C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm</FILE><LINE>320</LINE></configurar_medida_fin>
  </LABELS>
 </ASSEMBLER_INFO>
