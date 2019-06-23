@@ -195,20 +195,3 @@ com_2_retornar:
 	pop r16
 	ret
 
-
-; ----------------------------------------------------------------------------
-; SEND_DATA: 
-; envia los registros r4:r2 por la USART. Funcion de prueba
-; ----------------------------------------------------------------------------
-
-send_data:
-	push r16
-	ldi  yh, HIGH(0x04)				; hay que mandar 3 bytes, ubicados en r4:r2. Definimos
-	ldi  yl, LOW(0x04)				; que Z apunte a r4 y luego en la rutina de interruopcion se decrementa
-	
-	lds  r16, UCSR0B
-	sbr  r16, 1<<UDRIE0
-	sts  UCSR0B, r16				; habilito interrupciones 
-	sei
-	pop  r16
-	ret

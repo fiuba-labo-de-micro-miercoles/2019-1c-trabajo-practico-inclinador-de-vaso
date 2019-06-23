@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm Sat Jun 22 02:55:14 2019
+AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm Sat Jun 22 23:27:35 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
 C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm(12): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
@@ -1081,6 +1081,15 @@ C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo
                                  ; CONSTANTES y MACROS
                                  ;-------------------------------------------------------------------------
                                  .equ  VALOR_CANCELACION = 4096 
+                                 .equ MIN_PERTURBACION = 256
+                                 
+                                 .equ VASO_MINIMO = 200
+                                 .equ MARGEN_ERROR = 4
+                                 
+                                 ;-------------------------------------------------------------------------
+                                 ; VARIABLES EN REGISTROS
+                                 ;-------------------------------------------------------------------------
+                                 .def    MEDIDA_L = r11
                                  .include "configuracion.inc"
                                  
                                  ; CONSTANTES y MACROS
@@ -1320,86 +1329,74 @@ C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo
 00057b 910f                      	pop r16
 00057c 9508                      	ret
                                  
-                                 
-                                 ; ----------------------------------------------------------------------------
-                                 ; SEND_DATA: 
-                                 ; envia los registros r4:r2 por la USART. Funcion de prueba
-                                 ; ----------------------------------------------------------------------------
-                                 
-                                 send_data:
-00057d 930f                      	push r16
-00057e e0d0                      	ldi  yh, HIGH(0x04)				; hay que mandar 3 bytes, ubicados en r4:r2. Definimos
-00057f e0c4                      	ldi  yl, LOW(0x04)				; que Z apunte a r4 y luego en la rutina de interruopcion se decrementa
-                                 	
-000580 9100 00c1                 	lds  r16, UCSR0B
-000582 6200                      	sbr  r16, 1<<UDRIE0
-000583 9300 00c1                 	sts  UCSR0B, r16				; habilito interrupciones 
-000585 9478                      	sei
-000586 910f                      	pop  r16
                                  .include "configuracion.asm"
-000587 9508                      
+                                 
                                  ; CONFIGURACION_PUERTOS:
                                  ;-------------------------------------------------------------------------
                                  configuracion_puertos:
-000588 930f                      	push r16
+00057d 930f                      	push r16
                                  									; CELDA DE CARGA	
-000589 9a38                      	sbi  DDRC, SCK					; puerto PC0 = A0 como salida (SCK)
+00057e 9a38                      	sbi  DDRC, SCK					; puerto PC0 = A0 como salida (SCK)
+00057f 9839                      	cbi  DDRC, DOUT
+000580 9a41                      	sbi  PORTC, DOUT				; puerto PC = A1 como entrada (DOUT) 
                                  
-00058a 9a3a                      	sbi  DDRC, PC2					; leds de prueba
-00058b 9a3b                      	sbi  DDRC, PC3
-                                 									; PRUEBAS
-00058c 9839                      	cbi  DDRC, DOUT
-00058d 9a41                      	sbi  PORTC, DOUT				; puerto PC = A1 como entrada (DOUT) 
-                                 																		
-00058e ef00                      	ldi  r16, 0xF0					; PANTALLA LCD		
-00058f b90a                      	out  LCD_DDDR, r16				; Configuro los bits D7:D4 del puerto D como de salida
-000590 9a24                      	sbi  LCD_CDDR, LCD_RS		
-000591 9a23                      	sbi  LCD_CDDR, LCD_RW
-000592 9a22                      	sbi  LCD_CDDR, LCD_E			; Configuro los puertos de dato (PORTD) y los comandos usados (del PORTB) como de salida 
-000593 daf6                      	rcall delay_3ms
-000594 910f                      	pop  r16
-000595 9508                      	ret
-                                 
-                                 ; ----------------------------------------------------------------------
-                                 ; INICIALIZACION DE LA UART EN MODO TRANSMISION
-                                 ; ----------------------------------------------------------------------
-                                 USART_init:
-000596 930f                      	push r16
-                                 		
-000597 e000                      	ldi  r16, high(BAUD_RATE)		; configuracion del baudrate = 9600  		
-000598 9300 00c5                 	sts  UBRR0H, r16
-00059a ec0f                      	ldi  r16, low(BAUD_RATE)	
-00059b 9300 00c4                 	sts  UBRR0L, r16
+                                 									; SERVO
+000581 9a21                      	sbi  DDRB, PB1					; PB1 como output pin						
                                  	
-00059d e002                      	ldi  r16, (1<<U2X0)				; doble velocidad
-00059e 9300 00c0                 	sts	 UCSR0A, r16
-                                 
-0005a0 e006                      	ldi  r16, (0<<UMSEL01)|(0<<UMSEL00)|(0<<UPM01)|(0<<UPM00)|(0<<USBS0)|(1<<UCSZ01)|(1<<UCSZ00) ; Trama: modo asincronico,sin paridad8 bits de datos y 1 bit de stop 
-0005a1 9300 00c2                 	sts  UCSR0C, r16																			 
-                                 
-0005a3 ee08                      	ldi  r16, (1<<RXCIE0)|(1<<TXCIE0)|(1<<UDRIE0)|(0<<RXEN0)|(1<<TXEN0)|(0<<UCSZ02)	; Habilito interrupciones de recepcion y transmision
-0005a4 9300 00c1                 	sts  UCSR0B, r16																; habilito transmision y deshabilito recepcion, configuro la cantidad
-                                 																					; de bits del dato	
-0005a6 910f                      	pop  r16
-0005a7 9508                      	ret																				
+000582 ef00                      	ldi  r16, 0xF0					; PANTALLA LCD		
+000583 b90a                      	out  LCD_DDDR, r16				; Configuro los bits D7:D4 del puerto D como de salida
+000584 9a24                      	sbi  LCD_CDDR, LCD_RS		
+000585 9a23                      	sbi  LCD_CDDR, LCD_RW
+000586 9a22                      	sbi  LCD_CDDR, LCD_E			; Configuro los puertos de dato (PORTD) y los comandos usados (del PORTB) como de salida 
+000587 db04                      	rcall delay_3ms
+                                 	
+                                 	
+000588 910f                      	pop  r16
+000589 9508                      	ret											
                                  
                                  ;-------------------------------------------------------------------------
                                  ; LCD_INIT:
                                  ;-------------------------------------------------------------------------
                                  LCD_init:
-0005a8 930f                      	push  r16
+00058a 930f                      	push  r16
                                  
-0005a9 e208                      	ldi   r16, DATA_4BIT			; Trabajamos enviando los caracteres de a 4 bits
-0005aa d1ca                      	rcall send_command
-0005ab dade                      	rcall delay_3ms
+00058b e208                      	ldi   r16, DATA_4BIT			; Trabajamos enviando los caracteres de a 4 bits
+00058c d230                      	rcall send_command
+00058d dafe                      	rcall delay_3ms
                                  	
-0005ac e00c                      	ldi   r16, DISP_ON_CURS_OFF		; Deja el cursor fijo
-0005ad d1c7                      	rcall send_command				
-0005ae dadb                      	rcall delay_3ms
+00058e e00c                      	ldi   r16, DISP_ON_CURS_OFF		; Deja el cursor fijo
+00058f d22d                      	rcall send_command				
+000590 dafb                      	rcall delay_3ms
                                  
-0005af 910f                      	pop   r16
+000591 910f                      	pop   r16
+000592 9508                      	ret
+                                 
+                                 ;-------------------------------------------------------------------------
+                                 ; SERVO_INIT:
+                                 ; 
+                                 ;-------------------------------------------------------------------------
+                                 servo_init:
+000593 930f                      	push r16
+                                 
+000594 e001                      	ldi  r16, HIGH(313 + 7)
+000595 9300 0089                 	sts  OCR1AH, r16
+                                 
+000597 e400                      	ldi  r16, LOW(313 + 7)
+000598 9300 0088                 	sts  OCR1AL, r16
+                                 
+00059a e803                      	ldi  r16, (1<<WGM11)|(1<<WGM10)|(1<<COM1A1)|(0<<COM1A0)			; fast-PWM mode, non-inverting mode
+00059b 9300 0080                 	sts  TCCR1A, r16					
+                                 
+00059d e00d                      	ldi  r16, (0<<WGM13)|(1<<WGM12)|(1<<CS02)|(0<<CS01)|(1<<CS00)
+00059e 9300 0081                 	sts  TCCR1B, r16												; con prescaler = 1024
+                                 
+0005a0 e001                      	ldi  r16, (1<<TOIE1)
+0005a1 9300 006f                 	sts  TIMSK1, r16												; se activa interrupciones
+                                 
+0005a3 910f                      	pop  r16
+0005a4 9508                      	ret
                                  .include "input.asm"
-0005b0 9508                      
+                                 
                                  ; DETECTAR_PERTURBACION:
                                  ; Para la configuracion del dispositivo se detectaran golpes dados por
                                  ; el usuario. Entonces, se determino que un golpe equivale a aproximadamente
@@ -1408,39 +1405,40 @@ C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo
                                  ; ocurre significa que el dispositivo esta siendo configurado.
                                  ; ----------------------------------------------------------------------
                                  detectar_perturbacion:
-0005b1 930f                      	push  r16
-0005b2 931f                      	push  r17
+0005a5 930f                      	push  r16
+0005a6 931f                      	push  r17
                                  
-0005b3 e001                      	ldi	  r16, HIGH(MIN_PERTURBACION)					; se utiliza para comparar el valor de lectura y saber si hubo alguna perturbacion
+0005a7 e001                      	ldi	  r16, HIGH(MIN_PERTURBACION)					; se utiliza para comparar el valor de lectura y saber si hubo alguna perturbacion
                                  	
-                                 
                                  detectar_perturbacion_lectura:
-0005b4 df4b                      	rcall lectura_peso
-0005b5 df96                      	rcall set_scale	
-0005b6 1630                      	cp    DATO_M, r16
-0005b7 f3e0                      	brlo  detectar_perturbacion_lectura
-0005b8 e014                      	ldi   r17, 4
+0005a8 f096                      	brts  detectar_perturbacion_fin
+0005a9 df56                      	rcall lectura_peso
+0005aa dfa1                      	rcall set_scale	
+0005ab 1630                      	cp    DATO_M, r16
+0005ac f3d8                      	brlo  detectar_perturbacion_lectura
+0005ad e014                      	ldi   r17, 4
                                  
                                  detectar_perturbacion_verificacion:
-0005b9 951a                      	dec   r17
-0005ba f3c9                      	breq  detectar_perturbacion_lectura
-0005bb df44                      	rcall lectura_peso
-0005bc df8f                      	rcall set_scale
-0005bd 1630                      	cp    DATO_M, r16
-0005be f7d0                      	brsh  detectar_perturbacion_verificacion
-0005bf e016                      	ldi   r17, 6
+0005ae 951a                      	dec   r17
+0005af f3c1                      	breq  detectar_perturbacion_lectura
+0005b0 df4f                      	rcall lectura_peso
+0005b1 df9a                      	rcall set_scale
+0005b2 1630                      	cp    DATO_M, r16
+0005b3 f7d0                      	brsh  detectar_perturbacion_verificacion
+0005b4 e016                      	ldi   r17, 6
                                  
                                  detectar_perturbacion_verificacion2:
-0005c0 951a                      	dec   r17
-0005c1 f391                      	breq  detectar_perturbacion_lectura
-0005c2 df3d                      	rcall lectura_peso
-0005c3 df88                      	rcall set_scale
-0005c4 1630                      	cp    DATO_M, r16
-0005c5 f3d0                      	brlo  detectar_perturbacion_verificacion2
-                                 	
-0005c6 911f                      	pop   r17
-0005c7 910f                      	pop   r16
-0005c8 9508                      	ret
+0005b5 951a                      	dec   r17
+0005b6 f389                      	breq  detectar_perturbacion_lectura
+0005b7 df48                      	rcall lectura_peso
+0005b8 df93                      	rcall set_scale
+0005b9 1630                      	cp    DATO_M, r16
+0005ba f3d0                      	brlo  detectar_perturbacion_verificacion2
+                                 
+                                 detectar_perturbacion_fin:
+0005bb 911f                      	pop   r17
+0005bc 910f                      	pop   r16
+0005bd 9508                      	ret
                                  
                                  ; ----------------------------------------------------------------------
                                  ; DETECTAR_CANCELACION:
@@ -1451,36 +1449,156 @@ C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo
                                  ; byte del dato con 0x10 
                                  ; ----------------------------------------------------------------------	
                                  detectar_cancelacion:	
-0005c9 930f                      	push r16
+0005be 930f                      	push r16
                                  
-0005ca 2d03                      	mov  r16, DATO_M
-0005cb 3100                      	cpi  r16, HIGH (VALOR_CANCELACION)
-0005cc f410                      	brsh proceso_cancelado
-0005cd 910f                      	pop  r16
-0005ce 9508                      	ret
+0005bf 2d03                      	mov  r16, DATO_M
+0005c0 3100                      	cpi  r16, HIGH (VALOR_CANCELACION)
+0005c1 f410                      	brsh proceso_cancelado
+0005c2 910f                      	pop  r16
+0005c3 9508                      	ret
                                  
                                  proceso_cancelado:						
-0005cf e0fe                      	ldi   zh, HIGH(DIR_MSG_CANCELACION<<1)
-0005d0 ede0                      	ldi   zl, LOW(DIR_MSG_CANCELACION<<1)
-0005d1 d1b8                      	rcall send_msg
+0005c4 e0fe                      	ldi   zh, HIGH(DIR_MSG_CANCELACION<<1)
+0005c5 eeec                      	ldi   zl, LOW(DIR_MSG_CANCELACION<<1)
+0005c6 d20b                      	rcall send_msg
                                  										; se debe volver al SETUP cuando no haya peso sobre la balanza
-0005d2 9843                      	cbi    PORTC,PC3					; y eso se dara cuando el dato sea igual al peso del vaso 
-                                 										; que quedo guardado en VASO
+0005c7 e012                      	ldi    r17, 2									; y eso se dara cuando el dato sea igual al peso del vaso 
+0005c8 e00a                      	ldi    r16, 10						; que quedo guardado en VASO
                                  proceso_cancelado_loop:
-0005d3 df2c                      	rcall  lectura_peso	
-0005d4 144a                      	cp     DATO_H, VASO_H
-0005d5 f7e9                      	brne   proceso_cancelado_loop
-0005d6 1439                      	cp     DATO_M, VASO_M
-0005d7 f7d9                      	brne   proceso_cancelado_loop
-0005d8 e109                      	ldi    r16, 25
-0005d9 1620                      	cp     DATO_L, r16
-0005da f7c0                      	brsh   proceso_cancelado_loop
-0005db 910f                      	pop    r16
+0005c9 df36                      	rcall  lectura_peso	
                                  
+0005ca 1828                      	sub    DATO_L, VASO_L
+0005cb 0839                      	sbc    DATO_M, VASO_M
+0005cc 084a                      	sbc	   DATO_H, VASO_H
+0005cd f408                      	brsh   proceso_cancelado_next
+0005ce dfa4                      	rcall  com_2
+                                 proceso_cancelado_next:	
+0005cf 2044                      	tst    DATO_H
+0005d0 f7c1                      	brne   proceso_cancelado_loop
+0005d1 2033                      	tst    DATO_M
+0005d2 f7b1                      	brne   proceso_cancelado_loop
+0005d3 1620                      	cp     DATO_L, r16
+0005d4 f7a0                      	brsh   proceso_cancelado_loop
+0005d5 951a                      	dec    r17
+0005d6 f791                      	brne   proceso_cancelado_loop
+                                 	/*cp     DATO_H, VASO_H
+                                 	brne   proceso_cancelado_loop
+                                 	cp     DATO_M, VASO_M
+                                 	brne   proceso_cancelado_loop
+                                 	cp     DATO_L, VASO_L
+                                 	brne   proceso_cancelado_loop*/
+0005d7 910f                      	pop    r16
+0005d8 ca5b                      	rjmp   setup
                                  
-0005dc ca57                      	rjmp   setup
+                                 ;-------------------------------------------------------------------------
+                                 ; DETECTA_VASO:
+                                 ; Se tiene en cuenta que un vaso de virdio pesa aproximadamente 200gr. 
+                                 ; La funcion lee un dato y compara con el valor minimo de un vaso, 
+                                 ; cuando detecta este valor se fija que en la siguiente lectura
+                                 ; el valor sea el mismo. Guarda ese valor en VASO_H VASO_L y setea la tara. 
+                                 ;-------------------------------------------------------------------------
+                                 
+                                 detectar_vaso: 
+0005d9 930f                      	push  r16
+                                 
+0005da ec08                      	ldi   r16, VASO_MINIMO				; peso aproximado de un vaso de vidrio
+0005db e014                      	ldi   r17, MARGEN_ERROR
+                                 
+                                 detectar_vaso_lectura:
+0005dc df23                      	rcall lectura_peso					; lee un dato y lo escala
+0005dd df6e                      	rcall set_scale						
+0005de dfdf                      	rcall detectar_cancelacion
                                  	
+0005df 2033                      	tst   DATO_M						
+0005e0 f411                      	brne  detectar_vaso_verificacion					
+0005e1 1620                      	cp    DATO_L, r16					; compara el peso leido con el peso estandar de un vaso			
+0005e2 f3c8                      	brlo  detectar_vaso_lectura			; si no detecta un cambio vuelve a leer un peso
                                  	
+                                 detectar_vaso_verificacion:				; la balanza envia 10 muestras por segundo por lo que la siguiente muestra sera a los 10 ms de la anterior
+0005e3 2c82                      	mov   VASO_L, DATO_L
+0005e4 2c93                      	mov   VASO_M, DATO_M
+0005e5 2ca4                      	mov   VASO_H, DATO_H
+                                 
+0005e6 df19                      	rcall lectura_peso					; lee un dato y lo escala
+0005e7 df64                      	rcall set_scale						
+0005e8 dfd5                      	rcall detectar_cancelacion
+                                 	
+0005e9 1828                      	sub   DATO_L, VASO_L				; compara el siguiente valor leido con el anterior			
+0005ea 0839                      	sbc   DATO_M, VASO_M
+0005eb 084a                      	sbc   DATO_H, VASO_H
+                                 	
+0005ec f408                      	brsh  detectar_vaso_next
+0005ed df85                      	rcall com_2							; se toma el modulo de la diferencia de dos valores consecutivos
+                                 
+                                 detectar_vaso_next:
+0005ee 2044                      	tst   DATO_H
+0005ef f761                      	brne  detectar_vaso_lectura
+0005f0 2033                      	tst   DATO_M
+0005f1 f751                      	brne  detectar_vaso_lectura
+0005f2 1621                      	cp    DATO_L, r17
+0005f3 f740                      	brsh  detectar_vaso_lectura
+                                 	
+0005f4 e0fe                      	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)	; Mensaje hasta que se setea la nueva tara
+0005f5 e2ee                      	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
+0005f6 d1db                      	rcall send_msg
+                                 
+0005f7 df2f                      	rcall set_tara						; setea la tara ahora con el vaso puesto
+                                 	
+0005f8 910f                      	pop   r16
+0005f9 9508                      	ret
+                                 	
+                                 ;-------------------------------------------------------------------------
+                                 ; CONFIGURAR_MEDIDA:
+                                 ; Se espera 3 segundos a que el usuario golpee 2 veces para cambiar la medida
+                                 ;-------------------------------------------------------------------------
+                                 configurar_medida:
+0005fa 930f                      	push r16
+0005fb 931f                      	push r17
+0005fc 932f                      	push r18
+0005fd 93ef                      	push zl
+0005fe 93ff                      	push zh
+                                 
+0005ff ef1f                      	ldi  r17, 0xFF
+                                 
+                                 configurar_medida_init:
+000600 e0fe                      	ldi  zh, HIGH(DIR_MSG_PINTA<<1)
+000601 e5e8                      	ldi  zl, LOW(DIR_MSG_PINTA<<1)		; Se inicializa en la medida pinta
+                                 	
+                                 
+                                 configurar_medida_loop:
+000602 d1cf                      	rcall send_msg						; envia el mensaje correspondiente a la medida cargada
+                                 
+000603 90b5                      	lpm  MEDIDA_L, Z+					; se guarda la medida seleccionada
+000604 90c5                      	lpm  MEDIDA_H, Z+ 
+                                 	
+000605 16b1                      	cp   MEDIDA_L, r17					; si el siguiente valor es 0xFF, ya se recorrieron las 3 medidas
+000606 f3c9                      	breq configurar_medida_init
+                                 		
+000607 da92                      	rcall delay_4s						; inicializa el delay de 4 seg
+                                 	
+000608 df9c                      	rcall detectar_perturbacion			; se queda esperando una perturbación, si en 4 segundos no detecto nada ya se selecciono una medida	
+000609 f026                      	brts  configurar_medida_fin			; si esta el bit T=1 significa que pasaron 4 segundos dentro de la funcion detectar_perturbacion
+                                 
+00060a e000                      	ldi   r16, (0<<TOIE0)				; se desactiva la interrupcion por overflow
+00060b 9300 006e                 	sts   TIMSK0, r16
+                                 	
+00060d cff4                      	rjmp  configurar_medida_loop
+                                  
+                                 configurar_medida_fin:					; si pasaron 4 seg, de la subrutina de interrupcion se vuelve aqui	
+00060e e000                      	ldi   r16, (0<<CS02)|(0<<CS01)|(0<<CS00)
+00060f bd05                      	out   TCCR0B, r16					; config: se apaga el timer
+                                 
+000610 e000                      	ldi  r16, (0<<TOIE0)				; se desactiva la interrupcion por overflow
+000611 9300 006e                 	sts  TIMSK0, r16
+                                 	
+000613 94e8                      	clt									; se pone en cero el flag T						
+                                 
+000614 91ff                      	pop   zh
+000615 91ef                      	pop   zl
+000616 912f                      	pop   r18
+000617 911f                      	pop   r17
+000618 910f                      	pop   r16
+000619 9508                      	ret	
                                  .include "output.asm"
                                  
                                  .org  0x700
@@ -1513,181 +1631,288 @@ C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo
 00071a 2e65
 00071b 2e2e
 00071c ff20                      	DIR_MSG_AGUARDE:		 .DB "Aguarde... ", 0xFF
-00071d 6f47
-00071e 706c
-00071f 6165
-000720 2072
-000721 2032
-000722 6576
-000723 6563
-000724 0a73
-000725 6170
-000726 6172
-000727 6320
-000728 6d61
-000729 6962
-00072a 7261
-00072b ff20                      	DIR_MSG_CONFIGURACION_1: .DB "Golpear 2 veces", '\n', "para cambiar ", 0xFF
+00071d 6c45
+00071e 6a69
+00071f 2061
+000720 616c
+000721 6d20
+000722 6465
+000723 6469
+000724 2061
+000725 670a
+000726 6c6f
+000727 6570
+000728 6e61
+000729 6f64
+00072a 7820
+00072b ff32                      	DIR_MSG_CONFIGURACION:   .DB "Elija la medida ", '\n', "golpeando x2", 0xFF
                                  	
-00072c f401                      	MEDIDA_PINTA:			 .DB HIGH(500), LOW(500)
-00072d 4950
-00072e 544e
-00072f 2041
-000730 3528
-000731 3030
-000732 6c6d
-000733 0a29
-000734 6f47
-000735 706c
-000736 6565
-000737 7020
-000738 7261
-000739 2061
-00073a 746f
-00073b 6f72
-00073c ff2e                      	DIR_MSG_PINTA:           .DB "PINTA (500ml)", '\n', "Golpee para otro.", 0xFF
+00072c 4950
+00072d 544e
+00072e 2041
+00072f 3528
+000730 3030
+000731 6c6d
+000732 0a29
+000733 6f47
+000734 706c
+000735 6565
+000736 7020
+000737 7261
+000738 2061
+000739 746f
+00073a 6f72
+00073b ff2e                      	DIR_MSG_PINTA:           .DB "PINTA (500ml)", '\n', "Golpee para otro.", 0xFF
+00073c 01f4                      	MEDIDA_PINTA:			 .DB LOW(500), HIGH(500)
                                  
-00073d 7701                      	MEDIDA_CHOP:			 .DB HIGH(375), LOW(375)
-00073e 4843
-00073f 504f
-000740 2050
-000741 3328
-000742 3537
-000743 6c6d
-000744 0a29
-000745 6f47
-000746 706c
-000747 6565
-000748 7020
-000749 7261
-00074a 2061
-00074b 746f
-00074c 6f72
-00074d ff2e                      	DIR_MSG_CHOPP:           .DB "CHOPP (375ml)", '\n', "Golpee para otro.", 0xFF
-                                 
-00074e fa00                      	MEDIDA_MEDIAPINTA:       .DB HIGH(250), LOW(250)
-00074f 2f31
-000750 2032
-000751 4950
-000752 544e
-000753 2841
-000754 3532
-000755 6d30
-000756 296c
-000757 470a
-000758 6c6f
-000759 6570
-00075a 2065
-00075b 6170
-00075c 6172
-00075d 6f20
-00075e 7274
-00075f 206f
-000760 ffff                      	DIR_MSG_MEDIA_PINTA:     .DB "1/2 PINTA(250ml)", '\n', "Golpee para otro ", 0xFF, 0xFF 
                                  	
-000761 6953
-000762 7672
-000763 6569
-000764 646e
-000765 2e6f
-000766 2e2e
-000767 ff2e                      	DIR_MSG_SIRVIENDO:       .DB "Sirviendo....", 0xFF
-000768 2020
-000769 2020
-00076a 7250
-00076b 636f
-00076c 7365
-00076d 206f
-00076e 200a
-00076f 2020
-000770 6163
-000771 636e
+00073d 4843
+00073e 504f
+00073f 2050
+000740 3328
+000741 3537
+000742 6c6d
+000743 0a29
+000744 6f47
+000745 706c
+000746 6565
+000747 7020
+000748 7261
+000749 2061
+00074a 746f
+00074b 6f72
+00074c ff2e                      	DIR_MSG_CHOPP:           .DB "CHOPP (375ml)", '\n', "Golpee para otro.", 0xFF
+00074d 0177                      	MEDIDA_CHOP:			 .DB LOW(375), HIGH(375)
+                                 
+                                 	
+00074e 2f31
+00074f 2032
+000750 4950
+000751 544e
+000752 2841
+000753 3532
+000754 6d30
+000755 296c
+000756 0a20
+000757 6f47
+000758 706c
+000759 6565
+00075a 7020
+00075b 7261
+00075c 2061
+00075d 746f
+00075e 6f72
+00075f ff20                      	DIR_MSG_MEDIA_PINTA:     .DB "1/2 PINTA(250ml) ", '\n', "Golpee para otro ", 0xFF 
+000760 00fa
+000761 ffff
+000762 ffff                      	MEDIDA_MEDIAPINTA:       .DB LOW(250), HIGH(250), 0xFF, 0xFF, 0xFF, 0xFF
+                                 
+000763 7550
+000764 6465
+000765 2065
+000766 6573
+000767 7672
+000768 7269
+000769 2e2e
+00076a ff2e                      	DIR_MSG_SIRVIENDO:       .DB "Puede servir...", 0xFF
+00076b 7550
+00076c 6465
+00076d 2065
+00076e 6572
+00076f 6974
+000770 6172
+000771 0a72
 000772 6c65
-000773 6461
-000774 ff6f                      	DIR_MSG_CANCELACION:     .DB "    Proceso ",'\n', "   cancelado", 0xFF 
+000773 7620
+000774 7361
+000775 ff6f                      	DIR_MSG_FIN:			 .DB "Puede retirar",'\n', "el vaso", 0xFF
+000776 2020
+000777 2020
+000778 7250
+000779 636f
+00077a 7365
+00077b 206f
+00077c 200a
+00077d 2020
+00077e 6163
+00077f 636e
+000780 6c65
+000781 6461
+000782 ff6f                      	DIR_MSG_CANCELACION:     .DB "    Proceso ",'\n', "   cancelado", 0xFF 
                                  
+                                 ;-------------------------------------------------------------------------
+                                 ; DECLINACION_INIT:
+                                 ; Funcion que setea el servo en la posicion de amyor inclinacion de la
+                                 ; plataforma
+                                 ;-------------------------------------------------------------------------
+                                 .equ  POS_MAYOR_INCLINACION = 313 + 40			; valor para el Output Comapre Register para posicionar el servo en la mayor inclinacion
                                  
+                                 declinacion_init:
+000783 930f                      	push r16
+                                 	
+000784 e001                      	ldi  r16, HIGH(POS_MAYOR_INCLINACION)
+000785 9300 0089                 	sts  OCR1AH, r16
+                                 
+000787 e601                      	ldi  r16, LOW(POS_MAYOR_INCLINACION)
+000788 9300 0088                 	sts  OCR1AL, r16
+                                 
+00078a 910f                      	pop  r16
+00078b 9508                      	ret
+                                 
+                                 ;-------------------------------------------------------------------------
+                                 ; PROCESO_DECLINACION:
+                                 ; funcion para el proceso de declinacion del vaso en funcion de la cantidad
+                                 ; de liquido servido. La plataforma posee 32 posiciones de inclinacion y 
+                                 ; el vaso comienza en la posicion 32, y comienza a declinarse cuando
+                                 ; la cantidad de liquido servida es igual a la mitad de la medida elegida.
+                                 ;-------------------------------------------------------------------------
+                                 .def   TECHO_L = r20
+                                 .def   TECHO_H = r21
+                                 .def   PASO = r22
+                                 
+                                 proceso_declinacion:
+00078c 930f                      	push  r16
+00078d 931f                      	push  r17
+00078e 934f                      	push  TECHO_L
+00078f 935f                      	push  TECHO_H
+000790 936f                      	push  PASO
+                                 
+000791 2d4b                      	mov   TECHO_L, MEDIDA_L
+000792 2d5c                      	mov   TECHO_H, MEDIDA_H
+000793 9556                      	lsr   TECHO_H									; dividimos la medida por 2
+000794 9547                      	ror   TECHO_L									; en r16 ya va a quedar la mitad de la medida
+                                 	
+000795 2f64                      	mov   PASO, TECHO_L								; se divide el rango de valores que va desde MEDIDA/2 HASTA MEDIDA,
+000796 9566                      	lsr   PASO										; por 32, que son las cantidad de posiciones que tiene la paltaforma.
+000797 9566                      	lsr   PASO									
+000798 9566                      	lsr   PASO
+000799 9566                      	lsr   PASO
+00079a 9566                      	lsr   PASO
+                                 
+                                 proceso_declinacion_lectura:
+00079b dd64                      	rcall lectura_peso								; se lee un dato
+00079c ddaf                      	rcall set_scale
+00079d de20                      	rcall detectar_cancelacion
+                                 
+00079e 1635                      	cp    DATO_M, TECHO_H							; se compara el valor leido con el techo
+00079f f3d8                      	brlo  proceso_declinacion_lectura				; mientras el dato sea menor que el techo se sigue leyendo
+0007a0 1624                      	cp    DATO_L, TECHO_L
+0007a1 f3c8                      	brlo  proceso_declinacion_lectura
+                                 
+0007a2 9100 0088                 	lds   r16, OCR1AL								; cuando el valor leido es mayor al techo se decrementa la posicion del servo
+0007a4 9110 0089                 	lds   r17, OCR1AH								; decrementando el Output Compare Register y achicando asi el pulso del PWM
+                                 	
+0007a6 5001                      	subi  r16, 0x01								
+0007a7 f418                      	brcc  proceso_declinacion_next2
+0007a8 951a                      	dec   r17
+                                 
+0007a9 3008                      	cpi   r16, 0x08
+0007aa f058                      	brlo  proceso_declinacion_fin
+                                 
+                                 proceso_declinacion_next2:
+0007ab 9310 0089                 	sts   OCR1AH, r17								
+0007ad 9300 0088                 	sts   OCR1AL, r16
+                                 
+0007af 0f46                      	add   TECHO_L, PASO								; se define el nuevo techo como TECHO = TECHO + PASO
+0007b0 f408                      	brcc  proceso_declinacion_next
+0007b1 9553                      	inc   TECHO_H
+                                 
+                                 proceso_declinacion_next:
+0007b2 155c                      	cp    TECHO_H, MEDIDA_H							; se verifica que el valor leido no sea mayor que la medida seleccionada
+0007b3 f338                      	brlo  proceso_declinacion_lectura
+0007b4 154b                      	cp    TECHO_L, MEDIDA_L
+0007b5 f328                      	brlo  proceso_declinacion_lectura
+                                 
+                                 proceso_declinacion_fin:
+0007b6 dddc                      	rcall servo_init								; cuando se llego a la medida seleccionada se lleva el servo a la posicion final
+                                 
+0007b7 916f                      	pop   PASO
+0007b8 915f                      	pop   TECHO_H
+0007b9 914f                      	pop   TECHO_L
+0007ba 911f                      	pop   r17
+0007bb 910f                      	pop   r16
+0007bc 9508                      	ret
                                  ;-------------------------------------------------------------------------
                                  ; SEND_COMMAND:
                                  ; Recibe el registro r16 cargado con una configuracion. Luego
                                  ; lo envía a la pantalla LCD.
                                  ;-------------------------------------------------------------------------
                                  send_command:
-000775 931f                      	push  r17
+0007bd 931f                      	push  r17
                                  
-000776 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
-000777 7f10                      	andi  r17, 0xF0
-000778 b91b                      	out   LCD_DPRT, r17
-000779 982c                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
-00077a 982b                      	cbi   LCD_CPRT, LCD_RW
-00077b 9a2a                      	sbi   LCD_CPRT, LCD_E
-00077c d8f6                      	rcall delay_500ns 
-00077d 982a                      	cbi   LCD_CPRT,LCD_E
+0007be 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
+0007bf 7f10                      	andi  r17, 0xF0
+0007c0 b91b                      	out   LCD_DPRT, r17
+0007c1 982c                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
+0007c2 982b                      	cbi   LCD_CPRT, LCD_RW
+0007c3 9a2a                      	sbi   LCD_CPRT, LCD_E
+0007c4 d8b0                      	rcall delay_500ns 
+0007c5 982a                      	cbi   LCD_CPRT,LCD_E
                                  
-00077e 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
-00077f 9512                      	swap  r17
-000780 7f10                      	andi  r17, 0xF0
-000781 b91b                      	out   LCD_DPRT, r17
-000782 982c                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
-000783 982b                      	cbi   LCD_CPRT, LCD_RW
-000784 9a2a                      	sbi   LCD_CPRT, LCD_E
-000785 d8ed                      	rcall delay_500ns 
-000786 982a                      	cbi   LCD_CPRT,LCD_E
+0007c6 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
+0007c7 9512                      	swap  r17
+0007c8 7f10                      	andi  r17, 0xF0
+0007c9 b91b                      	out   LCD_DPRT, r17
+0007ca 982c                      	cbi   LCD_CPRT, LCD_RS		; RS = 0 es para mandar comandos
+0007cb 982b                      	cbi   LCD_CPRT, LCD_RW
+0007cc 9a2a                      	sbi   LCD_CPRT, LCD_E
+0007cd d8a7                      	rcall delay_500ns 
+0007ce 982a                      	cbi   LCD_CPRT,LCD_E
                                  
-000787 d8f4                      	rcall delay_100us
-000788 911f                      	pop  r17
-000789 9508                      	ret
+0007cf d8ae                      	rcall delay_100us
+0007d0 911f                      	pop  r17
+0007d1 9508                      	ret
                                  ;-------------------------------------------------------------------------
                                  ; SEND_MSG:
                                  ; Recibe el puntero Z cargado con un mensaje guardado en memoria ROM. Luego
                                  ; lo envía por la pantalla LCD.
                                  ;-------------------------------------------------------------------------
                                  send_msg:
-00078a 930f                      	push  r16
-00078b 931f                      	push  r17
+0007d2 930f                      	push  r16
+0007d3 931f                      	push  r17
                                  
-00078c e001                      	ldi   r16, CLEAR_DISPLAY
-00078d dfe7                      	rcall send_command			; Borra la pantalla
-00078e d8fb                      	rcall delay_3ms
+0007d4 e001                      	ldi   r16, CLEAR_DISPLAY
+0007d5 dfe7                      	rcall send_command			; Borra la pantalla
+0007d6 d8b5                      	rcall delay_3ms
                                  
                                  send_msg_loop:
-00078f 9105                          lpm  r16, Z+
+0007d7 9105                          lpm  r16, Z+
                                  	
-000790 3f0f                      	cpi r16, 0xFF				; Me fijo si termino el mensaje
-000791 f0c9                      	breq send_msg_fin
-000792 300a                      	cpi r16, '\n'				; Me fijo si el mensaje tiene una segunda parte
-000793 f421                      	brne send_msg_next
+0007d8 3f0f                      	cpi  r16, 0xFF				; Me fijo si termino el mensaje
+0007d9 f0c9                      	breq send_msg_fin
+0007da 300a                      	cpi  r16, '\n'				; Me fijo si el mensaje tiene una segunda parte
+0007db f421                      	brne send_msg_next
                                  
-000794 ec00                      	ldi   r16, CURSOR_LINE_2
-000795 dfdf                      	rcall send_command			; Fuerza el cursor a la 2da linea
-000796 d8f3                      	rcall delay_3ms	
-000797 cff7                      	rjmp  send_msg_loop
+0007dc ec00                      	ldi   r16, CURSOR_LINE_2
+0007dd dfdf                      	rcall send_command			; Fuerza el cursor a la 2da linea
+0007de d8ad                      	rcall delay_3ms	
+0007df cff7                      	rjmp  send_msg_loop
                                  
                                  send_msg_next:	
-000798 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
-000799 7f10                      	andi  r17, 0xF0
-00079a b91b                      	out   LCD_DPRT, r17
-00079b 9a2c                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
-00079c 982b                      	cbi   LCD_CPRT, LCD_RW
-00079d 9a2a                      	sbi   LCD_CPRT, LCD_E
-00079e d8d4                      	rcall delay_500ns 
-00079f 982a                      	cbi   LCD_CPRT,LCD_E
+0007e0 2f10                      	mov   r17, r16				; se mandan los 4 bits mas significativos primero
+0007e1 7f10                      	andi  r17, 0xF0
+0007e2 b91b                      	out   LCD_DPRT, r17
+0007e3 9a2c                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
+0007e4 982b                      	cbi   LCD_CPRT, LCD_RW
+0007e5 9a2a                      	sbi   LCD_CPRT, LCD_E
+0007e6 d88e                      	rcall delay_500ns 
+0007e7 982a                      	cbi   LCD_CPRT,LCD_E
                                  
-0007a0 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
-0007a1 9512                      	swap  r17
-0007a2 7f10                      	andi  r17, 0xF0
-0007a3 b91b                      	out   LCD_DPRT, r17
-0007a4 9a2c                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
-0007a5 982b                      	cbi   LCD_CPRT, LCD_RW
-0007a6 9a2a                      	sbi   LCD_CPRT, LCD_E
-0007a7 d8cb                      	rcall delay_500ns 
-0007a8 982a                      	cbi   LCD_CPRT,LCD_E
-0007a9 d8d2                      	rcall delay_100us
-0007aa cfe4                      	rjmp  send_msg_loop
+0007e8 2f10                      	mov   r17, r16				; ahora los 4 bits restantes
+0007e9 9512                      	swap  r17
+0007ea 7f10                      	andi  r17, 0xF0
+0007eb b91b                      	out   LCD_DPRT, r17
+0007ec 9a2c                      	sbi   LCD_CPRT, LCD_RS		; RS = 1 es para mandar datos
+0007ed 982b                      	cbi   LCD_CPRT, LCD_RW
+0007ee 9a2a                      	sbi   LCD_CPRT, LCD_E
+0007ef d885                      	rcall delay_500ns 
+0007f0 982a                      	cbi   LCD_CPRT,LCD_E
+0007f1 d88c                      	rcall delay_100us
+0007f2 cfe4                      	rjmp  send_msg_loop
                                  send_msg_fin:		
-0007ab 910f                      	pop  r16
-0007ac 911f                      	pop  r17
-0007ad 9508                      
+0007f3 911f                      	pop  r17
+0007f4 910f                      	pop  r16
+0007f5 9508                      
                                  ;-------------------------------------------------------------------------
                                  ; VARIABLES EN REGISTROS
                                  ;-------------------------------------------------------------------------
@@ -1699,14 +1924,14 @@ C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo
                                  ; CÓDIGO
                                  ;-------------------------------------------------------------------------
                                  		.cseg 
-                                 .org 0x00
+                                 .org	0x00
 000000 940c 0034                 	jmp setup
                                  
-                                 .org    0x0020
-000020 940c 00db                 	jmp INT_TIMER0_OVF
+                                 .org	OVF1addr
+00001a 940c 005a                 	jmp INT_TIMER1_OVF
                                  
-                                 .org	0x0026								; USART Data Register Empty
-000026 940c 0051                 	jmp	ISR_REG_USART_VACIO
+                                 .org   OVF0addr
+000020 940c 0063                 	jmp INT_TIMER0_OVF
                                  
                                  .org INT_VECTORS_SIZE
                                  
@@ -1715,115 +1940,128 @@ C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo
 000035 bf0e                      	out  sph, r16
 000036 ef0f                      	ldi  r16, LOW(RAMEND)
 000037 bf0d                      	out  spl, r16								; inicializo el stack pointer al final de la RAM
+                                     
+000038 9478                      	sei
                                  
-000038 d54f                          rcall configuracion_puertos
-000039 d55c                      	rcall USART_init
-00003a d56d                      	rcall LCD_init
+000039 d543                      	rcall configuracion_puertos
+00003a d558                      	rcall servo_init
+00003b d54e                      	rcall LCD_init
                                  
-00003b 24aa                      	clr   VASO_H
-00003c 2499                      	clr  VASO_M
-00003d 2488                      	clr  VASO_L
-00003e e0fe                      	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)			; Se envia el mensaje de aguarde hasta que se termina de configurar el peso con la tara
-00003f e2ee                      	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
-000040 d749                      	rcall send_msg
-                                 
-000041 9a42                      	sbi   PORTC, PC2							; encendemos led de prueba
-000042 9843                      	cbi   PORTC, PC3
-000043 d4e3                      	rcall set_tara								; Setea el peso 0 de la balanza
+00003c 24aa                      	clr  VASO_H
+00003d 2499                      	clr  VASO_M
+00003e 2488                      	clr  VASO_L
                                  	
-000044 e0fe                      	ldi   zh, HIGH(DIR_MSG_INICIO<<1)			; Se envia el mensaje de inicio
-000045 e0e0                      	ldi   zl, LOW(DIR_MSG_INICIO<<1)
-000046 d743                      	rcall send_msg
+00003f e0fe                      	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)			; Se envia el mensaje de aguarde hasta que se termina de configurar el peso con la tara
+000040 e2ee                      	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
+000041 d790                      	rcall send_msg
                                  
-000047 d569                      	rcall detectar_perturbacion					; Esta función espera a que haya una perturbación para iniciar el proceso
+000042 d4e4                      	rcall set_tara								; Setea el peso 0 de la balanza
                                  	
-000048 e0fe                      	ldi   zh, HIGH(DIR_MSG_ESPERA_VASO<<1)		; Mensaje hasta que se detecta un peso
-000049 e1ee                      	ldi   zl, LOW(DIR_MSG_ESPERA_VASO<<1)
-00004a d73f                      	rcall send_msg
-                                 	
-                                 	;rcall detectar_vaso
-                                 	;ldi   zh, HIGH(DIR_MSG_CONFIGURACION_1<<1)	; Mensaje para elegir medida
-                                 	;ldi   zl, LOW(DIR_MSG_CONFIGURACION_1<<1)
-                                 	;rcall send_msg
+000043 e0fe                      	ldi   zh, HIGH(DIR_MSG_INICIO<<1)			; me envia el mensaje de inicio
+000044 e0e0                      	ldi   zl, LOW(DIR_MSG_INICIO<<1)
+000045 d78c                      	rcall send_msg
                                  
-                                 main_loop:
-00004b 9842                      	cbi   PORTC, PC2							; LEDS de prueba	
-00004c 9a43                      	sbi   PORTC, PC3	
-00004d d4b2                      	rcall lectura_peso							; lee los datos, le resta el tara y los deja almacenados en r4:r2 
-00004e d4fd                      	rcall set_scale								; convierte el dato a gramos
-00004f d579                      	rcall detectar_cancelacion					; chequea si el dato leido es mayor a 4096 gramos, en ese caso cancela el proceso
-000050 cffa                      	rjmp main_loop
+                                 	;rcall detectar_perturbacion					; esta función espera a que haya una perturbación para iniciar el proceso
+                                 	
+000046 e0fe                      	ldi   zh, HIGH(DIR_MSG_ESPERA_VASO<<1)		; mensaje hasta que se detecta un peso que equivale a un vaso
+000047 e1ee                      	ldi   zl, LOW(DIR_MSG_ESPERA_VASO<<1)
+000048 d789                      	rcall send_msg
+                                 	
+000049 d58f                      	rcall detectar_vaso
+00004a e0fe                      	ldi   zh, HIGH(DIR_MSG_CONFIGURACION<<1)	; mensaje para elegir medida
+00004b e3ea                      	ldi   zl, LOW(DIR_MSG_CONFIGURACION<<1)
+00004c d785                      	rcall send_msg
+                                 	;rcall delay_3seg							; se muestra el mensaje durante 3 segundos
+00004d d5ac                      	rcall configurar_medida
+                                 	
+00004e e0fe                      	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)			
+00004f e2ee                      	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
+000050 d781                      	rcall send_msg
+                                 
+000051 d731                      	rcall declinacion_init						; inclina la plataforma a la posicion inicial
+                                 	
+000052 e0fe                      	ldi   zh, HIGH(DIR_MSG_SIRVIENDO<<1)		; mensaje que le indica al usuario que le puede comenzar a servir
+000053 ece6                      	ldi   zl, LOW(DIR_MSG_SIRVIENDO<<1)
+000054 d77d                      	rcall send_msg
+                                 	
+000055 d736                      	rcall proceso_declinacion   
+                                 	
+000056 e0fe                      	ldi   zh, HIGH(DIR_MSG_FIN<<1)				; mensaje que le indica al usuario que puede retirar el vaso
+000057 ede6                      	ldi   zl, LOW(DIR_MSG_FIN<<1)
+000058 d779                      	rcall send_msg
+                                 	 
+000059 cfda                      	rjmp setup
                                  
                                  ;-------------------------------------------------------------------------
                                  ; FUNCIONES
                                  ;-------------------------------------------------------------------------
                                  
-                                 ; ----------------------------------------------------------------------
-                                 ; INTERRUPCION PARA EL CODIGO DE PRUEBAS
-                                 ; hay 3 bytes para mandar por la USART. Z apunta al byte mas significativo.
-                                 ; La interrupcion, manda un byte, (comenzando por el maas significativo),
-                                 ; si todavia quedan bytes por mandar, sale sin deshabilitar la interrupcion
-                                 ; de transmision. Si ya mando los 3, antes de salir la deshabilita.
-                                 ; ----------------------------------------------------------------------
-                                 ISR_REG_USART_VACIO:
-000051 930f                      	push r16
-000052 8108                      	ld   r16, Y
-000053 95ca                      	dec  yl
-000054 9300 00c6                 	sts  UDR0, r16
-000056 30c1                      	cpi  yl, 1						;  Z  esta apuntando a r1? Si lo esta haciendo ya se cargaron los 3 bytes
-000057 f011                      	breq ISR_REG_USART_VACIO_fin
-000058 910f                      	pop  r16
-000059 9518                      	reti
-                                 ISR_REG_USART_VACIO_fin:
-00005a 9100 00c1                 	lds  r16, UCSR0B
-00005c 7d0f                      	cbr  r16, 1<<UDRIE0
-00005d 9300 00c1                 	sts  UCSR0B, r16				; deshabilito interrupciones
-00005f 910f                      	pop  r16
-000060 9518                      	reti
+                                 ;-------------------------------------------------------------------------
+                                 ; INT_TIMER1_0VF:
+                                 ; rutina de interrupcion vinculada al Timer1, que controla el pwm del servo.
+                                 ;-------------------------------------------------------------------------
+                                 INT_TIMER1_OVF:
+00005a 930f                      	push r16
+                                 
+00005b e001                      	ldi  r16, HIGH(313)
+00005c 9300 0085                 	sts  TCNT1H, r16
+00005e e309                      	ldi  r16, LOW(313)
+00005f 9300 0084                 	sts  TCNT1L, r16
+                                 
+000061 910f                      	pop  r16
+000062 9518                      	reti
+                                 
+                                 ;-------------------------------------------------------------------------
+                                 ; INT_TIMER0_OVF:
+                                 ; rutina de interrupcion vinculada al Timer1, que controla el delay de los 4
+                                 ; segundos que posee el usuario para ir cambiando de medida
+                                 ;-------------------------------------------------------------------------
+                                 INT_TIMER0_OVF:
+000063 957a                      	dec  r23
+000064 f409                      	brne int_next								; hasta que el contador no llega a 0 no pasaron los 4 segundos
+000065 9468                      	set											; se activa el flag T para salir de la funcion detectar_perturbacion cuando pasaron los 4 segundos										
+                                 int_next:	
+000066 9518                      	reti
                                  
                                  ; ----------------------------------------------------------------------
-                                 ; DELLAY:
-                                 ; dellay de 1 segundo para ver mejor los datos enviados.
+                                 ; DELAY_3s:
+                                 ; Delay de 3 segundos 
                                  ; ----------------------------------------------------------------------
-                                 dellay:
-000061 934f                      	push r20
-000062 935f                      	push r21
-000063 936f                      	push r22
+                                 delay_3seg:
+000067 930f                      	push r16
                                  
-000064 e240                      	ldi  r20, 32
-000065 ec58                      dellay_L1: ldi  r21,200
-000066 ef6a                      dellay_L2: ldi  r22, 250	
-                                 dellay_L3:	
-000067 0000                      	nop
-000068 0000                      	nop
-000069 956a                      	dec  r22
-00006a f7e1                      	brne dellay_L3
-                                 
-00006b 955a                      	dec  r21
-00006c f7c9                      	brne dellay_L2
-                                 
-00006d 954a                      	dec  r20
-00006e f7b1                      	brne dellay_L1
+000068 eb08                      	ldi r16, 184
+000069 bd06                      	out TCNT0, r16					; se inicializa el contador
                                  	
-00006f 916f                      	pop  r22
-000070 915f                      	pop  r21
-000071 914f                      	pop  r20
+00006a 2700                      	clr r16
+00006b bd04                      	out TCCR0A, r16		
                                  	
-000072 9508                      	ret
+00006c e005                      	ldi r16, (1<<CS02)|(0<<CS01)|(1<<CS00)
+00006d bd05                      	out TCCR0B, r16					; config: modo normal, con prescaler = 256
                                  
+                                 delay_3seg_loop:
+00006e 9ba8                      	sbis TIFR0, TOV0
+00006f cffe                      	rjmp delay_3seg_loop
+000070 2700                      	clr  r16
+000071 bd05                      	out  TCCR0B, r16				; se apaga el timer
+000072 9aa8                      	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
+                                 
+000073 910f                      	pop r16
+000074 9508                      	ret	
                                  ; ----------------------------------------------------------------------
-                                 ; Delay de 500ns porque el pin E tiene que estar alto ese tiempo
+                                 ; DELAY_500ns:
+                                 ; Delay de 500ns 
                                  ; ----------------------------------------------------------------------
                                  delay_500ns:
-000073 0000                      	nop
-000074 0000                      	nop
 000075 0000                      	nop
 000076 0000                      	nop
 000077 0000                      	nop
 000078 0000                      	nop
 000079 0000                      	nop
 00007a 0000                      	nop
-00007b 9508                      	ret
+00007b 0000                      	nop
+00007c 0000                      	nop
+00007d 9508                      	ret
                                  
                                  ; -------------------------------------------------------------------------
                                  ; DELAY_100us:
@@ -1832,51 +2070,51 @@ C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo
                                  ; -------------------------------------------------------------------------
                                  
                                  delay_100us:
-00007c 930f                      	push r16
+00007e 930f                      	push r16
                                  
-00007d ef08                      	ldi r16, 248
-00007e bd06                      	out TCNT0, r16					; se inicializa el contador
+00007f ef08                      	ldi r16, 248
+000080 bd06                      	out TCNT0, r16					; se inicializa el contador
                                  	
-00007f 2700                      	clr r16
-000080 bd04                      	out TCCR0A, r16		
+000081 2700                      	clr r16
+000082 bd04                      	out TCCR0A, r16		
                                  	
-000081 e004                      	ldi r16, (1<<CS02)|(0<<CS01)|(0<<CS00)
-000082 bd05                      	out TCCR0B, r16					; config: modo normal, con prescaler = 256
+000083 e004                      	ldi r16, (1<<CS02)|(0<<CS01)|(0<<CS00)
+000084 bd05                      	out TCCR0B, r16					; config: modo normal, con prescaler = 256
                                  delay_100us_loop:
-000083 9ba8                      	sbis TIFR0, TOV0
-000084 cffe                      	rjmp delay_100us_loop
-000085 2700                      	clr  r16
-000086 bd05                      	out  TCCR0B, r16				; se apaga el timer
-000087 9aa8                      	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
+000085 9ba8                      	sbis TIFR0, TOV0
+000086 cffe                      	rjmp delay_100us_loop
+000087 2700                      	clr  r16
+000088 bd05                      	out  TCCR0B, r16				; se apaga el timer
+000089 9aa8                      	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
                                  
-000088 910f                      	pop r16
-000089 9508                      	ret
+00008a 910f                      	pop r16
+00008b 9508                      	ret
                                  
                                  ; -------------------------------------------------------------------------
-                                 ; DELAY_3MS:
+                                 ; DELAY_3ms:
                                  ; funcion de delay de 3 ms. 
                                  ; Calculo de delay: (256-VALOR_INICIAL_TCNT0) * PRESCALER / fclk
                                  ; -------------------------------------------------------------------------
                                  delay_3ms:
-00008a 930f                      	push r16
+00008c 930f                      	push r16
                                  
-00008b e405                      	ldi r16, 69
-00008c bd06                      	out TCNT0, r16					; se inicializa el contador
+00008d e405                      	ldi r16, 69
+00008e bd06                      	out TCNT0, r16					; se inicializa el contador
                                  	
-00008d 2700                      	clr r16
-00008e bd04                      	out TCCR0A, r16		
+00008f 2700                      	clr r16
+000090 bd04                      	out TCCR0A, r16		
                                  	
-00008f e004                      	ldi r16, (1<<CS02)|(0<<CS01)|(0<<CS00)
-000090 bd05                      	out TCCR0B, r16					; config: modo normal, con prescaler = 256
+000091 e004                      	ldi r16, (1<<CS02)|(0<<CS01)|(0<<CS00)
+000092 bd05                      	out TCCR0B, r16					; config: modo normal, con prescaler = 256
                                  delay_3ms_loop:
-000091 9ba8                      	sbis TIFR0, TOV0
-000092 cffe                      	rjmp delay_3ms_loop
-000093 2700                      	clr  r16
-000094 bd05                      	out  TCCR0B, r16				; se apaga el timer
-000095 9aa8                      	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
+000093 9ba8                      	sbis TIFR0, TOV0
+000094 cffe                      	rjmp delay_3ms_loop
+000095 2700                      	clr  r16
+000096 bd05                      	out  TCCR0B, r16				; se apaga el timer
+000097 9aa8                      	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
                                  
-000096 910f                      	pop r16
-000097 9508                      	ret
+000098 910f                      	pop r16
+000099 9508                      	ret
                                  
                                  ; -------------------------------------------------------------------------
                                  ; DELAY_4s:
@@ -1884,137 +2122,26 @@ C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo
                                  ; usuario para ir cambiando de medida de vaso.
                                  ; -------------------------------------------------------------------------
                                  delay_4s:
-000098 930f                      	push  r16
+00009a 930f                      	push  r16
                                  
-000099 2700                      	clr   r16							
-00009a bd06                      	out   TCNT0, r16					; se inicializa el contador en 0 	
+00009b 2700                      	clr   r16							
+00009c bd06                      	out   TCNT0, r16					; se inicializa el contador en 0 	
                                  
-00009b bd04                      	out   TCCR0A, r16					; config: modo normal, OC0A y OC0B desconectados
+00009d 2700                      	clr   r16
+00009e bd04                      	out   TCCR0A, r16					; config: modo normal, OC0A y OC0B desconectados 
                                  	
-00009c e005                      	ldi   r16, (1<<CS02)|(0<<CS01)|(1<<CS00)
-00009d bd05                      	out   TCCR0B, r16					; config: modo normal, con prescaler = 1024
+00009f e005                      	ldi   r16, (1<<CS02)|(0<<CS01)|(1<<CS00)
+0000a0 bd05                      	out   TCCR0B, r16					; config: modo normal, con prescaler = 1024
                                  
-00009e e001                      	ldi  r16, (1<<TOIE0)				; se activa la interrupcion por overflow
-00009f 9300 006e                 	sts  TIMSK0, r16
+0000a1 e001                      	ldi  r16, (1<<TOIE0)				; se activa la interrupcion por overflow
+0000a2 9300 006e                 	sts  TIMSK0, r16
                                  
-0000a1 ef24                      	ldi  r18, 244						; se inicializa el contador para el delay de 4 s
-0000a2 910f                      	pop  r16
-0000a3 9508                      	ret
-                                 
-                                 ;-------------------------------------------------------------------------
-                                 ; DETECTA_VASO:
-                                 ; Se tiene en cuenta que un vaso de virdio pesa aproximadamente 200gr. 
-                                 ; La funcion lee un dato y compara con el valor minimo de un vaso, 
-                                 ; cuando detecta este valor se fija que en la siguiente lectura
-                                 ; el valor sea el mismo. Guarda ese valor en VASO_H VASO_L y setea la tara. 
-                                 ;-------------------------------------------------------------------------
-                                 .equ VASO_MINIMO = 200
-                                 
-                                 detectar_vaso: 
-0000a4 930f                      	push  r16
-                                 
-0000a5 ec08                      	ldi   r16, VASO_MINIMO				; peso aproximado de un vaso de vidrio
-                                 
-                                 detectar_vaso_lectura:
-0000a6 d459                      	rcall lectura_peso					
-0000a7 d4a4                      	rcall set_scale						; lee un dato y lo escala
-0000a8 d520                      	rcall detectar_cancelacion
-0000a9 2044                      	tst   DATO_H						
-0000aa f411                      	brne  detectar_vaso_verificacion					
-0000ab 1620                      	cp    DATO_L, r16					; compara el peso leido con el peso estandar de un vaso			
-0000ac f3c8                      	brlo  detectar_vaso_lectura			; si no detecta un cambio vuelve a leer un peso
+0000a4 ef74                      	ldi  r23, 244						; se inicializa el contador para el delay de 4 s
                                  	
-                                 
-                                 detectar_vaso_verificacion:				; la balanza envia 10 muestras por segundo por lo que la siguiente muestra sera a los 10 ms de la anterior
-0000ad 2c82                      	mov   VASO_L, DATO_L
-0000ae 2ca4                      	mov   VASO_H, DATO_H
-0000af d450                      	rcall lectura_peso					
-0000b0 d49b                      	rcall set_scale						; lee un dato y lo escala
-0000b1 d517                      	rcall detectar_cancelacion
-0000b2 144a                      	cp    DATO_H, VASO_H				; compara el peso leido con el peso estandar de un vaso			
-0000b3 f791                      	brne  detectar_vaso_lectura		
-0000b4 1428                      	cp    DATO_L, VASO_L				; compara el peso leido con el peso estandar de un vaso			
-0000b5 f781                      	brne  detectar_vaso_lectura	
+0000a5 9478                      	sei 
                                  	
-0000b6 e0fe                      	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)	; Mensaje hasta que se setea la tara
-0000b7 e2ee                      	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
-0000b8 d6d1                      	rcall send_msg
-                                 
-0000b9 d46d                      	rcall set_tara						; setea la tara ahora con el vaso puesto
-                                 	
-0000ba 910f                      	pop   r16
-0000bb 9508                      	ret
-                                 
-                                 ;-------------------------------------------------------------------------
-                                 ; CONFIGURAR_MEDIDA:
-                                 ; Se espera 3 segundos a que el usuario golpee 2 veces para cambiar la medida
-                                 ;-------------------------------------------------------------------------
-                                 
-                                 
-                                 .def    MEDIDA_L = r11
-                                 .def    MEDIDA_H = r12
-                                 
-                                 configurar_medida:
-0000bc 930f                      	push r16
-0000bd 931f                      	push r17
-0000be 932f                      	push r18
-0000bf 93ef                      	push zl
-0000c0 93ff                      	push zh
-                                 
-0000c1 ef1f                      	ldi  r17, 0xFF
-                                 
-                                 configurar_medida_init:
-0000c2 e5e8                      	ldi  zl, LOW(MEDIDA_PINTA<<1)				; Se inicializa en la medida pinta
-0000c3 e0fe                      	ldi  zh, HIGH(MEDIDA_PINTA<<1)
-                                 
-                                 configurar_medida_loop:
-0000c4 90b5                      	lpm  MEDIDA_L, Z+					; se guarda la medida seleccionada
-0000c5 90c5                      	lpm  MEDIDA_H, Z+ 
-                                 	
-0000c6 16b1                      	cp   MEDIDA_L, r17					; si el siguiente valor es 0xFF, ya se recorrieron las 3 medidas
-0000c7 f3d1                      	breq configurar_medida_init
-                                 	
-0000c8 d6c1                      	rcall send_msg						; envia el mensaje correspondiente a la medida cargada
-                                 		
-0000c9 dfce                      	rcall delay_4s						; inicializa el delay de 4 seg
-                                 	
-0000ca d4e6                      	rcall detectar_perturbacion			
-                                 	
-0000cb e001                      	ldi  r16, (1<<TOIE0)				; se desactiva la interrupcion por overflow
-0000cc 9300 006e                 	sts  TIMSK0, r16
-0000ce cff5                      	rjmp  configurar_medida_loop
-                                 
-                                 configurar_medida_fin:					; si pasaron 4 seg, de la subrutina de interrupcion se vuelve aqui
-0000cf e000                      	ldi   r16, (0<<CS02)|(0<<CS01)|(0<<CS00)
-0000d0 bd05                      	out   TCCR0B, r16					; config: se apaga el timer
-                                 
-0000d1 e000                      	ldi  r16, (0<<TOIE0)				; se desactiva la interrupcion por overflow
-0000d2 9300 006e                 	sts  TIMSK0, r16
-                                 	
-0000d4 9478                      	sei								
-                                 
-0000d5 91ff                      	pop   zh
-0000d6 91ef                      	pop   zl
-0000d7 912f                      	pop   r18
-0000d8 911f                      	pop   r17
-0000d9 910f                      	pop   r16
-0000da 9508                      	ret	
-                                 
-                                 
-                                 ;-------------------------------------------------------------------------
-                                 ; INT_TIMER0_OVF:
-                                 ; 
-                                 ;-------------------------------------------------------------------------
-                                 INT_TIMER0_OVF:
-0000db 952a                      	dec  r18
-0000dc f391                      	breq configurar_medida_fin					; si el contador llego a 0, pasaron 4 segundos
-0000dd 9518                      	reti
-                                 
-                                 
-                                 
-                                 
-                                 
-                                 
+0000a6 910f                      	pop  r16
+0000a7 9508                      	ret
                                  
                                  
                                  
@@ -2036,39 +2163,39 @@ counted separately from r26..r31 here.
 .dseg memory usage only counts static data declared with .byte
 
 "ATmega328P" register use summary:
-x  :   0 y  :   1 z  :   3 r0 :   3 r1 :   3 r2 :  11 r3 :  13 r4 :  13 
-r5 :   3 r6 :   3 r7 :   3 r8 :   3 r9 :   2 r10:   4 r11:   2 r12:   1 
-r13:   0 r14:   0 r15:   0 r16: 129 r17:  42 r18:  16 r19:  12 r20:  15 
-r21:   4 r22:   4 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   3 
-r29:   1 r30:   8 r31:   8 
-Registers used: 26 out of 35 (74.3%)
+x  :   0 y  :   0 z  :   3 r0 :   3 r1 :   3 r2 :  14 r3 :  19 r4 :  14 
+r5 :   3 r6 :   3 r7 :   3 r8 :   4 r9 :   4 r10:   4 r11:   4 r12:   3 
+r13:   0 r14:   0 r15:   0 r16: 145 r17:  51 r18:  14 r19:  12 r20:  19 
+r21:   7 r22:   9 r23:   2 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
+r29:   0 r30:  12 r31:  12 
+Registers used: 24 out of 35 (68.6%)
 
 "ATmega328P" instruction use summary:
-.lds  :   0 .sts  :   0 adc   :   6 add   :   3 adiw  :   0 and   :   0 
+.lds  :   0 .sts  :   0 adc   :   6 add   :   4 adiw  :   0 and   :   0 
 andi  :   4 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   2 brcs  :   1 break :   0 breq  :   6 brge  :   0 brhc  :   0 
-brhs  :   0 brid  :   0 brie  :   0 brlo  :   3 brlt  :   0 brmi  :   0 
-brne  :  13 brpl  :   1 brsh  :   3 brtc  :   0 brts  :   0 brvc  :   0 
-brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :  16 cbr   :   1 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  21 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   2 cp    :  10 cpc   :   0 
-cpi   :   4 cpse  :   0 dec   :  11 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   3 jmp   :   3 
-ld    :   1 ldd   :   0 ldi   :  50 lds   :   2 lpm   :   3 lsl   :   1 
-lsr   :   2 mov   :  18 movw  :   0 mul   :   3 muls  :   0 mulsu :   0 
-neg   :   1 nop   :  18 or    :   0 ori   :   0 out   :  19 pop   :  38 
-push  :  36 rcall :  51 ret   :  20 reti  :   3 rjmp  :   9 rol   :   0 
-ror   :   5 sbc   :   2 sbci  :   0 sbi   :  19 sbic  :   3 sbis  :   2 
-sbiw  :   0 sbr   :   1 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
-sei   :   2 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
-sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :  11 
-sub   :   1 subi  :   0 swap  :   2 tst   :   2 wdr   :   0 
-Instructions used: 47 out of 113 (41.6%)
+brcc  :   4 brcs  :   1 break :   0 breq  :   4 brge  :   0 brhc  :   0 
+brhs  :   0 brid  :   0 brie  :   0 brlo  :   8 brlt  :   0 brmi  :   0 
+brne  :  12 brpl  :   1 brsh  :   6 brtc  :   0 brts  :   2 brvc  :   0 
+brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :  13 cbr   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :  24 cls   :   0 
+clt   :   1 clv   :   0 clz   :   0 com   :   2 cp    :  11 cpc   :   0 
+cpi   :   4 cpse  :   0 dec   :   9 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   4 jmp   :   3 
+ld    :   0 ldd   :   0 ldi   :  61 lds   :   2 lpm   :   3 lsl   :   1 
+lsr   :   8 mov   :  22 movw  :   0 mul   :   3 muls  :   0 mulsu :   0 
+neg   :   1 nop   :  16 or    :   0 ori   :   0 out   :  23 pop   :  40 
+push  :  39 rcall :  61 ret   :  21 reti  :   2 rjmp  :  10 rol   :   0 
+ror   :   6 sbc   :   6 sbci  :   0 sbi   :  17 sbic  :   3 sbis  :   3 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
+sei   :   2 sen   :   0 ser   :   0 ses   :   0 set   :   1 sev   :   0 
+sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :  14 
+sub   :   3 subi  :   1 swap  :   2 tst   :   6 wdr   :   0 
+Instructions used: 48 out of 113 (42.5%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000f5c    908    234   1142   32768   3.5%
+[.cseg] 0x000000 0x000fec   1038    262   1300   32768   4.0%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

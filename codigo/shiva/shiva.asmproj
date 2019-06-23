@@ -107,9 +107,6 @@
     <Compile Include="output.inc">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Vaso.asm">
-      <SubType>Code</SubType>
-    </Compile>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Assembler.targets" />
 </Project>
