@@ -55,9 +55,9 @@ setup:
 	rcall servo_init
 	rcall LCD_init
 
-	clr  VASO_H
-	clr  VASO_M
-	clr  VASO_L
+	clr   VASO_H
+	clr   VASO_M
+	clr   VASO_L
 	
 	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)			; Se envia el mensaje de aguarde hasta que se termina de configurar el peso con la tara
 	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
@@ -65,21 +65,23 @@ setup:
 
 	rcall set_tara								; Setea el peso 0 de la balanza
 	
-	ldi   zh, HIGH(DIR_MSG_INICIO<<1)			; me envia el mensaje de inicio
+	ldi   zh, HIGH(DIR_MSG_INICIO<<1)			; se envia el mensaje de inicio
 	ldi   zl, LOW(DIR_MSG_INICIO<<1)
 	rcall send_msg
 
-	;rcall detectar_perturbacion					; esta función espera a que haya una perturbación para iniciar el proceso
+	;rcall detectar_perturbacion				; espera a que haya una perturbación para iniciar el proceso
 	
 	ldi   zh, HIGH(DIR_MSG_ESPERA_VASO<<1)		; mensaje hasta que se detecta un peso que equivale a un vaso
 	ldi   zl, LOW(DIR_MSG_ESPERA_VASO<<1)
 	rcall send_msg
 	
+	
 	rcall detectar_vaso
 	ldi   zh, HIGH(DIR_MSG_CONFIGURACION<<1)	; mensaje para elegir medida
 	ldi   zl, LOW(DIR_MSG_CONFIGURACION<<1)
 	rcall send_msg
-	;rcall delay_3seg							; se muestra el mensaje durante 3 segundos
+	rcall delay_3seg							; se muestra el mensaje durante 3 segundos
+	
 	rcall configurar_medida
 	
 	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)			
@@ -97,6 +99,8 @@ setup:
 	ldi   zh, HIGH(DIR_MSG_FIN<<1)				; mensaje que le indica al usuario que puede retirar el vaso
 	ldi   zl, LOW(DIR_MSG_FIN<<1)
 	rcall send_msg
+	
+	rcall fin_programa							; aguarda a que retiren el vaso 
 	 
 	rjmp setup
 
@@ -104,6 +108,36 @@ setup:
 ; FUNCIONES
 ;-------------------------------------------------------------------------
 
+;-------------------------------------------------------------------------
+; SEND_BLACK_CHAR:
+; manda un caracter en negro cuyo valor ASCII es 0xFF.
+;-------------------------------------------------------------------------
+send_black_char:
+	push  r17
+
+	ldi   r17, 0xFF					; se mandan los 4 bits mas significativos primero
+	andi  r17, 0xF0
+	out   LCD_DPRT, r17
+	sbi   LCD_CPRT, LCD_RS			; RS = 1 es para mandar datos
+	cbi   LCD_CPRT, LCD_RW
+	sbi   LCD_CPRT, LCD_E
+	rcall delay_500ns 
+	cbi   LCD_CPRT,LCD_E
+
+	ldi   r17, 0xFF					; ahora los 4 bits restantes
+	swap  r17
+	andi  r17, 0xF0
+	out   LCD_DPRT, r17
+	sbi   LCD_CPRT, LCD_RS			; RS = 1 es para mandar datos
+	cbi   LCD_CPRT, LCD_RW
+	sbi   LCD_CPRT, LCD_E
+	rcall delay_500ns 
+	cbi   LCD_CPRT,LCD_E
+
+	rcall delay_100us
+	pop  r17
+	ret
+	
 ;-------------------------------------------------------------------------
 ; INT_TIMER1_0VF:
 ; rutina de interrupcion vinculada al Timer1, que controla el pwm del servo.
@@ -132,24 +166,28 @@ int_next:
 	reti
 
 ; ----------------------------------------------------------------------
-; DELAY_3s:
+; DELAY_3seg:
 ; Delay de 3 segundos 
 ; ----------------------------------------------------------------------
 delay_3seg:
 	push r16
 
-	ldi r16, 184
+	ldi r16, 0
 	out TCNT0, r16					; se inicializa el contador
 	
 	clr r16
 	out TCCR0A, r16		
 	
 	ldi r16, (1<<CS02)|(0<<CS01)|(1<<CS00)
-	out TCCR0B, r16					; config: modo normal, con prescaler = 256
+	out TCCR0B, r16					; config: modo normal, con prescaler = 1024
 
+	ldi r16, 184
 delay_3seg_loop:
 	sbis TIFR0, TOV0
 	rjmp delay_3seg_loop
+	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0
+	dec  r16
+	brne delay_3seg_loop
 	clr  r16
 	out  TCCR0B, r16				; se apaga el timer
 	sbi  TIFR0, TOV0				; se setea el flag TOV0 para dejarlo en 0

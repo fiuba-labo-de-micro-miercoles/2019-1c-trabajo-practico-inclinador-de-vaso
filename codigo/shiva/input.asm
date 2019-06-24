@@ -56,24 +56,32 @@ detectar_cancelacion:
 	mov  r16, DATO_M
 	cpi  r16, HIGH (VALOR_CANCELACION)
 	brsh proceso_cancelado
+	
 	pop  r16
 	ret
 
 proceso_cancelado:						
+	push  r17
+	
 	ldi   zh, HIGH(DIR_MSG_CANCELACION<<1)
 	ldi   zl, LOW(DIR_MSG_CANCELACION<<1)
 	rcall send_msg
 										; se debe volver al SETUP cuando no haya peso sobre la balanza
-	ldi    r17, 2									; y eso se dara cuando el dato sea igual al peso del vaso 
-	ldi    r16, 10						; que quedo guardado en VASO
-proceso_cancelado_loop:
+										; y eso se dara cuando el dato sea igual al peso del vaso 
+										; que quedo guardado en VASO
+proceso_cancelado_loop:	
+	ldi    r17, NRO_MUESTRAS
+	ldi    r16, MARGEN_ERROR
+proceso_cancelado_lectura:
 	rcall  lectura_peso	
+	rcall  set_scale
 
 	sub    DATO_L, VASO_L
 	sbc    DATO_M, VASO_M
 	sbc	   DATO_H, VASO_H
 	brsh   proceso_cancelado_next
 	rcall  com_2
+
 proceso_cancelado_next:	
 	tst    DATO_H
 	brne   proceso_cancelado_loop
@@ -82,15 +90,11 @@ proceso_cancelado_next:
 	cp     DATO_L, r16
 	brsh   proceso_cancelado_loop
 	dec    r17
-	brne   proceso_cancelado_loop
-	/*cp     DATO_H, VASO_H
-	brne   proceso_cancelado_loop
-	cp     DATO_M, VASO_M
-	brne   proceso_cancelado_loop
-	cp     DATO_L, VASO_L
-	brne   proceso_cancelado_loop*/
+	brne   proceso_cancelado_lectura
+	
+	pop    r17
 	pop    r16
-	rjmp   setup
+	jmp   setup
 
 ;-------------------------------------------------------------------------
 ; DETECTA_VASO:
@@ -102,10 +106,17 @@ proceso_cancelado_next:
 
 detectar_vaso: 
 	push  r16
+	push  r17
+	push  r18
+	push  r19
+	push  r20
+	push  r21
 
 	ldi   r16, VASO_MINIMO				; peso aproximado de un vaso de vidrio
 	ldi   r17, MARGEN_ERROR
 
+detectar_vaso_loop:
+	ldi   r18, NRO_MUESTRAS				; contador
 detectar_vaso_lectura:
 	rcall lectura_peso					; lee un dato y lo escala
 	rcall set_scale						
@@ -117,35 +128,46 @@ detectar_vaso_lectura:
 	brlo  detectar_vaso_lectura			; si no detecta un cambio vuelve a leer un peso
 	
 detectar_vaso_verificacion:				; la balanza envia 10 muestras por segundo por lo que la siguiente muestra sera a los 10 ms de la anterior
-	mov   VASO_L, DATO_L
-	mov   VASO_M, DATO_M
-	mov   VASO_H, DATO_H
+	mov   r19, DATO_L
+	mov   r20, DATO_M
+	mov   r21, DATO_H
 
 	rcall lectura_peso					; lee un dato y lo escala
 	rcall set_scale						
 	rcall detectar_cancelacion
 	
-	sub   DATO_L, VASO_L				; compara el siguiente valor leido con el anterior			
-	sbc   DATO_M, VASO_M
-	sbc   DATO_H, VASO_H
+	sub   DATO_L, r19					; compara el siguiente valor leido con el anterior			
+	sbc   DATO_M, r20
+	sbc   DATO_H, r21
 	
 	brsh  detectar_vaso_next
 	rcall com_2							; se toma el modulo de la diferencia de dos valores consecutivos
 
 detectar_vaso_next:
 	tst   DATO_H
-	brne  detectar_vaso_lectura
+	brne  detectar_vaso_loop
 	tst   DATO_M
-	brne  detectar_vaso_lectura
+	brne  detectar_vaso_loop
 	cp    DATO_L, r17
-	brsh  detectar_vaso_lectura
-	
+	brsh  detectar_vaso_loop
+	dec   r18
+	brne  detectar_vaso_lectura
+
+	mov   VASO_L, r19
+	mov   VASO_M, r20
+	mov   VASO_H, r21
+
 	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)	; Mensaje hasta que se setea la nueva tara
 	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
 	rcall send_msg
 
 	rcall set_tara						; setea la tara ahora con el vaso puesto
 	
+	pop   r21
+	pop   r20
+	pop   r19
+	pop   r18
+	pop   r17
 	pop   r16
 	ret
 	
@@ -160,7 +182,7 @@ configurar_medida:
 	push zl
 	push zh
 
-	ldi  r17, 0xFF
+	ldi  r17, END_OF_MESSAGE
 
 configurar_medida_init:
 	ldi  zh, HIGH(DIR_MSG_PINTA<<1)
@@ -201,3 +223,44 @@ configurar_medida_fin:					; si pasaron 4 seg, de la subrutina de interrupcion s
 	pop   r17
 	pop   r16
 	ret	
+
+	;-------------------------------------------------------------------------
+; FIN_PROGRAMA:
+; funcion que aguarda a que retiren el vaso de la plataforma. Considerando
+; que el peso del vaso quedo guardado en VASO_H:VASO_L, la funcion lee datos
+; de la celda hasta encontrar NRO_MUESTRAS muestras consecutivas cuyo valor
+; sean iguales a VASO con un margen de rror de MARGEN_ERROR
+;-------------------------------------------------------------------------
+
+fin_programa:
+	push  r16
+	push  r17
+
+	ldi   r17, MARGEN_ERROR
+				
+fin_programa_loop:
+	ldi   r16, NRO_MUESTRAS
+fin_programa_lectura:
+	rcall lectura_peso
+	rcall set_scale
+
+	sub   DATO_L, VASO_L							
+	sbc   DATO_M, VASO_M
+	sbc   DATO_H, VASO_H
+
+	brsh  fin_programa_next
+	rcall com_2							; se obtiene el modulo de la resta
+
+fin_programa_next:
+	tst   DATO_H
+	brne  fin_programa_loop
+	tst   DATO_M
+	brne  fin_programa_loop
+	cp    DATO_L, r17
+	brsh  fin_programa_loop				; se compara el modulo de la resta con el marge de error
+	dec   r16
+	brne  fin_programa_lectura			; cuando se leen NRO_MUESTRAS datos, cuya resta con el peso del vaso es menor al margen 
+										; de error, es porque retiraron el vaso
+	pop  r17
+	pop  r16
+	ret

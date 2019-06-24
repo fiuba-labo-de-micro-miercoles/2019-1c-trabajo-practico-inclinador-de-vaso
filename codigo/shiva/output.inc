@@ -33,3 +33,4 @@
 .equ  CURSOR_LINE_2                 = 0xC0	; Fuerza el cursor al ppio de la 2da linea
 .equ  DATA_4BIT                     = 0x28	; Dos lineas, D4-D7
 .equ  DATA_8BIT                     = 0x38	; Dos lineas, D0-D7
+.equ  END_OF_MESSAGE				= 0xF0
