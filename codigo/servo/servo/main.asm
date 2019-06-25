@@ -13,17 +13,27 @@ main:
 	ldi  r16, LOW(RAMEND)
 	out  spl, r16		; inicializo el stack pointer al final de la RAM
 	sei
+	rcall dellay
+	rcall dellay
 	rcall servo_init
 	rcall dellay
 	rcall dellay
-	clr   r18
+	ldi   r18, 40
 
 here:	
 	rcall servo_pull
 	rcall dellay
-	inc   r18
-	cpi  r18, 40
-	brsh main
+	dec   r18
+	cpi  r18, 3
+	brne here
+
+here2:
+	rcall servo_pull
+	rcall dellay
+	inc  r18
+	cpi  r18, 30
+	brne here2
+	
 	rjmp here
 
 
@@ -34,10 +44,10 @@ servo_init:
 	
 	sbi  DDRB, PB1			; PB1 como output pin
 
-	ldi  r16, HIGH(313 + 8)
+	ldi  r16, HIGH(313 + 40)
 	sts  OCR1AH, r16
 
-	ldi  r16, LOW(313 + 8)
+	ldi  r16, LOW(313 + 40)
 	sts  OCR1AL, r16
 
 	ldi  r16, (1<<WGM11)|(1<<WGM10)|(1<<COM1A1)|(0<<COM1A0)			; fast-PWM mode, non-inverting mode

@@ -69,7 +69,7 @@ proceso_declinacion:
 
 	mov   PASO, MEDIDA_MITAD_L						; se divide el rango de valores que va desde MEDIDA/2 HASTA MEDIDA,
 	lsr   PASO										; por 32, que son las cantidad de posiciones que tiene la paltaforma.
-	lsr   PASO										;
+	lsr   PASO										
 	lsr   PASO
 	lsr   PASO
 	lsr   PASO
@@ -86,10 +86,14 @@ proceso_declinacion_techo:
 	inc   TECHO_H
 
 proceso_declinacion_techo_next:
-	cp    TECHO_H, MEDIDA_H							; se verifica que el techo no sea mayor que la medida seleccionada
+	cp    MEDIDA_H, TECHO_H 						; si MEDIDA_H < TECHO_H => MEDIDA < TECHO entonces se tiene que terminar el proceso
+	brlo  proceso_declinacion_fin
+	
+	cp    TECHO_H, MEDIDA_H							; ya se que MEDIDA_H >= TECHO_H, asi que verifico si se cumple la igualdad o el techo es mayor 
 	brlo  proceso_declinacion_lectura
-	cp    TECHO_L, MEDIDA_L
-	brsh  proceso_declinacion_fin
+	
+	cp    TECHO_L, MEDIDA_L							; si esta aca MEDIDA_H = TECHO_H
+	brsh  proceso_declinacion_fin					; si TECHO_L > MEDIDA_L => TECHO > MEDIDA y termina el proceso
 
 proceso_declinacion_lectura:
 	rcall lectura_peso								; se lee un dato y se escala
@@ -97,15 +101,17 @@ proceso_declinacion_lectura:
 	rcall detectar_cancelacion
 
 	cp    DATO_M, TECHO_H							; se compara el valor leido con el techo
-	brlo  proceso_declinacion_lectura				; mientras el dato sea menor que el techo se sigue leyendo
+	brlo  proceso_declinacion_lectura				; mientras el dato sea menor que el techo se sigue leyendo 
 	cp    DATO_L, TECHO_L
 	brlo  proceso_declinacion_lectura
+
 	
-	cp    TECHO_H, MEDIDA_MITAD_H					; se compara el dato leido con la mitad de la medida para 
-	brlo  proceso_declinacion_step					; ver si se tiene que declinar la plataforma
+	cp    MEDIDA_MITAD_H, TECHO_H					; se compara el dato leido con la mitad de la medida para 
+	brlo  proceso_declinacion_servo					; ver si se tiene que declinar la plataforma
 	cp    TECHO_L, MEDIDA_MITAD_L
 	brlo  proceso_declinacion_step
 
+proceso_declinacion_servo:
 	rcall mover_servo
 	 
 proceso_declinacion_step:
@@ -142,8 +148,16 @@ mover_servo:
 	dec   r17
 
 mover_servo_next:
-	cpi   r16, 0x08
+	cpi   r17, HIGH(313+8)							; comparo la nueva posicion con la minima posicion posible del servo
+	brlo  mover_servo_fin							; si es mas chica salgo de la funcion (seguridad)
+	cpi   r16, LOW(313+8)
 	brlo  mover_servo_fin
+
+	;cpi   r17, HIGH(313+40) +1						; comparo la nueva posicion con la maxima posicion posible del servo
+	;brsh  mover_servo_fin							; si es mas grande salgo de la funcion (seguridad)
+	;cpi   r16, LOW(313+40)
+	;brsh  mover_servo_fin
+
 
 	sts   OCR1AH, r17								
 	sts   OCR1AL, r16

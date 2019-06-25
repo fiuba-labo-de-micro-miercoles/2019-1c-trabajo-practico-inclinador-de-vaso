@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\marti\Google Drive\LABO\servo\servo\main.asm Wed Jun 19 21:02:17 2019
+AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\servo\servo\main.asm Mon Jun 24 13:50:31 2019
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.209\avrasm\inc\m328pdef.inc'
@@ -989,7 +989,7 @@ AVRASM ver. 2.2.7  C:\Users\marti\Google Drive\LABO\servo\servo\main.asm Wed Jun
 000000 940c 0034                 	jmp  main
                                  
                                  .org 0x01A
-00001a 940c 0066                 	jmp INT_TIMER1_OVF
+00001a 940c 006d                 	jmp INT_TIMER1_OVF
                                  
                                  .org INT_VECTORS_SIZE
                                  
@@ -999,102 +999,112 @@ AVRASM ver. 2.2.7  C:\Users\marti\Google Drive\LABO\servo\servo\main.asm Wed Jun
 000036 ef0f                      	ldi  r16, LOW(RAMEND)
 000037 bf0d                      	out  spl, r16		; inicializo el stack pointer al final de la RAM
 000038 9478                      	sei
-000039 d009                      	rcall servo_init
-00003a d034                      	rcall dellay
-00003b d033                      	rcall dellay
-00003c 2722                      	clr   r18
+000039 d03c                      	rcall dellay
+00003a d03b                      	rcall dellay
+00003b d00e                      	rcall servo_init
+00003c d039                      	rcall dellay
+00003d d038                      	rcall dellay
+00003e e228                      	ldi   r18, 40
                                  
                                  here:	
-00003d d018                      	rcall servo_pull
-00003e d030                      	rcall dellay
-00003f 9523                      	inc   r18
-000040 3228                      	cpi  r18, 40
-000041 f790                      	brsh main
-000042 cffa                      	rjmp here
+00003f d01d                      	rcall servo_pull
+000040 d035                      	rcall dellay
+000041 952a                      	dec   r18
+000042 3023                      	cpi  r18, 3
+000043 f7d9                      	brne here
+                                 
+                                 here2:
+000044 d018                      	rcall servo_pull
+000045 d030                      	rcall dellay
+000046 9523                      	inc  r18
+000047 312e                      	cpi  r18, 30
+000048 f7d9                      	brne here2
+                                 	
+000049 cff5                      	rjmp here
                                  
                                  
                                  
                                  ; ============================================================================
                                  servo_init:
-000043 930f                      	push r16
+00004a 930f                      	push r16
                                  	
-000044 9a21                      	sbi  DDRB, PB1			; PB1 como output pin
+00004b 9a21                      	sbi  DDRB, PB1			; PB1 como output pin
                                  
-000045 e001                      	ldi  r16, HIGH(313 + 8)
-000046 9300 0089                 	sts  OCR1AH, r16
+00004c e001                      	ldi  r16, HIGH(313 + 40)
+00004d 9300 0089                 	sts  OCR1AH, r16
                                  
-000048 e401                      	ldi  r16, LOW(313 + 8)
-000049 9300 0088                 	sts  OCR1AL, r16
+00004f e601                      	ldi  r16, LOW(313 + 40)
+000050 9300 0088                 	sts  OCR1AL, r16
                                  
-00004b e803                      	ldi  r16, (1<<WGM11)|(1<<WGM10)|(1<<COM1A1)|(0<<COM1A0)			; fast-PWM mode, non-inverting mode
-00004c 9300 0080                 	sts  TCCR1A, r16					
+000052 e803                      	ldi  r16, (1<<WGM11)|(1<<WGM10)|(1<<COM1A1)|(0<<COM1A0)			; fast-PWM mode, non-inverting mode
+000053 9300 0080                 	sts  TCCR1A, r16					
                                  
-00004e e00d                      	ldi  r16, (0<<WGM13)|(1<<WGM12)|(1<<CS02)|(0<<CS01)|(1<<CS00)
-00004f 9300 0081                 	sts  TCCR1B, r16												; con prescaler = 1024
+000055 e00d                      	ldi  r16, (0<<WGM13)|(1<<WGM12)|(1<<CS02)|(0<<CS01)|(1<<CS00)
+000056 9300 0081                 	sts  TCCR1B, r16												; con prescaler = 1024
                                  
-000051 e001                      	ldi  r16, (1<<TOIE1)
-000052 9300 006f                 	sts  TIMSK1, r16												; se activa interrupciones
+000058 e001                      	ldi  r16, (1<<TOIE1)
+000059 9300 006f                 	sts  TIMSK1, r16												; se activa interrupciones
                                  
-000054 910f                      	pop  r16
-000055 9508                      	ret
+00005b 910f                      	pop  r16
+00005c 9508                      	ret
                                  
                                  ; ============================================================================
                                  servo_pull:
-000056 930f                      	push r16
-000057 931f                      	push r17
+00005d 930f                      	push r16
+00005e 931f                      	push r17
                                  
-000058 3221                      	cpi  r18,33
-000059 f448                      	brsh servo_pull_end												; si es mayor a 32 el valor que recibe significa que esta fuera del rango de 250-500gr.
+00005f 3221                      	cpi  r18,33
+000060 f448                      	brsh servo_pull_end												; si es mayor a 32 el valor que recibe significa que esta fuera del rango de 250-500gr.
                                  	
-00005a e401                      	ldi  r16, LOW(313 + 8)
-00005b e011                      	ldi  r17, HIGH(313 + 8)
+000061 e401                      	ldi  r16, LOW(313 + 8)
+000062 e011                      	ldi  r17, HIGH(313 + 8)
                                  
-00005c 0f02                      	add  r16, r18
-00005d f408                      	brcc servo_pull_next
-00005e 9513                      	inc  r17
+000063 0f02                      	add  r16, r18
+000064 f408                      	brcc servo_pull_next
+000065 9513                      	inc  r17
                                  servo_pull_next:
-00005f 9300 0088                 	sts OCR1AL, r16
-000061 9310 0089                 	sts OCR1AH, r17 
+000066 9300 0088                 	sts OCR1AL, r16
+000068 9310 0089                 	sts OCR1AH, r17 
                                  
                                  servo_pull_end:	
-000063 911f                      	pop  r17
-000064 910f                      	pop  r16
-000065 9508                      	ret
+00006a 911f                      	pop  r17
+00006b 910f                      	pop  r16
+00006c 9508                      	ret
                                  ; ============================================================================
                                  INT_TIMER1_OVF:
-000066 930f                      	push r16
+00006d 930f                      	push r16
                                  
-000067 e001                      	ldi  r16, HIGH(313)
-000068 9300 0085                 	sts  TCNT1H, r16
-00006a e309                      	ldi  r16, LOW(313)
-00006b 9300 0084                 	sts  TCNT1L, r16
+00006e e001                      	ldi  r16, HIGH(313)
+00006f 9300 0085                 	sts  TCNT1H, r16
+000071 e309                      	ldi  r16, LOW(313)
+000072 9300 0084                 	sts  TCNT1L, r16
                                  
-00006d 910f                      	pop  r16
-00006e 9518                      	reti
+000074 910f                      	pop  r16
+000075 9518                      	reti
                                  ; ============================================================================
                                  dellay:
-00006f 934f                      	push r20
-000070 935f                      	push r21
-000071 936f                      	push r22
+000076 934f                      	push r20
+000077 935f                      	push r21
+000078 936f                      	push r22
                                  
-000072 e240                      	ldi  r20, 32
-000073 ec58                      dellay_L1: ldi  r21,200
-000074 ef6a                      dellay_L2: ldi  r22, 250	
+000079 e240                      	ldi  r20, 32
+00007a ec58                      dellay_L1: ldi  r21,200
+00007b ef6a                      dellay_L2: ldi  r22, 250	
                                  dellay_L3:	
-000075 0000                      	nop
-000076 0000                      	nop
-000077 956a                      	dec  r22
-000078 f7e1                      	brne dellay_L3
+00007c 0000                      	nop
+00007d 0000                      	nop
+00007e 956a                      	dec  r22
+00007f f7e1                      	brne dellay_L3
                                  
-000079 955a                      	dec  r21
-00007a f7c9                      	brne dellay_L2
+000080 955a                      	dec  r21
+000081 f7c9                      	brne dellay_L2
                                  
-00007b 954a                      	dec  r20
-00007c f7b1                      	brne dellay_L1
+000082 954a                      	dec  r20
+000083 f7b1                      	brne dellay_L1
                                  	
-00007d 916f                      	pop  r22
-00007e 915f                      	pop  r21
-00007f 914f                      	pop  r20
+000084 916f                      	pop  r22
+000085 915f                      	pop  r21
+000086 914f                      	pop  r20
                                  	
 
 
@@ -1115,7 +1125,7 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  27 r17:   5 r18:   5 r19:   0 r20:   4 
+r13:   0 r14:   0 r15:   0 r16:  27 r17:   5 r18:   7 r19:   0 r20:   4 
 r21:   4 r22:   4 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
 Registers used: 6 out of 35 (17.1%)
@@ -1125,27 +1135,27 @@ Registers used: 6 out of 35 (17.1%)
 andi  :   0 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
 brcc  :   1 brcs  :   0 break :   0 breq  :   0 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
-brne  :   3 brpl  :   0 brsh  :   2 brtc  :   0 brts  :   0 brvc  :   0 
+brne  :   5 brpl  :   0 brsh  :   1 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   0 cbi   :   0 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   1 cls   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   0 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :   2 cpse  :   0 dec   :   3 eor   :   0 fmul  :   0 fmuls :   0 
+cpi   :   3 cpse  :   0 dec   :   4 eor   :   0 fmul  :   0 fmuls :   0 
 fmulsu:   0 icall :   0 ijmp  :   0 in    :   0 inc   :   2 jmp   :   2 
-ld    :   0 ldd   :   0 ldi   :  14 lds   :   0 lpm   :   0 lsl   :   0 
+ld    :   0 ldd   :   0 ldi   :  15 lds   :   0 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
 neg   :   0 nop   :   2 or    :   0 ori   :   0 out   :   2 pop   :   7 
-push  :   7 rcall :   5 ret   :   3 reti  :   1 rjmp  :   1 rol   :   0 
+push  :   7 rcall :   9 ret   :   3 reti  :   1 rjmp  :   1 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   1 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   0 sec   :   0 seh   :   0 
 sei   :   1 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   9 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 21 out of 113 (18.6%)
+Instructions used: 20 out of 113 (17.7%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x000102    162      0    162   32768   0.5%
+[.cseg] 0x000000 0x000110    176      0    176   32768   0.5%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

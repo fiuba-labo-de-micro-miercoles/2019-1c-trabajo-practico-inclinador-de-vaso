@@ -69,7 +69,7 @@ setup:
 	ldi   zl, LOW(DIR_MSG_INICIO<<1)
 	rcall send_msg
 
-	;rcall detectar_perturbacion				; espera a que haya una perturbación para iniciar el proceso
+	rcall detectar_perturbacion				; espera a que haya una perturbación para iniciar el proceso
 	
 	ldi   zh, HIGH(DIR_MSG_ESPERA_VASO<<1)		; mensaje hasta que se detecta un peso que equivale a un vaso
 	ldi   zl, LOW(DIR_MSG_ESPERA_VASO<<1)

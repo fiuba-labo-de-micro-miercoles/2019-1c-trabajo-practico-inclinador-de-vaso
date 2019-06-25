@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\marti\Google Drive\LABO\servo\servo\main.asm Wed Jun 19 21:02:17 2019
+AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\servo\servo\main.asm Mon Jun 24 13:50:31 2019
 
 
 EQU  SIGNATURE_000 0000001e
@@ -696,13 +696,14 @@ EQU  TWIaddr      00000030
 EQU  SPMRaddr     00000032
 EQU  INT_VECTORS_SIZE 00000034
 CSEG main         00000034
-CSEG INT_TIMER1_OVF 00000066
-CSEG servo_init   00000043
-CSEG dellay       0000006f
-CSEG here         0000003d
-CSEG servo_pull   00000056
-CSEG servo_pull_end 00000063
-CSEG servo_pull_next 0000005f
-CSEG dellay_L1    00000073
-CSEG dellay_L2    00000074
-CSEG dellay_L3    00000075
+CSEG INT_TIMER1_OVF 0000006d
+CSEG dellay       00000076
+CSEG servo_init   0000004a
+CSEG here         0000003f
+CSEG servo_pull   0000005d
+CSEG here2        00000044
+CSEG servo_pull_end 0000006a
+CSEG servo_pull_next 00000066
+CSEG dellay_L1    0000007a
+CSEG dellay_L2    0000007b
+CSEG dellay_L3    0000007c
