@@ -1,5 +1,6 @@
 ;-------------------------------------------------------------------------
 ; CONFIGURACION_PUERTOS:
+; se definen los puertos de entrada o de salda para todo el programa
 ;-------------------------------------------------------------------------
 configuracion_puertos:
 	push r16
@@ -15,15 +16,16 @@ configuracion_puertos:
 	out  LCD_DDDR, r16				; Configuro los bits D7:D4 del puerto D como de salida
 	sbi  LCD_CDDR, LCD_RS		
 	sbi  LCD_CDDR, LCD_RW
-	sbi  LCD_CDDR, LCD_E			; Configuro los puertos de dato (PORTD) y los comandos usados (del PORTB) como de salida 
+	sbi  LCD_CDDR, LCD_E			; Se configura los puertos de dato (PORTD) y los comandos usados (del PORTB) como de salida 
 	rcall delay_3ms
-	
-	
+
 	pop  r16
 	ret											
 
 ;-------------------------------------------------------------------------
 ; LCD_INIT:
+; se define el formato en que se le envian los datos a la pantalla, y el 
+; formato del cursor.
 ;-------------------------------------------------------------------------
 LCD_init:
 	push  r16
@@ -32,7 +34,7 @@ LCD_init:
 	rcall send_command
 	rcall delay_3ms
 	
-	ldi   r16, DISP_ON_CURS_OFF		; Deja el cursor fijo
+	ldi   r16, DISP_ON_CURS_OFF		; Sin cursor
 	rcall send_command				
 	rcall delay_3ms
 
@@ -41,7 +43,9 @@ LCD_init:
 
 ;-------------------------------------------------------------------------
 ; SERVO_INIT:
-; 
+; Inicializa la posición del servo tal que la plataforma se encuentre en
+; posición vertical. Envia un PWM de periodo 20 ms y tiempo en alto 0,5 ms
+; por el pin correspondiente al TIMER1A
 ;-------------------------------------------------------------------------
 servo_init:
 	push r16

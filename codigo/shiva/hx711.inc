@@ -12,8 +12,8 @@
 .def  DATO_M = r3
 .def  DATO_L = r2
 
-.def TARA_H	= r7
-.def TARA_M	= r6
-.def TARA_L = r5
+.def  TARA_H	= r7
+.def  TARA_M	= r6
+.def  TARA_L = r5
 
 .def  CONT_8 = r17

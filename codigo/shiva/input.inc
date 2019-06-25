@@ -1,14 +1,14 @@
 ;-------------------------------------------------------------------------
 ; CONSTANTES y MACROS
 ;-------------------------------------------------------------------------
-.equ  VALOR_CANCELACION = 4096 
+.equ VALOR_CANCELACION = 4096 
 .equ MIN_PERTURBACION = 256
 
 .equ VASO_MINIMO  = 200
 .equ MARGEN_ERROR = 4
-.EQU NRO_MUESTRAS = 6
+.equ NRO_MUESTRAS = 6
 ;-------------------------------------------------------------------------
 ; VARIABLES EN REGISTROS
 ;-------------------------------------------------------------------------
-.def    MEDIDA_L = r11
-.def    MEDIDA_H = r12
+.def MEDIDA_L = r11
+.def MEDIDA_H = r12

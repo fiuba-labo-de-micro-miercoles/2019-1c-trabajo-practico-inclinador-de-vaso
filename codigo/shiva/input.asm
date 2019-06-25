@@ -1,7 +1,7 @@
 ; ----------------------------------------------------------------------
 ; DETECTAR_PERTURBACION:
 ; Para la configuracion del dispositivo se detectaran golpes dados por
-; el usuario. Entonces, se determino que un golpe equivale a aproximadamente
+; el usuario. Entonces, se determinó, a partir de mediciones, que un golpe equivale a aproximadamente
 ; 300 gr. Por lo que se toma el byte del medio del dato y se verifica si es
 ; mayor a 255. Si lo es se verifica que haya un segundo golpe. Si esto
 ; ocurre significa que el dispositivo esta siendo configurado.
@@ -10,10 +10,11 @@ detectar_perturbacion:
 	push  r16
 	push  r17
 
-	ldi	  r16, HIGH(MIN_PERTURBACION)					; se utiliza para comparar el valor de lectura y saber si hubo alguna perturbacion
+	ldi	  r16, HIGH(MIN_PERTURBACION)					; se utiliza para comparar el valor de lectura y saber si hubo alguna perturbación
 	
 detectar_perturbacion_lectura:
-	brts  detectar_perturbacion_fin
+	brts  detectar_perturbacion_fin						; se utiliza para la función CONFIGURAR_MEDIDA
+	
 	rcall lectura_peso
 	rcall set_scale	
 	cp    DATO_M, r16
@@ -27,7 +28,7 @@ detectar_perturbacion_verificacion:
 	rcall set_scale
 	cp    DATO_M, r16
 	brsh  detectar_perturbacion_verificacion
-	ldi   r17, 6
+	ldi   r17, NRO_MUESTRAS
 
 detectar_perturbacion_verificacion2:
 	dec   r17
@@ -44,11 +45,11 @@ detectar_perturbacion_fin:
 
 ; ----------------------------------------------------------------------
 ; DETECTAR_CANCELACION:
-; La cancelacion se da en cualquier momento del proceso cuando el usuario
-; hace una presion de mas de 4096 g. Esta funcion chequea el dato leido, 
-; lo compara con 4096 g (0x1000) y si es es mayor, espera a que no hay nada  
-;  sobre la balanza y vuelve a setup. Se eligio 4096 g porque es solo comparar el segundo
-; byte del dato con 0x10 
+; La cancelación se da en cualquier momento del proceso cuando el usuario
+; hace una presión de más de 4096 g. Esta función chequea el dato que recibe en DATO, 
+; lo compara con 4096 g (0x1000) y si es es mayor, espera a que no haya nada  
+; sobre la balanza y vuelve a setup. Se eligió 4096 g porque es solo comparar el segundo
+; byte del dato con 0x10.
 ; ----------------------------------------------------------------------	
 detectar_cancelacion:	
 	push r16
@@ -76,7 +77,7 @@ proceso_cancelado_lectura:
 	rcall  lectura_peso	
 	rcall  set_scale
 
-	sub    DATO_L, VASO_L
+	sub    DATO_L, VASO_L				; se calcula el módulo de la resta del DATO y el peso del VASO
 	sbc    DATO_M, VASO_M
 	sbc	   DATO_H, VASO_H
 	brsh   proceso_cancelado_next
@@ -94,14 +95,15 @@ proceso_cancelado_next:
 	
 	pop    r17
 	pop    r16
-	jmp   setup
+	jmp    main
 
 ;-------------------------------------------------------------------------
-; DETECTA_VASO:
+; DETECTAR_VASO:
 ; Se tiene en cuenta que un vaso de virdio pesa aproximadamente 200gr. 
-; La funcion lee un dato y compara con el valor minimo de un vaso, 
-; cuando detecta este valor se fija que en la siguiente lectura
-; el valor sea el mismo. Guarda ese valor en VASO_H VASO_L y setea la tara. 
+; La función lee un dato y compara con el valor mínimo de un vaso, 
+; cuando detecta este valor se fija que en la siguientes lecturas que
+; el valor sea aproximadamente el mismo. Guarda ese valor en VASO_H:VASO_L
+; y setea la tara. 
 ;-------------------------------------------------------------------------
 
 detectar_vaso: 
@@ -173,7 +175,8 @@ detectar_vaso_next:
 	
 ;-------------------------------------------------------------------------
 ; CONFIGURAR_MEDIDA:
-; Se espera 3 segundos a que el usuario golpee 2 veces para cambiar la medida
+; Se espera 4 segundos a que el usuario golpee 2 veces para cambiar la medida.
+; De otra forma, se selecciona la medida elegida y se guarda el valor en MEDIDA.
 ;-------------------------------------------------------------------------
 configurar_medida:
 	push r16
@@ -188,31 +191,31 @@ configurar_medida_init:
 	ldi  zh, HIGH(DIR_MSG_PINTA<<1)
 	ldi  zl, LOW(DIR_MSG_PINTA<<1)		; Se inicializa en la medida pinta
 	
-
 configurar_medida_loop:
 	rcall send_msg						; envia el mensaje correspondiente a la medida cargada
 
-	lpm  MEDIDA_L, Z+					; se guarda la medida seleccionada
+	lpm  MEDIDA_L, Z+					; se guarda la medida seleccionada, cuyo valor esta a continuacion de su mensaje
 	lpm  MEDIDA_H, Z+ 
 	
-	cp   MEDIDA_L, r17					; si el siguiente valor es 0xFF, ya se recorrieron las 3 medidas
-	breq configurar_medida_init
+	cp   MEDIDA_L, r17					; si el siguiente valor es 0xF0, ya se recorrieron las 3 medidas
+	breq configurar_medida_init			; vuelve a comenzar por PINTA
 		
 	rcall delay_4s						; inicializa el delay de 4 seg
 	
-	rcall detectar_perturbacion			; se queda esperando una perturbación, si en 4 segundos no detecto nada ya se selecciono una medida	
-	brts  configurar_medida_fin			; si esta el bit T=1 significa que pasaron 4 segundos dentro de la funcion detectar_perturbacion
+	rcall detectar_perturbacion			; se queda esperando una perturbación, si en 4 segundos no detecto nada ya se seleccionó una medida.
+	brts  configurar_medida_fin			; si esta el bit T=1 significa que pasaron 4 segundos dentro de la función detectar_perturbacion 
+	                                    ; y sale de la función con la medida seleccionada en MEDIDA
 
-	ldi   r16, (0<<TOIE0)				; se desactiva la interrupcion por overflow
+	ldi   r16, (0<<TOIE0)				; se desactiva la interrupción por overflow
 	sts   TIMSK0, r16
 	
 	rjmp  configurar_medida_loop
  
-configurar_medida_fin:					; si pasaron 4 seg, de la subrutina de interrupcion se vuelve aqui	
+configurar_medida_fin:					; si pasaron 4 seg, de la subrutina de interrupción se vuelve aquí	
 	ldi   r16, (0<<CS02)|(0<<CS01)|(0<<CS00)
 	out   TCCR0B, r16					; config: se apaga el timer
 
-	ldi  r16, (0<<TOIE0)				; se desactiva la interrupcion por overflow
+	ldi  r16, (0<<TOIE0)				; se desactiva la interrupción por overflow
 	sts  TIMSK0, r16
 	
 	clt									; se pone en cero el flag T						
@@ -224,12 +227,12 @@ configurar_medida_fin:					; si pasaron 4 seg, de la subrutina de interrupcion s
 	pop   r16
 	ret	
 
-	;-------------------------------------------------------------------------
+;-------------------------------------------------------------------------
 ; FIN_PROGRAMA:
-; funcion que aguarda a que retiren el vaso de la plataforma. Considerando
-; que el peso del vaso quedo guardado en VASO_H:VASO_L, la funcion lee datos
+; función que aguarda a que retiren el vaso de la plataforma. Considerando
+; que el peso del vaso quedo guardado en VASO_H:VASO_L, la función lee datos
 ; de la celda hasta encontrar NRO_MUESTRAS muestras consecutivas cuyo valor
-; sean iguales a VASO con un margen de rror de MARGEN_ERROR
+; sean iguales a VASO con un margen de error de MARGEN_ERROR
 ;-------------------------------------------------------------------------
 
 fin_programa:

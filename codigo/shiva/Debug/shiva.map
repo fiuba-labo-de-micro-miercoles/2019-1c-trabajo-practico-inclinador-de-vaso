@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm Mon Jun 24 20:18:11 2019
+AVRASM ver. 2.2.7  C:\Users\marti\Desktop\2019-1c-trabajo-practico-inclinador-de-vaso-master\codigo\shiva\main.asm Tue Jun 25 20:19:04 2019
 
 
 EQU  SIGNATURE_000 0000001e
@@ -712,7 +712,11 @@ EQU  MARGEN_ERROR 00000004
 EQU  NRO_MUESTRAS 00000006
 DEF  MEDIDA_L     r11
 DEF  MEDIDA_H     r12
-EQU  BAUD_RATE    000000cf
+DEF  TECHO_L      r19
+DEF  TECHO_H      r20
+DEF  PASO         r21
+DEF  MEDIDA_MITAD_L r22
+DEF  MEDIDA_MITAD_H r23
 EQU  LCD_DPRT     0000000b
 EQU  LCD_DDDR     0000000a
 EQU  LCD_DPIN     00000009
@@ -742,6 +746,7 @@ EQU  CURSOR_LINE_2 000000c0
 EQU  DATA_4BIT    00000028
 EQU  DATA_8BIT    00000038
 EQU  END_OF_MESSAGE 000000f0
+EQU  POS_MAYOR_INCLINACION 00000161
 CSEG lectura_peso 00000500
 CSEG lectura_peso_loop 00000502
 CSEG cargar_byte  0000051b
@@ -760,9 +765,9 @@ CSEG division_por_6 00000567
 CSEG shifteo_loop 00000568
 CSEG com_2_retornar 0000057b
 CSEG configuracion_puertos 0000057d
-CSEG delay_3ms    000000a8
+CSEG delay_3ms    00000093
 CSEG LCD_init     0000058a
-CSEG send_command 000007d5
+CSEG send_command 000007d1
 CSEG servo_init   00000593
 CSEG detectar_perturbacion 000005a5
 CSEG detectar_perturbacion_lectura 000005a8
@@ -772,14 +777,14 @@ CSEG detectar_perturbacion_verificacion2 000005b5
 CSEG detectar_cancelacion 000005be
 CSEG proceso_cancelado 000005c4
 CSEG DIR_MSG_CANCELACION 00000773
-CSEG send_msg     000007ea
+CSEG send_msg     000007e6
 CSEG proceso_cancelado_loop 000005c8
 CSEG proceso_cancelado_lectura 000005ca
 DEF  VASO_L       r8
 DEF  VASO_M       r9
 DEF  VASO_H       r10
 CSEG proceso_cancelado_next 000005d1
-CSEG setup        00000034
+CSEG main         00000034
 CSEG detectar_vaso 000005dd
 CSEG detectar_vaso_loop 000005e5
 CSEG detectar_vaso_lectura 000005e6
@@ -790,7 +795,7 @@ CSEG configurar_medida 0000060e
 CSEG configurar_medida_init 00000614
 CSEG DIR_MSG_PINTA 0000072c
 CSEG configurar_medida_loop 00000616
-CSEG delay_4s     000000b6
+CSEG delay_4s     000000a1
 CSEG configurar_medida_fin 00000622
 CSEG fin_programa 0000062e
 CSEG fin_programa_loop 00000631
@@ -806,34 +811,28 @@ CSEG DIR_MSG_MEDIA_PINTA 0000074e
 CSEG MEDIDA_MEDIAPINTA 00000760
 CSEG DIR_MSG_SIRVIENDO 00000763
 CSEG DIR_MSG_FIN  00000768
-EQU  POS_MAYOR_INCLINACION 00000161
 CSEG declinacion_init 00000780
-DEF  TECHO_L      r19
-DEF  TECHO_H      r20
-DEF  PASO         r21
-DEF  MEDIDA_MITAD_L r22
-DEF  MEDIDA_MITAD_H r23
 CSEG proceso_declinacion 00000789
-CSEG proceso_declinacion_loop 0000079d
-CSEG proceso_declinacion_techo 0000079e
-CSEG proceso_declinacion_techo_next 000007a1
-CSEG proceso_declinacion_fin 000007b7
-CSEG proceso_declinacion_lectura 000007a7
-CSEG proceso_declinacion_servo 000007b2
-CSEG proceso_declinacion_step 000007b3
-CSEG mover_servo  000007c1
-CSEG send_black_char 0000005d
-CSEG mover_servo_next 000007ca
-CSEG mover_servo_fin 000007d2
-CSEG delay_500ns  00000091
-CSEG delay_100us  0000009a
-CSEG send_msg_loop 000007ef
-CSEG send_msg_fin 0000080b
-CSEG send_msg_next 000007f8
-CSEG INT_TIMER1_OVF 00000072
-CSEG INT_TIMER0_OVF 0000007b
-CSEG delay_3seg   0000007f
-CSEG int_next     0000007e
-CSEG delay_3seg_loop 00000087
-CSEG delay_100us_loop 000000a1
-CSEG delay_3ms_loop 000000af
+CSEG proceso_declinacion_loop 0000079b
+CSEG proceso_declinacion_techo 0000079c
+CSEG proceso_declinacion_techo_next 0000079f
+CSEG proceso_declinacion_fin 000007b5
+CSEG proceso_declinacion_lectura 000007a5
+CSEG proceso_declinacion_servo 000007b0
+CSEG proceso_declinacion_step 000007b1
+CSEG mover_servo  000007bd
+CSEG send_black_char 0000080a
+CSEG mover_servo_next 000007c6
+CSEG mover_servo_fin 000007ce
+CSEG delay_500ns  0000007c
+CSEG delay_100us  00000085
+CSEG send_msg_loop 000007eb
+CSEG send_msg_fin 00000807
+CSEG send_msg_next 000007f4
+CSEG INT_TIMER1_OVF 0000005d
+CSEG INT_TIMER0_OVF 00000066
+CSEG delay_3seg   0000006a
+CSEG int_next     00000069
+CSEG delay_3seg_loop 00000072
+CSEG delay_100us_loop 0000008c
+CSEG delay_3ms_loop 0000009a

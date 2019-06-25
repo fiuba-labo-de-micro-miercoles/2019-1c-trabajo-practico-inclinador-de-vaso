@@ -5,7 +5,6 @@
 ;-------------------------------------------------------------------------
 ; MCU: ATmega328p con oscilador interno a 16 MHz
 ;-------------------------------------------------------------------------
-
 ;-------------------------------------------------------------------------
 ; INCLUSIONES
 ;-------------------------------------------------------------------------
@@ -33,7 +32,7 @@
 ;-------------------------------------------------------------------------
 		.cseg 
 .org	0x00
-	jmp setup
+	jmp main
 
 .org	OVF1addr
 	jmp INT_TIMER1_OVF
@@ -43,15 +42,15 @@
 
 .org INT_VECTORS_SIZE
 
-setup:
+main:
 	ldi	 r16, HIGH(RAMEND)
 	out  sph, r16
 	ldi  r16, LOW(RAMEND)
 	out  spl, r16								; inicializo el stack pointer al final de la RAM
     
-	sei
+	sei											; se activan las interrupciones
 
-	rcall configuracion_puertos
+	rcall configuracion_puertos					; se inicilizan los puertos, la pantalla y el servo
 	rcall servo_init
 	rcall LCD_init
 
@@ -59,7 +58,7 @@ setup:
 	clr   VASO_M
 	clr   VASO_L
 	
-	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)			; Se envia el mensaje de aguarde hasta que se termina de configurar el peso con la tara
+	ldi   zh, HIGH(DIR_MSG_AGUARDE<<1)			; Se envia el mensaje de aguarde hasta que se termina de configurar la tara
 	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
 	rcall send_msg
 
@@ -69,14 +68,14 @@ setup:
 	ldi   zl, LOW(DIR_MSG_INICIO<<1)
 	rcall send_msg
 
-	rcall detectar_perturbacion				; espera a que haya una perturbación para iniciar el proceso
+	rcall detectar_perturbacion					; espera a que haya una perturbación para iniciar el proceso
 	
 	ldi   zh, HIGH(DIR_MSG_ESPERA_VASO<<1)		; mensaje hasta que se detecta un peso que equivale a un vaso
 	ldi   zl, LOW(DIR_MSG_ESPERA_VASO<<1)
 	rcall send_msg
-	
-	
+		
 	rcall detectar_vaso
+
 	ldi   zh, HIGH(DIR_MSG_CONFIGURACION<<1)	; mensaje para elegir medida
 	ldi   zl, LOW(DIR_MSG_CONFIGURACION<<1)
 	rcall send_msg
@@ -88,7 +87,7 @@ setup:
 	ldi   zl, LOW(DIR_MSG_AGUARDE<<1)
 	rcall send_msg
 
-	rcall declinacion_init						; inclina la plataforma a la posicion inicial
+	rcall declinacion_init						; inclina la plataforma a la posicion inicial de mayor inclinacion
 	
 	ldi   zh, HIGH(DIR_MSG_SIRVIENDO<<1)		; mensaje que le indica al usuario que le puede comenzar a servir
 	ldi   zl, LOW(DIR_MSG_SIRVIENDO<<1)
@@ -102,42 +101,13 @@ setup:
 	
 	rcall fin_programa							; aguarda a que retiren el vaso 
 	 
-	rjmp setup
+	rjmp main
 
 ;-------------------------------------------------------------------------
 ; FUNCIONES
 ;-------------------------------------------------------------------------
 
-;-------------------------------------------------------------------------
-; SEND_BLACK_CHAR:
-; manda un caracter en negro cuyo valor ASCII es 0xFF.
-;-------------------------------------------------------------------------
-send_black_char:
-	push  r17
 
-	ldi   r17, 0xFF					; se mandan los 4 bits mas significativos primero
-	andi  r17, 0xF0
-	out   LCD_DPRT, r17
-	sbi   LCD_CPRT, LCD_RS			; RS = 1 es para mandar datos
-	cbi   LCD_CPRT, LCD_RW
-	sbi   LCD_CPRT, LCD_E
-	rcall delay_500ns 
-	cbi   LCD_CPRT,LCD_E
-
-	ldi   r17, 0xFF					; ahora los 4 bits restantes
-	swap  r17
-	andi  r17, 0xF0
-	out   LCD_DPRT, r17
-	sbi   LCD_CPRT, LCD_RS			; RS = 1 es para mandar datos
-	cbi   LCD_CPRT, LCD_RW
-	sbi   LCD_CPRT, LCD_E
-	rcall delay_500ns 
-	cbi   LCD_CPRT,LCD_E
-
-	rcall delay_100us
-	pop  r17
-	ret
-	
 ;-------------------------------------------------------------------------
 ; INT_TIMER1_0VF:
 ; rutina de interrupcion vinculada al Timer1, que controla el pwm del servo.

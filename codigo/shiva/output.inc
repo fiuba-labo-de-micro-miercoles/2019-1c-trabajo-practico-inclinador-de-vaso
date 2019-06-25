@@ -1,6 +1,16 @@
-;====================================================
-;MACROS
-;====================================================	
+; ----------------------------------------------------	
+; VARIABLES EN REGISTROS
+; ----------------------------------------------------
+
+.def   TECHO_L = r19
+.def   TECHO_H = r20
+.def   PASO    = r21
+.def   MEDIDA_MITAD_L = r22
+.def   MEDIDA_MITAD_H = r23
+
+; ----------------------------------------------------	
+; MACROS
+; ----------------------------------------------------	
 ; PANTALLA LCD					
 .equ  LCD_DPRT = PORTD
 .equ  LCD_DDDR = DDRD
@@ -34,3 +44,6 @@
 .equ  DATA_4BIT                     = 0x28	; Dos lineas, D4-D7
 .equ  DATA_8BIT                     = 0x38	; Dos lineas, D0-D7
 .equ  END_OF_MESSAGE				= 0xF0
+
+; SERVO
+.equ  POS_MAYOR_INCLINACION = 313 + 40			; valor para el Output Comapre Register para posicionar el servo en la mayor inclinacion

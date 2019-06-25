@@ -11,8 +11,7 @@
 	
 	DIR_MSG_CHOPP:           .DB "CHOPP (350ml)", '\n', "Golpee para otra.", END_OF_MESSAGE
 	MEDIDA_CHOP:			 .DB LOW(350), HIGH(350)
-
-	
+		
 	DIR_MSG_MEDIA_PINTA:     .DB "1/2 PINTA(250ml) ", '\n', "Golpee para otra.", END_OF_MESSAGE 
 	MEDIDA_MEDIAPINTA:       .DB LOW(250), HIGH(250), END_OF_MESSAGE, END_OF_MESSAGE, END_OF_MESSAGE, END_OF_MESSAGE
 
@@ -22,11 +21,10 @@
 
 ;-------------------------------------------------------------------------
 ; DECLINACION_INIT:
-; Funcion que setea el servo en la posicion de amyor inclinacion de la
-; plataforma
+; Funcion que setea el servo en la posicion de mayor inclinacion de la
+; plataforma. Redefine el Output comapre register para lograr un pwm de 2 ms 
+; de tiempo en alto.
 ;-------------------------------------------------------------------------
-.equ  POS_MAYOR_INCLINACION = 313 + 40			; valor para el Output Comapre Register para posicionar el servo en la mayor inclinacion
-
 declinacion_init:
 	push r16
 	
@@ -41,35 +39,35 @@ declinacion_init:
 
 ;-------------------------------------------------------------------------
 ; PROCESO_DECLINACION:
-; funcion para el proceso de declinacion del vaso en funcion de la cantidad
-; de liquido servido. La plataforma posee 32 posiciones de inclinacion y 
-; el vaso comienza en la posicion 32, y comienza a declinarse cuando
-; la cantidad de liquido servida es igual a la mitad de la medida elegida.
+; función para el proceso de declinación del vaso en base de la cantidad
+; de liquido servido. La plataforma (servo) posee 32 posiciones de inclinación y 
+; el vaso empieza en la posición 32, y comienza a declinarse cuando
+; la cantidad de líquido servida es igual a la mitad de la medida elegida.
+; Se define un valor PASO = MEDIDA/64 y un TECHO que arranca en PASO,
+; y cada vez que el peso supera el TECHO, se redefine TECHO = TECHO + PASO.
+; Cuando el techo es mas grande que la mitad de la MEDIDA se declina el servo cada
+; vez que se supera TECHO. 
+; Además, por la pantalla se muestra el avance del proceso a medida que se sirve. 
+; Para ello, cada cuatro incrementos del TECHO, se envia un caracter negro a la pantalla.
 ;-------------------------------------------------------------------------
-.def   TECHO_L = r19
-.def   TECHO_H = r20
-.def   PASO    = r21
-.def   MEDIDA_MITAD_L = r22
-.def   MEDIDA_MITAD_H = r23
+
 
 proceso_declinacion:
 	push  r16
-	push  r17
-	push  r18
 	push  MEDIDA_MITAD_L
 	push  MEDIDA_MITAD_H
 	push  TECHO_L
 	push  TECHO_H
 	push  PASO
 
-	mov   MEDIDA_MITAD_L, MEDIDA_L
+	mov   MEDIDA_MITAD_L, MEDIDA_L					; obtenemos la mitad de la medida que es cuando se comienza a declinar el vaso
 	mov   MEDIDA_MITAD_H, MEDIDA_H
-	lsr   MEDIDA_MITAD_H							; obtenemos la mitad de la medida que es cuando se comienza a declinar el vaso
-	ror   MEDIDA_MITAD_L				
+	lsr   MEDIDA_MITAD_H							
+	ror   MEDIDA_MITAD_L							
 
 	mov   PASO, MEDIDA_MITAD_L						; se divide el rango de valores que va desde MEDIDA/2 HASTA MEDIDA,
 	lsr   PASO										; por 32, que son las cantidad de posiciones que tiene la paltaforma.
-	lsr   PASO										
+	lsr   PASO										; que equivale a divir el valor de la MEDIDA por 64.
 	lsr   PASO
 	lsr   PASO
 	lsr   PASO
@@ -78,7 +76,7 @@ proceso_declinacion:
 	clr  TECHO_L
 
 proceso_declinacion_loop:
-	ldi   r18, 4									; contador para enviar caracteres que indican el avance del proceso
+	ldi   r16, 4									; contador para enviar caracteres que indican el avance del proceso
 
 proceso_declinacion_techo:
 	add   TECHO_L, PASO								; defino el techo como TECHO = TECHO + PASO
@@ -86,7 +84,7 @@ proceso_declinacion_techo:
 	inc   TECHO_H
 
 proceso_declinacion_techo_next:
-	cp    MEDIDA_H, TECHO_H 						; si MEDIDA_H < TECHO_H => MEDIDA < TECHO entonces se tiene que terminar el proceso
+	cp    MEDIDA_H, TECHO_H 						; si MEDIDA_H < TECHO_H ==> MEDIDA < TECHO entonces se termina el proceso
 	brlo  proceso_declinacion_fin
 	
 	cp    TECHO_H, MEDIDA_H							; ya se que MEDIDA_H >= TECHO_H, asi que verifico si se cumple la igualdad o el techo es mayor 
@@ -104,7 +102,6 @@ proceso_declinacion_lectura:
 	brlo  proceso_declinacion_lectura				; mientras el dato sea menor que el techo se sigue leyendo 
 	cp    DATO_L, TECHO_L
 	brlo  proceso_declinacion_lectura
-
 	
 	cp    MEDIDA_MITAD_H, TECHO_H					; se compara el dato leido con la mitad de la medida para 
 	brlo  proceso_declinacion_servo					; ver si se tiene que declinar la plataforma
@@ -115,32 +112,30 @@ proceso_declinacion_servo:
 	rcall mover_servo
 	 
 proceso_declinacion_step:
-	dec   r18
+	dec   r16										; si se incrementó 4 veces el TECHO, envía el caracter en negro 
 	brne  proceso_declinacion_techo
 	rcall send_black_char
 	rjmp  proceso_declinacion_loop
 
 proceso_declinacion_fin:
-	rcall servo_init								; cuando se llego a la medida seleccionada se lleva el servo a la posicion final
-	
+	rcall servo_init								; cuando se llego a la medida seleccionada se lleva el servo a la posición final
+													; en caso que haya faltado algun decremento de la plataforma
 	pop   PASO
 	pop   TECHO_H
 	pop   TECHO_L
 	pop   MEDIDA_MITAD_H
 	pop   MEDIDA_MITAD_L
-	pop   r18
-	pop   r17
 	pop   r16
 	ret
 ;-------------------------------------------------------------------------
 ; MOVER_SERVO:
-; 
+; Decrementa en uno la posición actual del servo y con eso, la de la plataforma.
 ;-------------------------------------------------------------------------
 mover_servo:
 	push  r16
 	push  r17
 
-	lds   r16, OCR1AL								; cuando el valor leido es mayor al techo se decrementa la posicion del servo
+	lds   r16, OCR1AL								; cuando el valor leido es mayor al techo se decrementa la posición del servo
 	lds   r17, OCR1AH								; decrementando el Output Compare Register y achicando asi el pulso del PWM
 	
 	subi  r16, 0x01								
@@ -148,16 +143,10 @@ mover_servo:
 	dec   r17
 
 mover_servo_next:
-	cpi   r17, HIGH(313+8)							; comparo la nueva posicion con la minima posicion posible del servo
-	brlo  mover_servo_fin							; si es mas chica salgo de la funcion (seguridad)
+	cpi   r17, HIGH(313+8)							; por seguridad se compara la nueva posición con la mínima posición posible del servo
+	brlo  mover_servo_fin							; si es mas chica salgo de la función
 	cpi   r16, LOW(313+8)
 	brlo  mover_servo_fin
-
-	;cpi   r17, HIGH(313+40) +1						; comparo la nueva posicion con la maxima posicion posible del servo
-	;brsh  mover_servo_fin							; si es mas grande salgo de la funcion (seguridad)
-	;cpi   r16, LOW(313+40)
-	;brsh  mover_servo_fin
-
 
 	sts   OCR1AH, r17								
 	sts   OCR1AL, r16
@@ -169,7 +158,7 @@ mover_servo_fin:
 
 ;-------------------------------------------------------------------------
 ; SEND_COMMAND:
-; Recibe el registro r16 cargado con una configuracion. Luego
+; Recibe el registro r16 cargado con una configuración. Luego
 ; lo envía a la pantalla LCD.
 ;-------------------------------------------------------------------------
 send_command:
@@ -201,26 +190,28 @@ send_command:
 ;-------------------------------------------------------------------------
 ; SEND_MSG:
 ; Recibe el puntero Z cargado con un mensaje guardado en memoria ROM. Luego
-; lo envía por la pantalla LCD.
+; lo envía por la pantalla LCD. Los mensajes tienen un formato definido,
+; terminan con END_OF_MESSAGE y si son de dos líneas, la separación entre ellas se indica
+; con el caracter '\n'.
 ;-------------------------------------------------------------------------
 send_msg:
 	push  r16
 	push  r17
 
-	ldi   r16, CLEAR_DISPLAY
-	rcall send_command			; Borra la pantalla
+	ldi   r16, CLEAR_DISPLAY	; Borra la pantalla
+	rcall send_command			
 	rcall delay_3ms
 
 send_msg_loop:
     lpm  r16, Z+
 	
-	cpi  r16, END_OF_MESSAGE	; Me fijo si termino el mensaje
+	cpi  r16, END_OF_MESSAGE	; Me fijo si terminó el mensaje
 	breq send_msg_fin
 	cpi  r16, '\n'				; Me fijo si el mensaje tiene una segunda parte
 	brne send_msg_next
 
-	ldi   r16, CURSOR_LINE_2
-	rcall send_command			; Fuerza el cursor a la 2da linea
+	ldi   r16, CURSOR_LINE_2	; Fuerza el cursor a la 2da línea
+	rcall send_command			
 	rcall delay_3ms	
 	rjmp  send_msg_loop
 
@@ -249,3 +240,35 @@ send_msg_fin:
 	pop  r17
 	pop  r16
 	ret
+
+;-------------------------------------------------------------------------
+; SEND_BLACK_CHAR:
+; manda un caracter en negro cuyo valor ASCII es 0xFF.
+;-------------------------------------------------------------------------
+send_black_char:
+	push  r17
+
+	ldi   r17, 0xFF					; se mandan los 4 bits mas significativos primero
+	andi  r17, 0xF0
+	out   LCD_DPRT, r17
+	sbi   LCD_CPRT, LCD_RS			; RS = 1 es para mandar datos
+	cbi   LCD_CPRT, LCD_RW
+	sbi   LCD_CPRT, LCD_E
+	rcall delay_500ns 
+	cbi   LCD_CPRT,LCD_E
+
+	ldi   r17, 0xFF					; ahora los 4 bits restantes
+	swap  r17
+	andi  r17, 0xF0
+	out   LCD_DPRT, r17
+	sbi   LCD_CPRT, LCD_RS			; RS = 1 es para mandar datos
+	cbi   LCD_CPRT, LCD_RW
+	sbi   LCD_CPRT, LCD_E
+	rcall delay_500ns 
+	cbi   LCD_CPRT,LCD_E
+
+	rcall delay_100us
+	
+	pop  r17
+	ret
+	
